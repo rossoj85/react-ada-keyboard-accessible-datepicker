@@ -11,17 +11,17 @@ class ReactColorSquare extends Component{
   }
   componentDidMount(){
     console.log('HELLO AFTER MOUNTING')
-   
+   console.log('Props after mounting',this.props);
     var datePickers = document.querySelectorAll('.datepicker');
     console.log('DatePickers====>',datePickers);
+    const dateFormat = this.props.dateFormat ||"mm/dd/yyyy"
     datePickers.forEach(function (dp) {
       var inputNode   = dp.querySelector('input');
       var buttonNode  = dp.querySelector('button');
       var dialogNode  = dp.querySelector('[role=dialog]');
 
-      console.log('vars-->',inputNode,buttonNode,dialogNode );
-        
-      var datePicker = new DatePicker(inputNode, buttonNode, dialogNode);
+    console.log('vars-->',inputNode,buttonNode,dialogNode );
+    var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat);
     datePicker.init();
     })
   }

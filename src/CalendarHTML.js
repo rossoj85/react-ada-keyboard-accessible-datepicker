@@ -10,7 +10,7 @@ const CalandarHTML = (props) =>{
   const styles = props.styles
   const buttonInlineStyle = props.buttonInlineStyle
   const customInputBox = props.customInputBox
-
+  const testSTRING = "TEST STRING"
     return(
       // this is the inputBox
       <div id="myDatepicker" className="datepicker">

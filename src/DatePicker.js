@@ -10,7 +10,7 @@ import DatePickerDay from './DatepickerDay';
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
 
-var DatePicker = function (inputNode, buttonNode, dialogNode) {
+var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat) {
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -21,8 +21,9 @@ var DatePicker = function (inputNode, buttonNode, dialogNode) {
   this.buttonNode  = buttonNode;
   this.dialogNode  = dialogNode;
   this.messageNode = dialogNode.querySelector('.message');
-
-  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this);
+  this.dateFormat = dateFormat
+  console.log('date format inside datepicker constructor',dateFormat);
+  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat);
 
   this.MonthYearNode = this.dialogNode.querySelector('.monthYear');
 

@@ -13,13 +13,13 @@ console.log('Datepicker---->', DatePicker);
 //CHANGED
 // var DatePicker = DatePicker || {};
 
-var CalendarButtonInput = function(inputNode, buttonNode, datepicker) {
+var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat) {
   this.inputNode    = inputNode;
   this.buttonNode   = buttonNode;
   this.imageNode    = false;
 
   this.datepicker = datepicker;
-
+  this.dateFormat = dateFormat
   this.defaultLabel = 'Choose Date';
 
   this.keyCode = Object.freeze({
@@ -85,8 +85,14 @@ CalendarButtonInput.prototype.setFocus = function () {
 };
 
 CalendarButtonInput.prototype.setDate = function (day) {
-  console.log('set date inputnode', this.inputNode);
-  this.inputNode.value = (day.getMonth() + 1) + '/' + day.getDate() + '/' + day.getFullYear();
+  console.log('inside set date ');
+  let dateFormatString = this.dateFormat.toLowerCase()
+  console.log('DATE FORMAT STRING', dateFormatString)
+  let newDateString = dateFormatString.replace("yyyy",day.getFullYear())
+                                      .replace("mm",(day.getMonth() + 1))
+                                      .replace("dd",day.getDate())
+  // this.inputNode.value = (day.getMonth() + 1) + '/' + day.getDate() + '/' + day.getFullYear();
+  this.inputNode.value = newDateString
   console.log('after set value', this.inputNode.value);
 };
 
