@@ -2,10 +2,13 @@
 import React,{Component,Fragment} from "react";
 import CalendarHTML from './CalendarHTML';
 import DatePicker from './DatePicker';
-import './Datepicker.scss'
-//first commit
+import styles from './Datepicker.scss'
+
 class ReactColorSquare extends Component{
   
+  constructor(props){
+    super(props)
+  }
   componentDidMount(){
     console.log('HELLO AFTER MOUNTING')
    
@@ -24,9 +27,14 @@ class ReactColorSquare extends Component{
   }
 
   render(){
+    console.log('access calendar Props', this.props)
+    console.log('styles', styles[".datepicker"]);
+    console.log('Props', this.props);
+    console.log('THIS INSIDE CLOLR SQUARE', this);
+    
     return(
       <Fragment>
-         <CalendarHTML />
+         <CalendarHTML {...this.props}/>
       </Fragment>
     )
   }

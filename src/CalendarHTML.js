@@ -3,25 +3,39 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 
 
-const CalandarHTML = () =>{
+const CalandarHTML = (props) =>{
   
-  
+  console.log('props inside html component', props);
+
+  const styles = props.styles
+  const buttonInlineStyle = props.buttonInlineStyle
+  const customInputBox = props.customInputBox
 
     return(
+      // this is the inputBox
+      <div id="myDatepicker" className="datepicker">
+        
+        <div className="date">
+        <label htmlFor="id-textbox-1">Date</label>
+        <span>
+       { customInputBox ? 
+        customInputBox
+        :
+        <input type="text"
+              placeholder="mm/dd/yyyy"
+              id="id-textbox-1"
+              aria-autocomplete="none"
+              className ={styles.inputBox}
+                />
+      }
+        <button className="icon" aria-label="Choose Date" attribute="testing . ." style={buttonInlineStyle}>
+          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
+        </button>
+        </span>
+      </div>  
+        
 
-        <div id="myDatepicker" className="datepicker">
-  <div className="date">
-    <label htmlFor="id-textbox-1">
-      Date
-    </label>
-    <input type="text"
-           placeholder="mm/dd/yyyy"
-           id="id-textbox-1"
-           aria-autocomplete="none" />
-    <button className="icon" aria-label="Choose Date">
-      <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
-    </button>
-  </div>
+  {/* this is the calendar component */}
   <div id="id-datepicker-1"
        className="datepickerDialog"
        role="dialog"
