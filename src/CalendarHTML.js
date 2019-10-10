@@ -11,21 +11,32 @@ const CalandarHTML = (props) =>{
   const buttonInlineStyle = props.buttonInlineStyle
   const customInputBox = props.customInputBox
   const testSTRING = "TEST STRING"
+  const inputBoxLabel = props.inputBoxLabel
+  const inputBoxLabelContent = props.inputBoxLabelContent;
+  const inputBoxOnChange = props.inputBoxOnChange
+  const dateFormat = props.dateFormat
+  
+  
     return(
       // this is the inputBox
       <div id="myDatepicker" className="datepicker">
         
         <div className="date">
-        <label htmlFor="id-textbox-1">Date</label>
+        {inputBoxLabel!== false ? 
+          <label htmlFor="id-textbox-1">{inputBoxLabelContent|| "Date "}</label>
+          :
+          null
+      }
         <span>
        { customInputBox ? 
         customInputBox
         :
         <input type="text"
-              placeholder="mm/dd/yyyy"
+              placeholder={dateFormat}
               id="id-textbox-1"
               aria-autocomplete="none"
               className ={styles.inputBox}
+              onChange={inputBoxOnChange}
                 />
       }
         <button className="icon" aria-label="Choose Date" attribute="testing . ." style={buttonInlineStyle}>

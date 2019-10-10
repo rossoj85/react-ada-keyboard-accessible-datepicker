@@ -6,3 +6,9 @@ THings to add
 4. on change callback?
 5. custom date format
 6. fix aria lable for button 
+7. Language 
+8. max and/ or min date (Callback)
+9. 
+
+
+/// custom date formatting intefering with focus day 

@@ -33,6 +33,7 @@
   }
   
   .datepicker .datepickerDialog {
+    z-index: 99 !important;
     position: absolute;
     width: 45%;
     clear: both;

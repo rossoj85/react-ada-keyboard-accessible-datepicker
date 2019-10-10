@@ -10,7 +10,7 @@ import DatePickerDay from './DatepickerDay';
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
 
-var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat) {
+var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate) {
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -22,7 +22,9 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat) {
   this.dialogNode  = dialogNode;
   this.messageNode = dialogNode.querySelector('.message');
   this.dateFormat = dateFormat
-  console.log('date format inside datepicker constructor',dateFormat);
+  this.minDate = minDate;
+  this.maxDate = maxDate;
+  console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
   this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat);
 
   this.MonthYearNode = this.dialogNode.querySelector('.monthYear');
@@ -114,7 +116,7 @@ DatePicker.prototype.init = function () {
 };
 
 DatePicker.prototype.updateGrid = function () {
-
+  console.log('----------calling update grid-------------');
   var i, flag;
   var fd = this.focusDay;
 
@@ -127,10 +129,11 @@ DatePicker.prototype.updateGrid = function () {
   firstDayOfMonth.setDate(firstDayOfMonth.getDate() - dayOfWeek);
 
   var d = new Date(firstDayOfMonth);
+  console.log('variable d in update grid--(first day of month)', d)
 
   for (i = 0; i < this.days.length; i++) {
     flag = d.getMonth() != fd.getMonth();
-    this.days[i].updateDay(flag, d);
+    this.days[i].updateDay(flag, d, this.minDate, this.maxDate);
     if ((d.getFullYear() == this.selectedDay.getFullYear()) &&
         (d.getMonth() == this.selectedDay.getMonth()) &&
         (d.getDate() == this.selectedDay.getDate())) {
