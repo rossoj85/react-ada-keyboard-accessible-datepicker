@@ -19,7 +19,7 @@ var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat)
   this.imageNode    = false;
 
   this.datepicker = datepicker;
-  this.dateFormat = dateFormat
+  this.dateFormat = dateFormat.toLowerCase();
   this.defaultLabel = 'Choose Date';
 
   this.keyCode = Object.freeze({
@@ -86,7 +86,7 @@ CalendarButtonInput.prototype.setFocus = function () {
 
 CalendarButtonInput.prototype.setDate = function (day) {
   console.log('inside set date ');
-  let dateFormatString = this.dateFormat.toLowerCase()
+  let dateFormatString = this.dateFormat;
   console.log('DATE FORMAT STRING', dateFormatString)
   let newDateString = dateFormatString.replace("yyyy",day.getFullYear())
                                       .replace("mm",(day.getMonth() + 1))
@@ -102,16 +102,30 @@ CalendarButtonInput.prototype.getDate = function () {
 
 CalendarButtonInput.prototype.getDateLabel = function () {
   var label = '';
+  let divider;
 
-  var parts = this.inputNode.value.split('/');
+  if(this.inputNode.value.indexOf(',')) divider=','
+  else if(this.inputNode.value.indexOf('/')) divider='/'
+
+  var parts = this.inputNode.value.split(divider);
+  var formatParts = this.dateFormat.split(divider)
+
+  console.log('parts', parts);
+  console.log('date format parts', formatParts);
 
   if ((parts.length === 3) &&
       Number.isInteger(parseInt(parts[0])) &&
       Number.isInteger(parseInt(parts[1])) &&
       Number.isInteger(parseInt(parts[2]))) {
-    var month = parseInt(parts[0]) - 1;
-    var day = parseInt(parts[1]);
-    var year = parseInt(parts[2]);
+    // var month = parseInt(parts[0]) - 1;
+    // var day = parseInt(parts[1]);
+    // var year = parseInt(parts[2]);
+
+    var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
+    var day = parseInt(parts[formatParts.indexOf('dd')]);
+    var year = parseInt(parts[formatParts.indexOf('yyyy')]);
+    
+    
 
     label = this.datepicker.getDateForButtonLabel(year, month, day);
   }
@@ -129,6 +143,7 @@ CalendarButtonInput.prototype.handleFocus = function () {
     this.setLabel('');
   }
 };
+CalendarButtonInput.prototype.findDivider = function(){}
 
 // Initialize menu button date picker
 

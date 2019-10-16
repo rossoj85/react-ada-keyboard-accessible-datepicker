@@ -8,15 +8,20 @@ const CalandarHTML = (props) =>{
   console.log('props inside html component', props);
 
   const styles = props.styles
-  const buttonInlineStyle = props.buttonInlineStyle
-  const customInputBox = props.customInputBox
-  const testSTRING = "TEST STRING"
-  const inputBoxLabel = props.inputBoxLabel
-  const inputBoxLabelContent = props.inputBoxLabelContent;
-  const inputBoxOnChange = props.inputBoxOnChange
-  const dateFormat = props.dateFormat
-  
-  
+  // const buttonInlineStyle = props.buttonInlineStyle
+  // const customInputBox = props.customInputBox
+  // const inputBoxLabel = props.inputBoxLabel
+  // const inputBoxLabelContent = props.inputBoxLabelContent;
+  // const inputBoxOnChange = props.inputBoxOnChange
+  const dateFormat = props.config.dateFormat || "MM/DD/YYY"
+  // const themeColor = props.themeColor;
+
+
+  const { themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange} = props.config
+
+ console.log("WHAAAAAAAAA", customInputBox)
+ console.log('keys', Object.keys(props.config));
+
     return(
       // this is the inputBox
       <div id="myDatepicker" className="datepicker">
@@ -35,11 +40,11 @@ const CalandarHTML = (props) =>{
               placeholder={dateFormat}
               id="id-textbox-1"
               aria-autocomplete="none"
-              className ={styles.inputBox}
+              className ={inputBoxClassNames}
               onChange={inputBoxOnChange}
                 />
       }
-        <button className="icon" aria-label="Choose Date" attribute="testing . ." style={buttonInlineStyle}>
+        <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" :themeColor}, buttonInlineStyle} >
           <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
         </button>
         </span>

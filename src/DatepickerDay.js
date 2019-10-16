@@ -48,9 +48,6 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
   
   DatePickerDay.prototype.updateDay = function (disable, day, minDate=null, maxDate=null) {
     console.log('DatepickerDay updateDay called...');
-    console.log('diable- ', disable);
-    console.log('day - ', day);
-    console.log('args', arguments);
     // console.log('datepickerDay update Day this.domNode',this.domNode)
     if (disable) {
       this.domNode.classList.add('disabled');
@@ -84,39 +81,21 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     // }
 
 
-    // console.log('this dayNode date', thisDayNodeDate);
-    // console.log('today date', dateToday, typeof dateToday );
-    console.log('date today', dateToday);
-    console.log('max date', maxDate);
-
     if(maxDate){
      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
      const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate);
-      if(pastMaxDate) {
-        this.domNode.setAttribute('isGreaterThanMaxDate',true)
-        this.domNode.setAttribute('todayDate' ,dateToday)
-        this.domNode.classList.add('disabled')
-      }
-      if(!pastMaxDate && !beforeMinDate) {
-        this.domNode.classList.remove('disabled')
-        this.domNode.setAttribute('isGreaterThanMaxDate',false)
-        this.domNode.setAttribute('todayDate' ,dateToday)
-      }
+
+      if(pastMaxDate) this.disableDayNode('iuGreaterThanMaxDate',this.domNode)
+      if(!pastMaxDate && !beforeMinDate) this.removeDisabled(this.domNode)
+
     } 
+
    if(minDate){
      const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate, minDate)
      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
 
-     if(beforeMinDate){
-      this.domNode.setAttribute('isBeforeMinDate',true)
-      this.domNode.setAttribute('todayDate' ,dateToday)
-      this.domNode.classList.add('disabled')
-     }
-     if(!beforeMinDate && !pastMaxDate){
-      this.domNode.classList.remove('disabled')
-      this.domNode.setAttribute('isBeforeMinDate',false)
-      this.domNode.setAttribute('todayDate' ,dateToday)
-     }
+     if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode)
+     if(!beforeMinDate && !pastMaxDate) this.removeDisabled(this.domNode)
    }
 
   };
@@ -124,7 +103,10 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     node.setAttribute(reason, true);
     node.classList.add('disabled')
     node.disabled=true
-    
+  }
+  DatePickerDay.prototype.removeDisabled = function(node){
+    node.classList.remove('disabled')
+    node.disabled=false;
   }
 
   DatePickerDay.prototype.isNodeDateGreaterThanMaxDate = function(nodeDate, selectedDate){
@@ -235,6 +217,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
   };
   
   DatePickerDay.prototype.handleMouseDown = function (event) {
+    console.log('handle mousedown',this.date)
   
     if (this.isDisabled()) {
       this.datepicker.moveFocusToDay(this.date);
@@ -250,6 +233,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
   };
   
   DatePickerDay.prototype.handleFocus = function () {
+    console.log('datepickerDay handle focus called');
     this.datepicker.setMessage(this.datepicker.messageCursorKeys);
   };
 

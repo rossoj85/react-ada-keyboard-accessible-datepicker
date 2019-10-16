@@ -21,7 +21,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.buttonNode  = buttonNode;
   this.dialogNode  = dialogNode;
   this.messageNode = dialogNode.querySelector('.message');
-  this.dateFormat = dateFormat
+  this.dateFormat = dateFormat.toLowerCase()
   this.minDate = minDate;
   this.maxDate = maxDate;
   console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
@@ -66,7 +66,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
 };
 
 DatePicker.prototype.init = function () {
-
+  console.log('datePicker init called... ');
   this.dateInput.init();
 
   this.okButtonNode.addEventListener('click', this.handleOkButton.bind(this));
@@ -166,8 +166,11 @@ DatePicker.prototype.setFocusDay = function (flag) {
   }
 
   var fd = this.focusDay;
+  console.log('datepicker setFocusday called');
+  console.log('FD (focus day)', fd);
 
   function checkDay (d) {
+    console.log('checkday called...');
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&
         (d.day.getMonth() == fd.getMonth()) &&
@@ -183,6 +186,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
 };
 
 DatePicker.prototype.updateDay = function (day) {
+  console.log('ANOTHER updateDay called ');
   var d = this.focusDay;
   this.focusDay = day;
   if ((d.getMonth() !== day.getMonth()) ||
@@ -579,14 +583,33 @@ DatePicker.prototype.setTextboxDate = function (day) {
 };
 
 DatePicker.prototype.getDateInput = function () {
+  console.log(' get date input called  . . . . ');
 
-  var parts = this.dateInput.getDate().split('/');
+
+  ////HERE !!!!!! !! ! ! ! 
+  let divider;
+  if(this.dateInput && this.dateInput.getDate().indexOf(',')!== -1) divider=','
+  else if(this.dateInput && this.dateInput.getDate().indexOf('/')!== -1) divider='/'
+  else if(this.dateInput && this.dateInput.getDate().indexOf(' ')!== -1) divider= ' '
+
+  
+  console.log('divider (parts)', divider);
+  var parts = this.dateInput.getDate().split(divider);
+  var formatParts = this.dateFormat.split(divider);
+  var originalParts = this.dateInput.getDate().split('/')
 
   if ((parts.length === 3) &&
       Number.isInteger(parseInt(parts[0])) &&
       Number.isInteger(parseInt(parts[1])) &&
       Number.isInteger(parseInt(parts[2]))) {
-    this.focusDay = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+        
+        var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
+        var day = parseInt(parts[formatParts.indexOf('dd')]);
+        var year = parseInt(parts[formatParts.indexOf('yyyy')]);
+        console.log('~~~~', year,month,day);
+    // new Date(year, month,day)
+    // this.focusDay = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+    this.focusDay = new Date(year, month, day);
     this.selectedDay = new Date(this.focusDay);
   }
   else {

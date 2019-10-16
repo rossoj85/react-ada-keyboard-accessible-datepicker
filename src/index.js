@@ -10,14 +10,18 @@ class ReactColorSquare extends Component{
     super(props)
   }
   componentDidMount(){
-    console.log(' ada-calander mounting....')
-    console.log('DOCUMENTS STYLESHEET ', document.styleSheets);
-    console.log('Props after mounting',this.props);
+    console.log(' ada-calander mounting....props--', this.props)
+
+    const { themeColor, minDate, maxDate } = this.props.config;
+    const dateFormat = this.props.config.dateFormat || "MM/DD/YYY"
+
+    if(themeColor) document.documentElement.style.setProperty("--themeColor", themeColor);
+ 
     var datePickers = document.querySelectorAll('.datepicker');
   
-    const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
-    const minDate = this.props.minDate;
-    const maxDate = this.props.maxDate;
+    // const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
+    // const minDate = this.props.minDate;
+    // const maxDate = this.props.maxDate;
 
     datePickers.forEach(function (dp) {
       var inputNode   = dp.querySelector('input');
@@ -35,7 +39,8 @@ class ReactColorSquare extends Component{
     console.log('styles', styles[".datepicker"]);
     console.log('Props', this.props);
     console.log('THIS INSIDE CLOLR SQUARE', this);
-    
+    console.log('MOUNTING CSS',document.documentElement.style);
+
     return(
       <Fragment>
          <CalendarHTML {...this.props}/>
