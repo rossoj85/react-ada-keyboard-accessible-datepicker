@@ -85,7 +85,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
      const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate);
 
-      if(pastMaxDate) this.disableDayNode('iuGreaterThanMaxDate',this.domNode)
+      if(pastMaxDate) this.disableDayNode('isGreaterThanMaxDate',this.domNode)
       if(!pastMaxDate && !beforeMinDate) this.removeDisabled(this.domNode)
 
     } 
@@ -115,7 +115,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     let result = false;
   
     for(let i = 0; i<3; i++){
-      console.log(`${nodeDateArray[i]}>${selectedDateArray[i]}`);
+      // console.log(`${nodeDateArray[i]}>${selectedDateArray[i]}`);
      if (parseInt(nodeDateArray[i])>parseInt(selectedDateArray[i])) return true;
      if (parseInt(nodeDateArray[i])<parseInt(selectedDateArray[i])) return false;
     }
@@ -126,7 +126,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     const nodeDateArray = nodeDate.split('-')
   
     for(let i = 0; i<3; i++){
-      console.log(`${nodeDateArray[i]}<${selectedDateArray[i]}`);
+      // console.log(`${nodeDateArray[i]}<${selectedDateArray[i]}`);
      if (parseInt(nodeDateArray[i])>parseInt(selectedDateArray[i])) return false;
      if (parseInt(nodeDateArray[i])<parseInt(selectedDateArray[i])) return true;
     }

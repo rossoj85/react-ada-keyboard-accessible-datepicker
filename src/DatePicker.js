@@ -10,7 +10,7 @@ import DatePickerDay from './DatepickerDay';
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
 
-var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate) {
+var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate, dateButtonClasses) {
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -24,6 +24,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.dateFormat = dateFormat.toLowerCase()
   this.minDate = minDate;
   this.maxDate = maxDate;
+  this.dateButtonClasses = dateButtonClasses;
   console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
   this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat);
 
@@ -102,6 +103,8 @@ DatePicker.prototype.init = function () {
       cell.classList.add('dateCell');
       var cellButton = document.createElement('button');
       cellButton.classList.add('dateButton');
+      var customdateButtonClassArray = this.dateButtonClasses.split(' ')
+      cellButton.classList.add(...customdateButtonClassArray);
       cell.appendChild(cellButton);
       row.appendChild(cell);
       var dpDay = new DatePickerDay(cellButton, this, index, i, j);
@@ -606,7 +609,7 @@ DatePicker.prototype.getDateInput = function () {
         var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
         var day = parseInt(parts[formatParts.indexOf('dd')]);
         var year = parseInt(parts[formatParts.indexOf('yyyy')]);
-        console.log('~~~~', year,month,day);
+        // console.log('~~~~', year,month,day);
     // new Date(year, month,day)
     // this.focusDay = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
     this.focusDay = new Date(year, month, day);
