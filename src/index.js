@@ -13,7 +13,7 @@ class ReactColorSquare extends Component{
     console.log(' ada-calander mounting....props--', this.props)
 
     const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config;
-    const dateFormat = this.props.config.dateFormat || "MM/DD/YYY"
+    const dateFormat = this.props.config.dateFormat || "MM/DD/YYYY"
 
     if(themeColor) document.documentElement.style.setProperty("--greekGod", themeColor);
  

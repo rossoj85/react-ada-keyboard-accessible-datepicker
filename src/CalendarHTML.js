@@ -1,373 +1,396 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 
 
-const CalandarHTML = (props) =>{
+class CalandarHTML extends Component{
+  constructor(props){
+    super(props);
+    this.state ={
+      dateFormat: this.props.config.dateFormat.toLowerCase() || "MM/DD/YYYY".toLowerCase(),
+      dateString: "",
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+ 
+  handleChange(e){
+    let dateString = this.state.dateString;
+    let dateFormat = this.state.dateFormat;
+    e.preventDefault();
   
-  console.log('props inside html component', props);
+    dateString = e.target.value
+    let dateFormatChar = dateFormat[dateString.length]
+    console.log('dateString', dateString);
+    console.log('dateString.length', dateString.length);
 
-  const styles = props.styles
-  // const buttonInlineStyle = props.buttonInlineStyle
-  // const customInputBox = props.customInputBox
-  // const inputBoxLabel = props.inputBoxLabel
-  // const inputBoxLabelContent = props.inputBoxLabelContent;
-  // const inputBoxOnChange = props.inputBoxOnChange
-  const dateFormat = props.config.dateFormat || "MM/DD/YYY"
-  // const --themeColor = props.--themeColor;
+    console.log('e.target.value', e.target.value);
+    console.log('dateformatChar',dateFormatChar);
 
+   if(  dateFormatChar!= 'y' && dateFormatChar !='m' &&dateFormatChar != 'd' && dateFormatChar!= undefined) dateString = dateString + dateFormatChar
+   this.setState({dateString})
+  }
 
-  const {themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange, dateButtonClasses, tableClasses} = props.config
+  render(){
 
-  console.log(')))))))))))))))) NEWWWWWWW C1@$$3SSSSSSWSWSWSWSWWS',dateButtonClasses )
+    const dateFormat = this.state.dateFormat;
+
+    console.log('CALANDER HTML PROPS', this.props.config);
+    console.log('CALANDER HTML FORMAT', dateFormat);
+  
+    const {themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange, dateButtonClasses, tableClasses} = this.props.config
+    
+    
     return(
-      // this is the inputBox
-      <div id="myDatepicker" className="datepicker">
+       // this is the inputBox
+       <div id="myDatepicker" className="datepicker">
         
-        <div className="date">
-        {inputBoxLabel!== false ? 
-          <label htmlFor="id-textbox-1">{inputBoxLabelContent|| "Date "}</label>
-          :
-          null
-      }
-        <span>
-       { customInputBox ? 
-        customInputBox
-        :
-        <input type="text"
-              placeholder={dateFormat}
-              id="id-textbox-1"
-              aria-autocomplete="none"
-              className ={inputBoxClassNames}
-              onChange={inputBoxOnChange}
-                />
-      }
-        <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
-          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
-        </button>
-        </span>
-      </div>  
-        
+       <div className="date">
+       {inputBoxLabel!== false ? 
+         <label htmlFor="id-textbox-1">{inputBoxLabelContent|| "Date "}</label>
+         :
+         null
+     }
+       <span>
+      { customInputBox ? 
+       customInputBox
+       :
+       <input type="text"
+             placeholder={dateFormat}
+             id="id-textbox-1"
+             aria-autocomplete="none"
+             className ={inputBoxClassNames}
+            //  onChange={inputBoxOnChange}
+            onChange={this.handleChange}
+            value={this.state.dateString}
+            maxLength={dateFormat.length}
+               />
+     }
+       <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" :themeColor}, buttonInlineStyle} >
+         <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
+       </button>
+       </span>
+     </div>  
+       
 
-  {/* this is the calendar component */}
-  <div id="id-datepicker-1"
-       className="datepickerDialog"
-       role="dialog"
-       aria-modal="true"
-       aria-labelledby="id-dialog-label">
-    <div className="header">
-      <button className="prevYear" aria-label="previous year">
-        {/* <span className="fas fa-angle-double-left fa-lg"></span> */}
-        <FontAwesomeIcon icon={faAngleDoubleLeft} />
-      </button>
-      <button className="prevMonth" aria-label="previous month">
-        {/* <span className="fas fa-angle-left fa-lg"></span> */}
-        <FontAwesomeIcon icon={faAngleLeft} />
-      </button>
-      <h2 id="id-dialog-label"
-          className="monthYear"
-          aria-live="polite">
-        Month Year
-      </h2>
-      <button className="nextMonth" aria-label="next month">
-        {/* <span className="fas fa-angle-right fa-lg"></span> */}
-        <FontAwesomeIcon icon={faAngleRight} />
-      </button>
-      <button className="nextYear" aria-label="next year">
-        {/* <span className="fas fa-angle-double-right fa-lg"></span> */}
-        <FontAwesomeIcon icon={faAngleDoubleRight} />
-      </button>
-    </div>
-    <table id="myDatepickerGrid"
-           className={`dates ${tableClasses}`}
-           role="grid"
-           aria-labelledby="id-dialog-label">
-      <thead>
-        <tr>
-          <th scope="col" abbr="Sunday">
-            Su
-          </th>
-          <th scope="col" abbr="Monday">
-            Mo
-          </th>
-          <th scope="col" abbr="Tuesday">
-            Tu
-          </th>
-          <th scope="col" abbr="Wednesday">
-            We
-          </th>
-          <th scope="col" abbr="Thursday">
-            Th
-          </th>
-          <th scope="col" abbr="Friday">
-            Fr
-          </th>
-          <th scope="col" abbr="Saturday">
-            Sa
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              25
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              26
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              27
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              28
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              29
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              30
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses} HELLOOOOO`} tabIndex="-1">
-              1
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              2
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              3
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              4
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              5
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              6
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              7
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              8
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              9
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              10
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              11
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              12
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              13
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="0">
-              14
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              15
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              16
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              17
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              18
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              19
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              20
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              21
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              22
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              23
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              24
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              25
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              26
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              27
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              28
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              29
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              30
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
-              31
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              1
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              2
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              3
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              4
-            </button>
-          </td>
-          <td className="dateCell">
-            <button className= {`dateButton ${dateButtonClasses}`}
-                    tabIndex="-1"
-                    disabled="">
-              5
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div className="dialogButtonGroup">
-      <button className="dialogButton" value="cancel">
-        Cancel
-      </button>
-      <button className="dialogButton" value="ok">
-        OK
-      </button>
-    </div>
-    <div className="message" aria-live="polite">
-      Test
-    </div>
-  </div>
+ {/* this is the calendar component */}
+ <div id="id-datepicker-1"
+      className="datepickerDialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="id-dialog-label">
+   <div className="header">
+     <button className="prevYear" aria-label="previous year">
+       {/* <span className="fas fa-angle-double-left fa-lg"></span> */}
+       <FontAwesomeIcon icon={faAngleDoubleLeft} />
+     </button>
+     <button className="prevMonth" aria-label="previous month">
+       {/* <span className="fas fa-angle-left fa-lg"></span> */}
+       <FontAwesomeIcon icon={faAngleLeft} />
+     </button>
+     <h2 id="id-dialog-label"
+         className="monthYear"
+         aria-live="polite">
+       Month Year
+     </h2>
+     <button className="nextMonth" aria-label="next month">
+       {/* <span className="fas fa-angle-right fa-lg"></span> */}
+       <FontAwesomeIcon icon={faAngleRight} />
+     </button>
+     <button className="nextYear" aria-label="next year">
+       {/* <span className="fas fa-angle-double-right fa-lg"></span> */}
+       <FontAwesomeIcon icon={faAngleDoubleRight} />
+     </button>
+   </div>
+   <table id="myDatepickerGrid"
+          className={`dates ${tableClasses}`}
+          role="grid"
+          aria-labelledby="id-dialog-label">
+     <thead>
+       <tr>
+         <th scope="col" abbr="Sunday">
+           Su
+         </th>
+         <th scope="col" abbr="Monday">
+           Mo
+         </th>
+         <th scope="col" abbr="Tuesday">
+           Tu
+         </th>
+         <th scope="col" abbr="Wednesday">
+           We
+         </th>
+         <th scope="col" abbr="Thursday">
+           Th
+         </th>
+         <th scope="col" abbr="Friday">
+           Fr
+         </th>
+         <th scope="col" abbr="Saturday">
+           Sa
+         </th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             25
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             26
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             27
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             28
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             29
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             30
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses} HELLOOOOO`} tabIndex="-1">
+             1
+           </button>
+         </td>
+       </tr>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             2
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             3
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             4
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             5
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             6
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             7
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             8
+           </button>
+         </td>
+       </tr>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             9
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             10
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             11
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             12
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             13
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="0">
+             14
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             15
+           </button>
+         </td>
+       </tr>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             16
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             17
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             18
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             19
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             20
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             21
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             22
+           </button>
+         </td>
+       </tr>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             23
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             24
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             25
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             26
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             27
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             28
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             29
+           </button>
+         </td>
+       </tr>
+       <tr>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             30
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`} tabIndex="-1">
+             31
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             1
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             2
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             3
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             4
+           </button>
+         </td>
+         <td className="dateCell">
+           <button className= {`dateButton ${dateButtonClasses}`}
+                   tabIndex="-1"
+                   disabled="">
+             5
+           </button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   <div className="dialogButtonGroup">
+     <button className="dialogButton" value="cancel">
+       Cancel
+     </button>
+     <button className="dialogButton" value="ok">
+       OK
+     </button>
+   </div>
+   <div className="message" aria-live="polite">
+     Test
+   </div>
+ </div>
 </div>
-    )
+    );
+  }
 }
-
 export default CalandarHTML;

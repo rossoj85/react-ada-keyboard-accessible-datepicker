@@ -167,10 +167,12 @@ DatePicker.prototype.setFocusDay = function (flag) {
   if (typeof flag !== 'boolean') {
     flag = true;
   }
-
+  
   var fd = this.focusDay;
   console.log('datepicker setFocusday called');
   console.log('FD (focus day)', fd);
+
+  
 
   function checkDay (d) {
     console.log('checkday called...');
