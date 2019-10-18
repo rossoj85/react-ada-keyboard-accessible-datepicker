@@ -7,38 +7,67 @@ class CalandarHTML extends Component{
   constructor(props){
     super(props);
     this.state ={
-      dateFormat: this.props.config.dateFormat.toLowerCase() || "MM/DD/YYYY".toLowerCase(),
-      dateString: "",
+      dateFormat: null,
+      stateDate: "",
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
+  }
+  componentWillMount(){
+    let dateFormat = this.props.dateFormat.toLowerCase();
+    if(dateFormat) this.setState({ dateFormat})
+    else{this.setState({dateFormat: "mm/dd/yyyy"})}
   }
  
-  handleChange(e){
-    let dateString = this.state.dateString;
+  autoFormatDateBox(e){
+    let stateDate = this.state.stateDate;
+    let targetVal = e.target.value
     let dateFormat = this.state.dateFormat;
+    let nextStateDate;
     e.preventDefault();
-  
-    dateString = e.target.value
-    let dateFormatChar = dateFormat[dateString.length]
-    console.log('dateString', dateString);
-    console.log('dateString.length', dateString.length);
+    
+    console.log('stateDate', stateDate);
+    console.log('targetVal', targetVal);
 
-    console.log('e.target.value', e.target.value);
-    console.log('dateformatChar',dateFormatChar);
+    const re = /^[0-9]*$/
+    console.log('rE Test', re.test(e.target.value));
 
-   if(  dateFormatChar!= 'y' && dateFormatChar !='m' &&dateFormatChar != 'd' && dateFormatChar!= undefined) dateString = dateString + dateFormatChar
-   this.setState({dateString})
+    //wont allow a non numeric addition, but wil allow for backspacing
+    if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
+    // if(isNaN(e.target.value[e.target.value.length-1])) return;
+    nextStateDate = e.target.value
+    let nextDateFormatChar = dateFormat[targetVal.length]
+    let thisDateFormatChar = dateFormat[targetVal.length-1]
+    let oneBehindDateFormatChar = dateFormat[targetVal.length-2]
+
+  console.log('thisDateFormatChar',thisDateFormatChar);
+
+   if(stateDate.length<targetVal.length && nextDateFormatChar!= 'y' && nextDateFormatChar !='m' &&nextDateFormatChar != 'd' && nextDateFormatChar!= undefined) nextStateDate = nextStateDate + nextDateFormatChar
+   if(thisDateFormatChar!='y'&& thisDateFormatChar!='m' && thisDateFormatChar!='d' && targetVal[targetVal.length-1]!==thisDateFormatChar) nextStateDate = stateDate + thisDateFormatChar + targetVal[targetVal.length-1]
+   console.log('---------------');
+   this.setState({stateDate: nextStateDate})
   }
 
   render(){
 
     const dateFormat = this.state.dateFormat;
 
-    console.log('CALANDER HTML PROPS', this.props.config);
-    console.log('CALANDER HTML FORMAT', dateFormat);
-  
-    const {themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange, dateButtonClasses, tableClasses} = this.props.config
+    // const {themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, 
+    //   buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange, dateButtonClasses, tableClasses} = config || null
+    const themeColor = this.props.themeColor;
+    const minDate = this.props.minDate;
+    const maxDate = this.props.maxDate;
+    const customInputBox = this.props.customInputBox;
+    const inputBoxLabel = this.props.inputBoxLabel;
+    const inputBoxClassNames = this.props.inputBoxClassNames;
+    const inputBoxOnChange = this.props.inputBoxOnChange;
+
+    const buttonInlineStyle = this.props.buttonInlineStyle;
+    const inputBoxLabelContent = this.props.inputBoxLabelContent;
+    const dateButtonClasses = this.props.dateButtonClasses;
+    const tableClasses = this.props.tableClasses;
     
+  
+
     
     return(
        // this is the inputBox
@@ -59,13 +88,12 @@ class CalandarHTML extends Component{
              id="id-textbox-1"
              aria-autocomplete="none"
              className ={inputBoxClassNames}
-            //  onChange={inputBoxOnChange}
-            onChange={this.handleChange}
-            value={this.state.dateString}
+            onChange={this.autoFormatDateBox}
+            value={this.state.stateDate}
             maxLength={dateFormat.length}
                />
      }
-       <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" :themeColor}, buttonInlineStyle} >
+       <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
        </button>
        </span>

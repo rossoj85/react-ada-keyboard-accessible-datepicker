@@ -11,9 +11,14 @@ class ReactColorSquare extends Component{
   }
   componentDidMount(){
     console.log(' ada-calander mounting....props--', this.props)
+    // const config = this.props.config || null;
+    // const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config || null;
 
-    const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config;
-    const dateFormat = this.props.config.dateFormat || "MM/DD/YYYY"
+    const themeColor = this.props.themeColor || null
+    const minDate = this.props.minDate || null
+    const maxDate = this.props.maxDate || null
+    const dateButtonClasses = this.props.dateButtonClasses || null
+    const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
 
     if(themeColor) document.documentElement.style.setProperty("--greekGod", themeColor);
  

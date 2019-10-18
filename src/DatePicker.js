@@ -103,7 +103,7 @@ DatePicker.prototype.init = function () {
       cell.classList.add('dateCell');
       var cellButton = document.createElement('button');
       cellButton.classList.add('dateButton');
-      var customdateButtonClassArray = this.dateButtonClasses.split(' ')
+      var customdateButtonClassArray =  this.dateButtonClasses ? this.dateButtonClasses.split(' '): '';
       cellButton.classList.add(...customdateButtonClassArray);
       cell.appendChild(cellButton);
       row.appendChild(cell);
