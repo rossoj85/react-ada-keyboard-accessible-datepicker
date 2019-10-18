@@ -13,8 +13,10 @@ class CalandarHTML extends Component{
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
   }
   componentWillMount(){
-    let dateFormat = this.props.dateFormat.toLowerCase();
-    if(dateFormat) this.setState({ dateFormat})
+    if(this.props.dateFormat){
+      let dateFormat = this.props.dateFormat.toLowerCase();
+      this.setState({ dateFormat})
+    }
     else{this.setState({dateFormat: "mm/dd/yyyy"})}
   }
  
@@ -33,16 +35,15 @@ class CalandarHTML extends Component{
 
     //wont allow a non numeric addition, but wil allow for backspacing
     if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
-    // if(isNaN(e.target.value[e.target.value.length-1])) return;
     nextStateDate = e.target.value
     let nextDateFormatChar = dateFormat[targetVal.length]
     let thisDateFormatChar = dateFormat[targetVal.length-1]
     let oneBehindDateFormatChar = dateFormat[targetVal.length-2]
 
   console.log('thisDateFormatChar',thisDateFormatChar);
-
-   if(stateDate.length<targetVal.length && nextDateFormatChar!= 'y' && nextDateFormatChar !='m' &&nextDateFormatChar != 'd' && nextDateFormatChar!= undefined) nextStateDate = nextStateDate + nextDateFormatChar
-   if(thisDateFormatChar!='y'&& thisDateFormatChar!='m' && thisDateFormatChar!='d' && targetVal[targetVal.length-1]!==thisDateFormatChar) nextStateDate = stateDate + thisDateFormatChar + targetVal[targetVal.length-1]
+  
+  //  if(stateDate.length<targetVal.length && nextDateFormatChar!= 'y' && nextDateFormatChar !='m' &&nextDateFormatChar != 'd' && nextDateFormatChar!= undefined) nextStateDate = nextStateDate + nextDateFormatChar
+   if( thisDateFormatChar!='y'&& thisDateFormatChar!='m' && thisDateFormatChar!='d' && targetVal[targetVal.length-1]!==thisDateFormatChar ) nextStateDate = stateDate + thisDateFormatChar + targetVal[targetVal.length-1]
    console.log('---------------');
    this.setState({stateDate: nextStateDate})
   }

@@ -1,5 +1,5 @@
 :root{
-  --greekGod: hsl(216, 80%, 55%);
+  --defaultTheme: hsl(216, 80%, 55%);
 }
 
 
@@ -18,11 +18,12 @@
     position: relative;
     left: -4px;
     top: 3px;
+    color: var(--defaultTheme);
   }
   
   .datepicker button.icon:focus {
     outline: none;
-    border-color: var(--greekGod);
+    border-color: var(--defaultTheme);
   }
   
   .datepicker span.arrow {
@@ -43,7 +44,7 @@
     width: 45%;
     clear: both;
     display: none;
-    border: 3px solid var(--greekGod);
+    border: 3px solid var(--defaultTheme);
     margin-top: 1em;
     border-radius: 5px;
     padding: 0;
@@ -52,7 +53,7 @@
   
   .datepicker .header {
     cursor: default;
-    background-color: var(--greekGod);
+    background-color: var(--defaultTheme);
     padding: 7px;
     font-weight: bold;
     text-transform: uppercase;
@@ -210,6 +211,6 @@
     padding-top: 0.25em;
     padding-left: 1em;
     height: 1.75em;
-    background: var(--greekGod);
+    background: var(--defaultTheme);
     color: white;
   }

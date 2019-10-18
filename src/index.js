@@ -20,7 +20,7 @@ class ReactColorSquare extends Component{
     const dateButtonClasses = this.props.dateButtonClasses || null
     const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
 
-    if(themeColor) document.documentElement.style.setProperty("--greekGod", themeColor);
+    if(themeColor) document.documentElement.style.setProperty("--defaultTheme", themeColor);
  
     var datePickers = document.querySelectorAll('.datepicker');
   
