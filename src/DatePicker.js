@@ -592,16 +592,16 @@ DatePicker.prototype.getDateInput = function () {
 
 
   ////HERE !!!!!! !! ! ! ! 
-  let divider;
-  if(this.dateInput && this.dateInput.getDate().indexOf(',')!== -1) divider=','
-  else if(this.dateInput && this.dateInput.getDate().indexOf('/')!== -1) divider='/'
-  else if(this.dateInput && this.dateInput.getDate().indexOf(' ')!== -1) divider= ' '
+  // let divider;
+  // if(this.dateInput && this.dateInput.getDate().indexOf(',')!== -1) divider=','
+  // else if(this.dateInput && this.dateInput.getDate().indexOf('/')!== -1) divider='/'
+  // else if(this.dateInput && this.dateInput.getDate().indexOf(' ')!== -1) divider= ' '
 
   
-  console.log('divider (parts)', divider);
-  var parts = this.dateInput.getDate().split(divider);
-  var formatParts = this.dateFormat.split(divider);
-  var originalParts = this.dateInput.getDate().split('/')
+  // console.log('divider (parts)', divider);
+  var parts = this.dateInput.getDate().split(/[\s,/]+/);
+  var formatParts = this.dateFormat.split(/[\s,/]+/);
+  var originalParts = this.dateInput.getDate().split(/[\s,/]+/);
 
   if ((parts.length === 3) &&
       Number.isInteger(parseInt(parts[0])) &&

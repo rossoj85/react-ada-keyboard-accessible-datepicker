@@ -24,9 +24,7 @@ class ReactColorSquare extends Component{
  
     var datePickers = document.querySelectorAll('.datepicker');
   
-    // const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
-    // const minDate = this.props.minDate;
-    // const maxDate = this.props.maxDate;
+   
     console.log('DATE BUTTON CLASSES ', dateButtonClasses);
     datePickers.forEach(function (dp) {
       var inputNode   = dp.querySelector('input');

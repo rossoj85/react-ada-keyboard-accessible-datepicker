@@ -5,6 +5,8 @@
 *   File:   calendar-button.js
 */
 
+
+//for commit 
 import DatePicker from './DatePicker';
 
 console.log('hello from Calendar');
@@ -101,14 +103,23 @@ CalendarButtonInput.prototype.getDate = function () {
 };
 
 CalendarButtonInput.prototype.getDateLabel = function () {
+  console.log('getDateLabel called');
   var label = '';
-  let divider;
+ 
 
-  if(this.inputNode.value.indexOf(',')) divider=','
-  else if(this.inputNode.value.indexOf('/')) divider='/'
-
-  var parts = this.inputNode.value.split(divider);
-  var formatParts = this.dateFormat.split(divider)
+  // console.log('inputNode Value', this.inputNode.value);
+  // // if(this.inputNode.value.indexOf(',')!== -1) {
+  // //   divider=','
+  // //   console.log('divider - ', divider);
+  // // }
+  // // else if(this.inputNode.value.indexOf('/')!== -1) {
+  // //   divider='/'
+  // //   console.log('divider - ', divider);
+  // // }
+  // // else console.log('COULDNT FIND ANY DIVIDER')
+// split on all commas spaces and forward slashes
+  var parts = this.inputNode.value.split(/[\s,/]+/)
+  var formatParts = this.dateFormat.split(/[\s,/]+/)
 
   console.log('parts', parts);
   console.log('date format parts', formatParts);
@@ -134,8 +145,10 @@ CalendarButtonInput.prototype.getDateLabel = function () {
 };
 
 CalendarButtonInput.prototype.handleFocus = function () {
+  console.log('-------------------------------------------------------------------');
+  console.log('CalendarButtonInput handle focus (selected date is...) called');
   var dateLabel = this.getDateLabel();
-
+console.log('dateLabel', dateLabel);
   if (dateLabel) {
     this.setLabel('selected date is ' + dateLabel);
   }

@@ -19,7 +19,7 @@ class CalandarHTML extends Component{
     }
     else{this.setState({dateFormat: "mm/dd/yyyy"})}
   }
- 
+
   autoFormatDateBox(e){
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value
@@ -30,6 +30,7 @@ class CalandarHTML extends Component{
     console.log('stateDate', stateDate);
     console.log('targetVal', targetVal);
 
+    //tests to see if number 
     const re = /^[0-9]*$/
     console.log('rE Test', re.test(e.target.value));
 
@@ -51,23 +52,29 @@ class CalandarHTML extends Component{
   render(){
 
     const dateFormat = this.state.dateFormat;
+    const autoFormatInput = this.props.autoFormatInput || true
+    const {themeColor, minDate, maxDate, inputBoxLabel, inputBoxClassNames, inputBoxOnChange, buttonInlineStyle, buttonClassNames, inputBoxLabelContent, dateButtonClasses,tableClasses} = this.props;
 
-    // const {themeColor, minDate, maxDate, customInputBox, inputBoxLabel, inputBoxClassNames, 
-    //   buttonInlineStyle, inputBoxLabelContent, inputBoxOnChange, dateButtonClasses, tableClasses} = config || null
-    const themeColor = this.props.themeColor;
-    const minDate = this.props.minDate;
-    const maxDate = this.props.maxDate;
-    const customInputBox = this.props.customInputBox;
-    const inputBoxLabel = this.props.inputBoxLabel;
-    const inputBoxClassNames = this.props.inputBoxClassNames;
-    const inputBoxOnChange = this.props.inputBoxOnChange;
+    console.log('MIN NAD MAX DATES', minDate, maxDate);
+    let customInputBox;
+    let extendedCustomInputBox;
 
-    const buttonInlineStyle = this.props.buttonInlineStyle;
-    const inputBoxLabelContent = this.props.inputBoxLabelContent;
-    const dateButtonClasses = this.props.dateButtonClasses;
-    const tableClasses = this.props.tableClasses;
-    
-  
+
+    if(this.props.customInputBox && autoFormatInput!==false){
+       extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
+        onChange: this.autoFormatDateBox,
+        value: this.state.stateDate,
+        maxLength: dateFormat.length,
+        placeholder: dateFormat
+      })
+      customInputBox = extendedCustomInputBox
+    }
+    else customInputBox = this.props.customInputBox
+
+   
+    console.log('new Custom Input box',extendedCustomInputBox);
+    console.log('CUSTOM INPUT BOX', customInputBox);
+    console.log('State date format', this.state.dateFormat,'Props date ofrmat', this.props.dateFormat);
 
     
     return(
@@ -94,7 +101,7 @@ class CalandarHTML extends Component{
             maxLength={dateFormat.length}
                />
      }
-       <button className="icon" aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
+       <button className={`icon ${buttonClassNames? buttonClassNames: "buttonDefault"}`} aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
        </button>
        </span>
@@ -423,3 +430,22 @@ class CalandarHTML extends Component{
   }
 }
 export default CalandarHTML;
+
+
+
+//**************OLD CLASSES***************************************************
+
+// const themeColor = this.props.themeColor;
+    // const minDate = this.props.minDate;
+    // const maxDate = this.props.maxDate;
+    // let customInputBox;
+    // let extendedCustomInputBox;
+    // const inputBoxLabel = this.props.inputBoxLabel;
+    // const inputBoxClassNames = this.props.inputBoxClassNames;
+    // const inputBoxOnChange = this.props.inputBoxOnChange;
+
+    // const buttonInlineStyle = this.props.buttonInlineStyle;
+    // const buttonClassNames = this.props.buttonClassNames
+    // const inputBoxLabelContent = this.props.inputBoxLabelContent;
+    // const dateButtonClasses = this.props.dateButtonClasses;
+    // const tableClasses = this.props.tableClasses;

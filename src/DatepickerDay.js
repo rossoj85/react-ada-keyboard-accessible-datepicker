@@ -79,24 +79,40 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     // if(this.isNodeDateGreaterThanSelectedDay(thisDayNodeDate,dateToday)){
     //   this.domNode.classList.add('disabled')
     // }
+    
 
-
-    if(maxDate){
-     const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
-     const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate);
+    if(maxDate && minDate){
+      console.log('INSIDE MAX AND MIN');
+      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
+      const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate); // failing here 
 
       if(pastMaxDate) this.disableDayNode('isGreaterThanMaxDate',this.domNode)
-      if(!pastMaxDate && !beforeMinDate) this.removeDisabled(this.domNode)
-
-    } 
-
-   if(minDate){
-     const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate, minDate)
+      if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode)
+      if(!beforeMinDate && !pastMaxDate) this.removeDisabled(this.domNode)
+    }
+    else if(maxDate){
+     console.log('INSIDE MAX ONLY');
      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
+    //  const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate); // failing here 
+    
+      if(pastMaxDate) this.disableDayNode('isGreaterThanMaxDate',this.domNode)
+      if(!pastMaxDate) this.removeDisabled(this.domNode)
+    }
+    else if (minDate){
+      console.log('INSIDE MIN ONLY');
+      const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate, minDate);
 
-     if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode)
-     if(!beforeMinDate && !pastMaxDate) this.removeDisabled(this.domNode)
-   }
+      if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode);
+      if(!beforeMinDate) this.removeDisabled(this.domNode)
+    }
+
+  //  if(minDate){
+  //    const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate, minDate)
+  //    const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate); // failing here 
+
+  //    if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode)
+  //    if(!beforeMinDate && !pastMaxDate) this.removeDisabled(this.domNode)
+  //  }
 
   };
   DatePickerDay.prototype.disableDayNode =function(reason, node){
