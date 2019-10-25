@@ -14,6 +14,7 @@ console.log('Datepicker---->', DatePicker);
 
 //CHANGED
 // var DatePicker = DatePicker || {};
+//HELLOoooooo
 
 var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat) {
   this.inputNode    = inputNode;
@@ -105,19 +106,6 @@ CalendarButtonInput.prototype.getDate = function () {
 CalendarButtonInput.prototype.getDateLabel = function () {
   console.log('getDateLabel called');
   var label = '';
- 
-
-  // console.log('inputNode Value', this.inputNode.value);
-  // // if(this.inputNode.value.indexOf(',')!== -1) {
-  // //   divider=','
-  // //   console.log('divider - ', divider);
-  // // }
-  // // else if(this.inputNode.value.indexOf('/')!== -1) {
-  // //   divider='/'
-  // //   console.log('divider - ', divider);
-  // // }
-  // // else console.log('COULDNT FIND ANY DIVIDER')
-// split on all commas spaces and forward slashes
   var parts = this.inputNode.value.split(/[\s,/]+/)
   var formatParts = this.dateFormat.split(/[\s,/]+/)
 
@@ -128,16 +116,11 @@ CalendarButtonInput.prototype.getDateLabel = function () {
       Number.isInteger(parseInt(parts[0])) &&
       Number.isInteger(parseInt(parts[1])) &&
       Number.isInteger(parseInt(parts[2]))) {
-    // var month = parseInt(parts[0]) - 1;
-    // var day = parseInt(parts[1]);
-    // var year = parseInt(parts[2]);
 
     var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
     var day = parseInt(parts[formatParts.indexOf('dd')]);
     var year = parseInt(parts[formatParts.indexOf('yyyy')]);
     
-    
-
     label = this.datepicker.getDateForButtonLabel(year, month, day);
   }
 
@@ -158,21 +141,5 @@ console.log('dateLabel', dateLabel);
 };
 CalendarButtonInput.prototype.findDivider = function(){}
 
-// Initialize menu button date picker
-
-// window.addEventListener('load' , function () {
-
-//   var datePickers = document.querySelectorAll('.datepicker');
-
-//   datePickers.forEach(function (dp) {
-//     var inputNode   = dp.querySelector('input');
-//     var buttonNode  = dp.querySelector('button');
-//     var dialogNode  = dp.querySelector('[role=dialog]');
-
-//     var datePicker = new DatePicker(inputNode, buttonNode, dialogNode);
-//     datePicker.init();
-//   });
-
-// });
 
 export default CalendarButtonInput;

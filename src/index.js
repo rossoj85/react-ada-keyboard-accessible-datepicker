@@ -11,6 +11,7 @@ class ReactColorSquare extends Component{
   }
   componentDidMount(){
     console.log(' ada-calander mounting....props--', this.props)
+    console.log('STILLL CHANGINGGGGGGGGGGGGG ');
     // const config = this.props.config || null;
     // const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config || null;
 

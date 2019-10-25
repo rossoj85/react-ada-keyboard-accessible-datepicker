@@ -82,7 +82,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     
 
     if(maxDate && minDate){
-      console.log('INSIDE MAX AND MIN');
+      // console.log('INSIDE MAX AND MIN');
       const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
       const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate); // failing here 
 
@@ -91,7 +91,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
       if(!beforeMinDate && !pastMaxDate) this.removeDisabled(this.domNode)
     }
     else if(maxDate){
-     console.log('INSIDE MAX ONLY');
+    //  console.log('INSIDE MAX ONLY');
      const  pastMaxDate = this.isNodeDateGreaterThanMaxDate(thisDayNodeDate,maxDate);
     //  const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate,minDate); // failing here 
     
@@ -99,7 +99,7 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
       if(!pastMaxDate) this.removeDisabled(this.domNode)
     }
     else if (minDate){
-      console.log('INSIDE MIN ONLY');
+      // console.log('INSIDE MIN ONLY');
       const beforeMinDate = this.isNodeDateLessThanMinDate(thisDayNodeDate, minDate);
 
       if(beforeMinDate) this.disableDayNode('isbeforeMinDate',this.domNode);

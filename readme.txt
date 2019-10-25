@@ -8,13 +8,14 @@ THings to add
 6. fix aria lable for button 
 7. Language 
 8. X - max and/ or min date 
-9. autoformat function. 
-
+9. X - autoformat function. 
+10. Min date and max date autofocus ()
+11. Date button classes prevent overwrite (get rid of datepicker)
 
 /// custom date formatting intefering with focus day 
 // min/ max date are efecting diplay message on bottom
 
-
+/
 
 
 DOCS 
@@ -25,3 +26,18 @@ CONFIG {
 
 * button inline style will overide --themeColor 
 *input box label is true or false 
+
+
+
+
+
+
+old props 
+  // const buttonInlineStyle = props.buttonInlineStyle
+  // const customInputBox = props.customInputBox
+  // const inputBoxLabel = props.inputBoxLabel
+  // const inputBoxLabelContent = props.inputBoxLabelContent;
+  // const inputBoxOnChange = props.inputBoxOnChang
+
+
+///date formatting not workign with 

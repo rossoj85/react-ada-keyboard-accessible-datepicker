@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
+import { format } from 'util';
 
 
 class CalandarHTML extends Component{
@@ -9,6 +10,9 @@ class CalandarHTML extends Component{
     this.state ={
       dateFormat: null,
       stateDate: "",
+      dd: null,
+      mm: null,
+      yyyy:null
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
   }
@@ -20,22 +24,55 @@ class CalandarHTML extends Component{
     else{this.setState({dateFormat: "mm/dd/yyyy"})}
   }
 
+  setMonthDateAndYearFieldsToState(dateFormat, nextStateDate){
+    let formatFields = dateFormat.split(/[\s,/]+/);
+    let inputValues = nextStateDate.split(/[\s,/]+/);
+
+    let month = inputValues[formatFields.indexOf('mm')]
+    let year = inputValues[formatFields.indexOf('yyyy')]
+    let day = inputValues[formatFields.indexOf('dd')]
+    
+    console.log('month', month);
+    console.log('year', year);
+    console.log('day', day);
+
+
+
+    // console.log('formatFields', formatFields);
+    // console.log('inpitParts', inputValues);
+    // for(var i =0; i<inputValues.length; i++){
+    //   //check to see if an input value exists at index[i] of format field, if it does and has proper length, set it to state
+    //   let formatField = formatFields[i]
+    //   console.log('input values  - ', inputValues, 'format fields - ', formatFields, 'i', i);
+    //   if(inputValues[i].length===formatFields[i].length){
+    //     console.log('@@@#@#@#@# WE GOT A FUCKING MATCH #@#@##@#@@#');
+        
+    //     let value = inputValues[i]
+    //     this.setState({
+    //       [formatField]: value
+    //     });
+    //   }else this.setState({[formatField]: ""})
+    // }
+  }
+
   autoFormatDateBox(e){
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value
     let dateFormat = this.state.dateFormat;
     let nextStateDate;
     e.preventDefault();
-    
+
     console.log('stateDate', stateDate);
     console.log('targetVal', targetVal);
 
     //tests to see if number 
     const re = /^[0-9]*$/
-    console.log('rE Test', re.test(e.target.value));
+    // console.log('rE Test', re.test(e.target.value));
 
-    //wont allow a non numeric addition, but wil allow for backspacing
+    //wont allow a non-numeric addition, but wil allow for backspacing
     if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
+
+
     nextStateDate = e.target.value
     let nextDateFormatChar = dateFormat[targetVal.length]
     let thisDateFormatChar = dateFormat[targetVal.length-1]
@@ -47,6 +84,7 @@ class CalandarHTML extends Component{
    if( thisDateFormatChar!='y'&& thisDateFormatChar!='m' && thisDateFormatChar!='d' && targetVal[targetVal.length-1]!==thisDateFormatChar ) nextStateDate = stateDate + thisDateFormatChar + targetVal[targetVal.length-1]
    console.log('---------------');
    this.setState({stateDate: nextStateDate})
+   this.setMonthDateAndYearFieldsToState(dateFormat, nextStateDate)
   }
 
   render(){
@@ -83,7 +121,7 @@ class CalandarHTML extends Component{
         
        <div className="date">
        {inputBoxLabel!== false ? 
-         <label htmlFor="id-textbox-1">{inputBoxLabelContent|| "Date "}</label>
+         <label htmlFor="id-textbox-1">{inputBoxLabel|| "Date"}</label>
          :
          null
      }
@@ -108,7 +146,7 @@ class CalandarHTML extends Component{
      </div>  
        
 
- {/* this is the calendar component */}
+ {/* Calendar grid starts here */}
  <div id="id-datepicker-1"
       className="datepickerDialog"
       role="dialog"
