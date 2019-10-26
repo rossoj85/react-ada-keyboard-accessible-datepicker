@@ -8,6 +8,7 @@
 
 //for commit 
 import DatePicker from './DatePicker';
+import {splitByDelineator} from './Utilities'
 
 console.log('hello from Calendar');
 console.log('Datepicker---->', DatePicker);
@@ -88,7 +89,7 @@ CalendarButtonInput.prototype.setFocus = function () {
 };
 
 CalendarButtonInput.prototype.setDate = function (day) {
-  console.log('inside set date ');
+  console.log('---->>> setDate called', day);
   let dateFormatString = this.dateFormat;
   console.log('DATE FORMAT STRING', dateFormatString)
   let newDateString = dateFormatString.replace("yyyy",day.getFullYear())
@@ -104,13 +105,19 @@ CalendarButtonInput.prototype.getDate = function () {
 };
 
 CalendarButtonInput.prototype.getDateLabel = function () {
-  console.log('getDateLabel called');
-  var label = '';
-  var parts = this.inputNode.value.split(/[\s,/]+/)
-  var formatParts = this.dateFormat.split(/[\s,/]+/)
+  // provides the date for the "the selected date is ${dateLabel}" dialogue for  the calendar button's label
+  console.log(' ---->>>getDateLabel called');
+  console.log('---->>>getDateLabel input node value', this.inputNode.value);
+  console.log('---->>>getDateLabel input node dateFormat', this.inputNode.value);
+  console.log('---->>>getDateLabel splitByDelineator', splitByDelineator);
 
-  console.log('parts', parts);
-  console.log('date format parts', formatParts);
+
+  var label = '';
+  var parts = splitByDelineator(this.inputNode.value)
+  var formatParts = splitByDelineator(this.dateFormat)
+
+  console.log('getD parts', parts);
+  console.log('getD format parts', formatParts);
 
   if ((parts.length === 3) &&
       Number.isInteger(parseInt(parts[0])) &&
@@ -123,7 +130,7 @@ CalendarButtonInput.prototype.getDateLabel = function () {
     
     label = this.datepicker.getDateForButtonLabel(year, month, day);
   }
-
+  // console.log('the label inside getDateLabel----->>', label )
   return label;
 };
 

@@ -125,26 +125,28 @@ var DatePickerDay = function (domNode, datepicker, index, row, column) {
     node.disabled=false;
   }
 
-  DatePickerDay.prototype.isNodeDateGreaterThanMaxDate = function(nodeDate, selectedDate){
-    const selectedDateArray = selectedDate.split('-')
+  DatePickerDay.prototype.isNodeDateGreaterThanMaxDate = function(nodeDate, maxDate){
+    // console.log('isNodeDateFreater than max date called');
+    const maxDateArray = maxDate.split('-')
     const nodeDateArray = nodeDate.split('-')
     let result = false;
   
     for(let i = 0; i<3; i++){
-      // console.log(`${nodeDateArray[i]}>${selectedDateArray[i]}`);
-     if (parseInt(nodeDateArray[i])>parseInt(selectedDateArray[i])) return true;
-     if (parseInt(nodeDateArray[i])<parseInt(selectedDateArray[i])) return false;
+      // console.log(`${nodeDateArray[i]}>${maxDateArray[i]}`);
+     if (parseInt(nodeDateArray[i])>parseInt(maxDateArray[i])) return true;
+     if (parseInt(nodeDateArray[i])<parseInt(maxDateArray[i])) return false;
     }
     return false;
   }
-  DatePickerDay.prototype.isNodeDateLessThanMinDate = function(nodeDate, selectedDate){
-    const selectedDateArray = selectedDate.split('-')
+  DatePickerDay.prototype.isNodeDateLessThanMinDate = function(nodeDate, minDate){
+    // console.log('is less than minDate called . . .');
+    const minDateArray = minDate.split('-')
     const nodeDateArray = nodeDate.split('-')
   
     for(let i = 0; i<3; i++){
-      // console.log(`${nodeDateArray[i]}<${selectedDateArray[i]}`);
-     if (parseInt(nodeDateArray[i])>parseInt(selectedDateArray[i])) return false;
-     if (parseInt(nodeDateArray[i])<parseInt(selectedDateArray[i])) return true;
+      // console.log(`${nodeDateArray[i]}<${minDateArray[i]}`);
+     if (parseInt(nodeDateArray[i])>parseInt(minDateArray[i])) return false;
+     if (parseInt(nodeDateArray[i])<parseInt(minDateArray[i])) return true;
     }
     return false;
   }
