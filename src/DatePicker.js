@@ -6,6 +6,7 @@
 */
 import CalendarButtonInput from './CalendarButtonInput'
 import DatePickerDay from './DatepickerDay';
+import { convertJSDayToDataDate, isLessThanMinDate, isGreaterThanMaxDate, dataDateFormat } from './Utilities';
 
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
@@ -163,19 +164,19 @@ DatePicker.prototype.showLastRow = function () {
 };
 
 DatePicker.prototype.setFocusDay = function (flag) {
-
+  console.log('Datepicker setFocusday called .. . ');
   if (typeof flag !== 'boolean') {
     flag = true;
   }
   
   var fd = this.focusDay;
-  console.log('datepicker setFocusday called');
   console.log('FD (focus day)', fd);
 
   
 
   function checkDay (d) {
-    console.log('checkday called...');
+    console.log('checkday called ---- D=', d);
+
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&
         (d.day.getMonth() == fd.getMonth()) &&
@@ -191,6 +192,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
 };
 
 DatePicker.prototype.updateDay = function (day) {
+  //called when gird opens or changes
   console.log('ANOTHER updateDay called ');
   var d = this.focusDay;
   this.focusDay = day;
@@ -531,7 +533,35 @@ DatePicker.prototype.moveToPreviousMonth = function () {
 };
 
 DatePicker.prototype.moveFocusToDay = function (day) {
+  //day is the date that the focus is about to move to 
+  console.log('moveFocusToDay called .. . .');
+
   var d = this.focusDay;
+  var dayDataDate = convertJSDayToDataDate(day);
+  // var y = day.getFullYear();
+  // var m = day.getMonth()
+  // var dd = day.getDate();
+  // console.log('moveFocusToDay var d',d);
+  // console.log('------------------------------------------------');
+  // console.log('moveFocusToDay day', day);
+  // console.log('moveFocusToDay  day.getMonth', day.getMonth());
+  // console.log('moveFocusToDay day.getDay()', dd);
+  // console.log('get Date', day.getDate());
+  // console.log('--------------------------------------------------');
+
+  // dayDataDate = `${y}-${m}-${dd}`
+  console.log('--->>> moveFocusDay datDataDate', dayDataDate);
+
+  if(this.minDate && isLessThanMinDate(dayDataDate,this.minDate, dataDateFormat)) {
+    console.log('moveFocusToDay --->>> move focus cancelled on account fo minDate');
+    return;
+}
+  if(this.maxDate && isGreaterThanMaxDate(dayDataDate, this.maxDate, dataDateFormat)){
+    console.log('moveFocusToDay --->>> move focus cancelled on account of maxDate');
+    return;
+  }
+  console.log('moveFocusToDay --->>> NO MIN OR MAX DATE DISABLING');
+
 
   this.focusDay = day;
 
@@ -543,6 +573,7 @@ DatePicker.prototype.moveFocusToDay = function (day) {
 };
 
 DatePicker.prototype.moveFocusToNextDay = function () {
+  console.log('moveFocusToNextDat called ....');
   var d = new Date(this.focusDay);
   d.setDate(d.getDate() + 1);
   this.moveFocusToDay(d);
@@ -555,13 +586,21 @@ DatePicker.prototype.moveFocusToNextWeek = function () {
 };
 
 DatePicker.prototype.moveFocusToPreviousDay = function () {
+  console.log('moveFocusToPrev day called .. . .');
   var d = new Date(this.focusDay);
   d.setDate(d.getDate() - 1);
   this.moveFocusToDay(d);
 };
 
 DatePicker.prototype.moveFocusToPreviousWeek = function () {
+  console.log('moveFocusToPrevious Week Called');
+
   var d = new Date(this.focusDay);
+  // console.log('moveFocusToPrevWeek var d  (current focus date) ', d);
+
+  // var nextDate = d.setDate(d.getDate() - 7);
+  // console.log(' moveFocusToPrevWeek next date', d.getDate()-7);
+  // console.log('moveFocusToPrevWeek nextDate', nextDate);
   d.setDate(d.getDate() - 7);
   this.moveFocusToDay(d);
 };

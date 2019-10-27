@@ -1,8 +1,12 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons';
 
 
-const Grid = () =>{
-
+const Grid = (props) =>{
+    const tableClasses = props.tableClasses;
+    const dateButtonClasses = props.dateButtonClasses;
+    console.log('table classes -- >', tableClasses);
     return(
         <div id="id-datepicker-1"
         className="datepickerDialog"
@@ -320,5 +324,7 @@ const Grid = () =>{
        Test
      </div>
    </div>
-    )
-}
+    );
+};
+
+export default Grid;

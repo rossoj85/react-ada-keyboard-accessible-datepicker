@@ -46,6 +46,25 @@ export const convertFormatedDateToDataDate = (formattedDate, dateFormat)=>{
 
      return dateFieldMap? `${dateFieldMap.yyyy}-${dateFieldMap.mm}-${dateFieldMap.dd}`: null;
 };
+export const convertJSDayToDataDate = (day) =>{
+    let dataDate;
+    let yyyy = day.getFullYear();
+
+    let mm = day.getMonth() +1
+    if (mm<=9) {
+        mm = '0' + mm;
+    }
+
+    let dd = day.getDate();
+    if (dd<=9) {
+        dd = '0' + dd;
+    }
+
+    dataDate= `${yyyy}-${mm}-${dd}`
+    console.log('moveFocus data date inside convert');
+    return dataDate;
+
+}
 
 //compartes the input date with the date format, both as data-dates(yyyy-mm-dd)
 export const isGreaterThanMaxDate = (inputDate, maxDate, dateFormat) =>{
@@ -91,3 +110,4 @@ export const isLessThanMinDate = (inputDate, minDate, dateFormat)=>{
       }
       return false
 }
+

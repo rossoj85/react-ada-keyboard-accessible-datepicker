@@ -1,7 +1,8 @@
 
 import React,{Component,Fragment} from "react";
-import CalendarHTML from './CalendarHTML';
+import CalControls from './CalControls';
 import DatePicker from './DatePicker';
+import Grid from './Grid'
 import styles from './Datepicker.scss'
 
 class ReactColorSquare extends Component{
@@ -12,6 +13,7 @@ class ReactColorSquare extends Component{
   componentDidMount(){
     console.log(' ada-calander mounting....props--', this.props)
     console.log('STILLL CHANGINGGGGGGGGGGGGG ');
+    console.log(Grid);
     // const config = this.props.config || null;
     // const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config || null;
 
@@ -39,15 +41,14 @@ class ReactColorSquare extends Component{
   }
 
   render(){
-    console.log('access calendar Props', this.props)
+    console.log('index  Props', this.props)
     console.log('styles', styles[".datepicker"]);
     console.log('Props', this.props);
-    console.log('THIS INSIDE CLOLR SQUARE', this);
     console.log('MOUNTING CSS',document.documentElement.style);
 
     return(
       <Fragment>
-         <CalendarHTML {...this.props}/>
+         <CalControls {...this.props}/>
       </Fragment>
     )
   }
