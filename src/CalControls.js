@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import { format } from 'util';
 import Grid from './Grid'
-import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate} from './Utilities.js'
+import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue} from './Utilities.js'
 
 
 class CalControls extends Component{
@@ -14,13 +14,25 @@ class CalControls extends Component{
       error: null
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
-    this.dateFormat = this.props.dateFormat
+    this.dateFormat = this.props.dateFormat || "mm/dd/yyyy"
   }
   componentWillMount(){
     console.log('cal controls mounted');
   }
+  componentDidMount(){
+    console.log('COMPonent mounted');
+    // this must be adapted to take in custom boxes
+    let inputBox = document.getElementById("id-textbox-1");
+    console.log('INPUT BOX', inputBox);
+
+    inputBox.addEventListener('DOMinputBoxValueChange', ()=> {
+      this.setState({stateDate: inputBox.value})
+      this.handleInputErrors(this.dateFormat,inputBox.value)
+        })
+  }
   
   handleInputErrors(dateFormat, nextStateDate){
+    console.log('CalCONTROL HANDLE INPUT ERRORS CALLED');
     let formatFields =  splitByDelineator(dateFormat)       
     let inputValues =   splitByDelineator(nextStateDate)                 
 
@@ -34,12 +46,12 @@ class CalControls extends Component{
 
     if(this.props.maxDate && nextStateDate.length === this.dateFormat.length){
       console.log('^^^^^^^^^^^^CALLING IS GREATER THAN MAX DATE ^^^^^^^^^^^^');
-      pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.props.dateFormat)
+      pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat)
 
     }
     if(this.props.minDate && nextStateDate.length === this.dateFormat.length){
       console.log('^^^^^^^^^^^^CALLING IS LESS THAN MIN DATE ^^^^^^^^^^^^');
-      beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.props.dateFormat)
+      beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat)
     }
  
 
@@ -51,6 +63,7 @@ class CalControls extends Component{
   };
 
   autoFormatDateBox(e){
+    console.log('CAL Control onChange AutoFormatDate Box Called');
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value
     let dateFormat = this.dateFormat;
@@ -126,7 +139,7 @@ class CalControls extends Component{
       // }
 
   render(){
-
+    console.log('CAL CONTROL RE-RENDER');
     const dateFormat = this.dateFormat;
     console.log('dateformat', dateFormat);
     console.log('date format length', dateFormat.length);
@@ -137,18 +150,27 @@ class CalControls extends Component{
     // console.log('MIN NAD MAX DATES', minDate, maxDate);
     let customInputBox;
     let extendedCustomInputBox;
+    let DOMinputBox = document.getElementById("id-textbox-1")
 
+    // if(DOMinputBox){
+    // console.log('CAL CONTROL DOMinputBoxValue in render', DOMinputBox.value);
+    // console.log('CAL CONTROL STATEDATE VALUE', this.state.stateDate);
+    // console.log('cal control COMPARE',DOMinputBox.value ==this.state.stateDate);
+    //     if(DOMinputBox.value && DOMinputBox.value !==this.state.stateDate){
+    //       this.setState({stateDate: DOMinputBox.value})
+    //     }
+    // }
 
-    if(this.props.customInputBox && autoFormatInput!==false){
-       extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
-        onChange: this.autoFormatDateBox,
-        value: this.state.stateDate,
-        maxLength: dateFormat.length,
-        placeholder: dateFormat
-      })
-      customInputBox = extendedCustomInputBox
-    }
-    else customInputBox = this.props.customInputBox
+    // if(this.props.customInputBox && autoFormatInput!==false){
+    //    extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
+    //     onChange: this.autoFormatDateBox,
+    //     // value: this.state.stateDate,
+    //     maxLength: dateFormat.length,
+    //     placeholder: dateFormat
+    //   })
+    //   customInputBox = extendedCustomInputBox
+    // }
+    // else customInputBox = this.props.customInputBox
 
   
     

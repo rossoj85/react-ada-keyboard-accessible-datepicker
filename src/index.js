@@ -9,6 +9,10 @@ class ReactColorSquare extends Component{
   
   constructor(props){
     super(props)
+    this.state = {
+      backgroundColor: null,
+      indexStateText: "Inside the index"
+    }
   }
   componentDidMount(){
     console.log(' ada-calander mounting....props--', this.props)
@@ -22,6 +26,7 @@ class ReactColorSquare extends Component{
     const maxDate = this.props.maxDate || null
     const dateButtonClasses = this.props.dateButtonClasses || null
     const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
+    const setState = this.setState;
 
     if(themeColor) document.documentElement.style.setProperty("--defaultTheme", themeColor);
  
@@ -35,7 +40,7 @@ class ReactColorSquare extends Component{
       var dialogNode  = dp.querySelector('[role=dialog]');
 
     console.log('vars-->',inputNode,buttonNode,dialogNode );
-    var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat, minDate,maxDate, dateButtonClasses);
+    var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat, minDate,maxDate, dateButtonClasses,setState);
     datePicker.init();
     })
   }
@@ -45,9 +50,10 @@ class ReactColorSquare extends Component{
     console.log('styles', styles[".datepicker"]);
     console.log('Props', this.props);
     console.log('MOUNTING CSS',document.documentElement.style);
-
+  
     return(
       <Fragment>
+        <div>{this.state.indexStateText}</div>
          <CalControls {...this.props}/>
       </Fragment>
     )

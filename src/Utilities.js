@@ -1,3 +1,6 @@
+export let constValue = "Just a string x"
+
+
 export const errorMessages ={
     invalidMonth: `Invalid Month.  Please enter a value between 1 and 12`,
     invalidDate: `Invalid date. Please enter a value between 1 and 31`

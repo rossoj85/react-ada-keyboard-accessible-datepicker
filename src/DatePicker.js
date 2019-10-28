@@ -11,7 +11,7 @@ import { convertJSDayToDataDate, isLessThanMinDate, isGreaterThanMaxDate, dataDa
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
 
-var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate, dateButtonClasses) {
+var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate, dateButtonClasses, setState) {
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -27,7 +27,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.maxDate = maxDate;
   this.dateButtonClasses = dateButtonClasses;
   console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
-  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat);
+  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat,setState);
 
   this.MonthYearNode = this.dialogNode.querySelector('.monthYear');
 
@@ -538,18 +538,7 @@ DatePicker.prototype.moveFocusToDay = function (day) {
 
   var d = this.focusDay;
   var dayDataDate = convertJSDayToDataDate(day);
-  // var y = day.getFullYear();
-  // var m = day.getMonth()
-  // var dd = day.getDate();
-  // console.log('moveFocusToDay var d',d);
-  // console.log('------------------------------------------------');
-  // console.log('moveFocusToDay day', day);
-  // console.log('moveFocusToDay  day.getMonth', day.getMonth());
-  // console.log('moveFocusToDay day.getDay()', dd);
-  // console.log('get Date', day.getDate());
-  // console.log('--------------------------------------------------');
 
-  // dayDataDate = `${y}-${m}-${dd}`
   console.log('--->>> moveFocusDay datDataDate', dayDataDate);
 
   if(this.minDate && isLessThanMinDate(dayDataDate,this.minDate, dataDateFormat)) {
