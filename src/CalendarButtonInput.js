@@ -17,7 +17,7 @@ console.log('Datepicker---->', DatePicker);
 // var DatePicker = DatePicker || {};
 //HELLOoooooo
 
-var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat, setState) {
+var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat ) {
   this.inputNode    = inputNode;
   this.buttonNode   = buttonNode;
   this.imageNode    = false;
@@ -25,7 +25,6 @@ var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat,
   this.datepicker = datepicker;
   this.dateFormat = dateFormat.toLowerCase();
   this.defaultLabel = 'Choose Date';
-  this.setState = setState
 
   this.keyCode = Object.freeze({
     'ENTER': 13,

@@ -6,12 +6,12 @@
 */
 import CalendarButtonInput from './CalendarButtonInput'
 import DatePickerDay from './DatepickerDay';
-import { convertJSDayToDataDate, isLessThanMinDate, isGreaterThanMaxDate, dataDateFormat } from './Utilities';
+import { convertJSDayToDataDate, isLessThanMinDate, isGreaterThanMaxDate, dataDateFormat, splitDataDateAndCreateNewDate, today } from './Utilities';
 
 // var CalendarButtonInput = CalendarButtonInput || {};
 // var DatePickerDay = DatePickerDay || {};
 
-var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate, dateButtonClasses, setState) {
+var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDate, maxDate, specifiedFocusDate, dateButtonClasses) {
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -22,12 +22,13 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.buttonNode  = buttonNode;
   this.dialogNode  = dialogNode;
   this.messageNode = dialogNode.querySelector('.message');
-  this.dateFormat = dateFormat.toLowerCase()
+  this.dateFormat = dateFormat.toLowerCase();
   this.minDate = minDate;
   this.maxDate = maxDate;
+  this.specifiedFocusDate =specifiedFocusDate;
   this.dateButtonClasses = dateButtonClasses;
   console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
-  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat,setState);
+  this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat );
 
   this.MonthYearNode = this.dialogNode.querySelector('.monthYear');
 
@@ -170,12 +171,13 @@ DatePicker.prototype.setFocusDay = function (flag) {
   }
   
   var fd = this.focusDay;
-  console.log('FD (focus day)', fd);
+  // var fd = new Date ("2019-10-14")
+  console.log('FD (focus day)',       fd);
 
   
 
   function checkDay (d) {
-    console.log('checkday called ---- D=', d);
+    console.log('checkday called ---- D=', d.day);
 
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&
@@ -183,6 +185,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
         (d.day.getFullYear() == fd.getFullYear())) {
       d.domNode.setAttribute('tabindex', '0');
       if (flag) {
+        console.log('');
         d.domNode.focus();
       }
     }
@@ -196,6 +199,8 @@ DatePicker.prototype.updateDay = function (day) {
   console.log('ANOTHER updateDay called ');
   var d = this.focusDay;
   this.focusDay = day;
+  console.log('updateDay focus day', this.focusDay);
+  console.log('updateDay d', d);
   if ((d.getMonth() !== day.getMonth()) ||
       (d.getFullYear() !== day.getFullYear())) {
     this.updateGrid();
@@ -626,18 +631,24 @@ DatePicker.prototype.getDateInput = function () {
   if ((parts.length === 3) &&
       Number.isInteger(parseInt(parts[0])) &&
       Number.isInteger(parseInt(parts[1])) &&
-      Number.isInteger(parseInt(parts[2]))) {
+      Number.isInteger(parseInt(parts[2]))) 
+        {
         
         var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
         var day = parseInt(parts[formatParts.indexOf('dd')]);
         var year = parseInt(parts[formatParts.indexOf('yyyy')]);
 
-    this.focusDay = new Date(year, month, day);
+    this.focusDay = splitDataDateAndCreateNewDate(this.dateInput.getDate(), this.dateFormat);
     this.selectedDay = new Date(this.focusDay);
   }
   else {
-    // If not a valid date (MM/DD/YY) initialize with todays date
-    this.focusDay = new Date();
+    console.log('TODAY AD DATSA DATE', today);
+    if(this.specifiedFocusDate) this.focusDay = splitDataDateAndCreateNewDate(this.specifiedFocusDate, dataDateFormat);
+    else if(this.minDate && isLessThanMinDate(today,this.minDate, dataDateFormat)) this.focusDay = splitDataDateAndCreateNewDate(this.minDate, dataDateFormat);
+    else if(this.maxDate && isGreaterThanMaxDate(today,this.maxDate, dataDateFormat )) this.focusDay = splitDataDateAndCreateNewDate(this.maxDate, dataDateFormat)
+
+    else this.focusDay = new Date();
+
     this.selectedDay = new Date(0,0,1);
   }
 

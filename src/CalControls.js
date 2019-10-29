@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import { format } from 'util';
 import Grid from './Grid'
-import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue} from './Utilities.js'
+import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue, createTodaysDateAsDataDate} from './Utilities.js'
 
 
 class CalControls extends Component{
@@ -18,6 +18,8 @@ class CalControls extends Component{
   }
   componentWillMount(){
     console.log('cal controls mounted');
+    console.log("Today'sdate ->> ", createTodaysDateAsDataDate());
+    console.log('calControls Props -->>>', this.props);
   }
   componentDidMount(){
     console.log('COMPonent mounted');
@@ -26,8 +28,8 @@ class CalControls extends Component{
     console.log('INPUT BOX', inputBox);
 
     inputBox.addEventListener('DOMinputBoxValueChange', ()=> {
-      this.setState({stateDate: inputBox.value})
-      this.handleInputErrors(this.dateFormat,inputBox.value)
+      this.setState({stateDate: inputBox.value});
+      this.handleInputErrors(this.dateFormat,inputBox.value);
         })
   }
   
@@ -46,35 +48,35 @@ class CalControls extends Component{
 
     if(this.props.maxDate && nextStateDate.length === this.dateFormat.length){
       console.log('^^^^^^^^^^^^CALLING IS GREATER THAN MAX DATE ^^^^^^^^^^^^');
-      pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat)
+      pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat);
 
     }
     if(this.props.minDate && nextStateDate.length === this.dateFormat.length){
       console.log('^^^^^^^^^^^^CALLING IS LESS THAN MIN DATE ^^^^^^^^^^^^');
-      beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat)
+      beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
  
 
-    if(month>12 || month ===0 ) this.setState({ error: errorMessages.invalidMonth})
-    else if (day>31|| day === 0) this.setState({error: errorMessages.invalidDate})
-    else if (pastMaxDate) this.setState({error: "THe Date is too big"})
-    else if(beforeMinDate) this.setState({error: "TheDate is too small"})
+    if(month>12 || month ===0 ) this.setState({ error: errorMessages.invalidMonth});
+    else if (day>31|| day === 0) this.setState({error: errorMessages.invalidDate});
+    else if (pastMaxDate) this.setState({error: "THe Date is too lare"});
+    else if(beforeMinDate) this.setState({error: "TheDate is too early"});
     else this.setState({error: null});
   };
 
   autoFormatDateBox(e){
     console.log('CAL Control onChange AutoFormatDate Box Called');
     let stateDate = this.state.stateDate;
-    let targetVal = e.target.value
+    let targetVal = e.target.value;
     let dateFormat = this.dateFormat;
-    let nextStateDate = e.target.value
+    let nextStateDate = e.target.value;
     e.preventDefault();
 
 
     console.log('stateDate', stateDate);
     console.log('targetVal', targetVal);
-    // const re = /^[0-9]*$/
-    // if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
+    const re = /^[0-9]*$/
+    if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
     const isDelineator= (dateFormatChar)=>{
       if( dateFormatChar
         && dateFormatChar 

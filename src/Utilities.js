@@ -1,5 +1,7 @@
 export let constValue = "Just a string x"
 
+// export const today = createTodaysDateAsDataDate();
+
 
 export const errorMessages ={
     invalidMonth: `Invalid Month.  Please enter a value between 1 and 12`,
@@ -7,12 +9,42 @@ export const errorMessages ={
 }
 
 export const dataDateFormat = "yyyy-mm-dd"
+
 //data date and min/max date formats are the same 
 export const splitByDelineator = (date) =>{
    const delineated =  date.split(/[\s,/-]+/)
 
    return delineated
 };
+export const createTodaysDateAsDataDate = ()=>{ 
+    let today = new Date();
+    return convertJSDayToDataDate(today)
+}
+
+export const splitDataDateAndCreateNewDate = (dataDate, dataDateFormat) =>{
+    var parts = splitByDelineator(dataDate);
+    var formatParts =  splitByDelineator(dataDateFormat);
+    console.log('PARTS INSIDE SPLIT', parts);
+    console.log('FORMAT PARTS INSIDE SPLIT', formatParts);
+    if ((parts.length === 3) &&
+      Number.isInteger(parseInt(parts[0])) &&
+      Number.isInteger(parseInt(parts[1])) &&
+      Number.isInteger(parseInt(parts[2])) ) 
+      {
+        var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
+        var day = parseInt(parts[formatParts.indexOf('dd')]);
+        var year = parseInt(parts[formatParts.indexOf('yyyy')]);
+        
+        console.log('splitDataDate', year, month, day);
+        return new Date(year, month, day)
+  }
+  else {
+      console.log(" splitData Date please check dateInput String ")
+      return "Please CHeck Date INput String"
+  }
+}
+
+
 
 export const createDateFieldMapObj = (formattedDate, dateFormat) =>{
     //max and min date ar not in data date format
@@ -68,7 +100,7 @@ export const convertJSDayToDataDate = (day) =>{
     return dataDate;
 
 }
-
+export const today = createTodaysDateAsDataDate();
 //compartes the input date with the date format, both as data-dates(yyyy-mm-dd)
 export const isGreaterThanMaxDate = (inputDate, maxDate, dateFormat) =>{
     console.log('called isGreaterTHan .. . ');
