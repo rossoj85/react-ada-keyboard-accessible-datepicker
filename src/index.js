@@ -1,25 +1,36 @@
 
 import React,{Component,Fragment} from "react";
-import CalendarHTML from './CalendarHTML';
+import CalControls from './CalControls';
 import DatePicker from './DatePicker';
+import Grid from './Grid'
 import styles from './Datepicker.scss'
+import {createTodaysDateAsDataDate} from './Utilities'
 
 class ReactColorSquare extends Component{
   
   constructor(props){
     super(props)
-  }
-  componentDidMount(){
-    console.log(' ada-calander mounting....props--', this.props)
-    console.log('STILLL CHANGINGGGGGGGGGGGGG ');
-    // const config = this.props.config || null;
-    // const { themeColor, minDate, maxDate, dateButtonClasses } = this.props.config || null;
+    this.state = {
+      backgroundColor: null,
+    }
+    this.minDate = this.props.minDate || null;
+      if(this.minDate && this.minDate.toLowerCase()==="today") this.minDate = createTodaysDateAsDataDate();
+    this.maxDate = this.props.maxDate || null;
+      if(this.maxDate && this.maxDate.toLowerCase()==="today") this.maxDate = createTodaysDateAsDataDate();
 
-    const themeColor = this.props.themeColor || null
-    const minDate = this.props.minDate || null
-    const maxDate = this.props.maxDate || null
-    const dateButtonClasses = this.props.dateButtonClasses || null
-    const dateFormat = this.props.dateFormat || "mm/dd/yyyy"
+  }
+
+
+  componentDidMount(){
+    // console.log('STILLL CHANGINGGGGGGGGGGGGG ');
+
+    const themeColor = this.props.themeColor || null;
+    const minDate = this.minDate
+    const maxDate = this.maxDate
+    const dateButtonClasses = this.props.dateButtonClasses || null;
+    const dateFormat = this.props.dateFormat || "mm/dd/yyyy";
+    const focusDate = this.props.focusDate;
+    const specifiedFocusDate = this.props.specifiedFocusDate;
 
     if(themeColor) document.documentElement.style.setProperty("--defaultTheme", themeColor);
  
@@ -32,22 +43,23 @@ class ReactColorSquare extends Component{
       var buttonNode  = dp.querySelector('button');
       var dialogNode  = dp.querySelector('[role=dialog]');
 
-    console.log('vars-->',inputNode,buttonNode,dialogNode );
-    var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat, minDate,maxDate, dateButtonClasses);
+    console.log('vars-->',inputNode,buttonNode,dialogNode, minDate, maxDate );
+    var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat, minDate, maxDate, specifiedFocusDate, dateButtonClasses );
     datePicker.init();
     })
   }
 
   render(){
-    console.log('access calendar Props', this.props)
+    console.log('index  Props', this.props);
     console.log('styles', styles[".datepicker"]);
-    console.log('Props', this.props);
-    console.log('THIS INSIDE CLOLR SQUARE', this);
     console.log('MOUNTING CSS',document.documentElement.style);
-
+  
     return(
       <Fragment>
-         <CalendarHTML {...this.props}/>
+         <CalControls {...this.props} 
+         minDate={this.minDate}
+         maxDate={this.maxDate}
+         />
       </Fragment>
     )
   }

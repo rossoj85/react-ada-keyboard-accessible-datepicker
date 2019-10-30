@@ -8,7 +8,7 @@
 
 //for commit 
 import DatePicker from './DatePicker';
-import {splitByDelineator} from './Utilities'
+import {splitByDelineator, constValue} from './Utilities'
 
 console.log('hello from Calendar');
 console.log('Datepicker---->', DatePicker);
@@ -17,7 +17,7 @@ console.log('Datepicker---->', DatePicker);
 // var DatePicker = DatePicker || {};
 //HELLOoooooo
 
-var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat) {
+var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat ) {
   this.inputNode    = inputNode;
   this.buttonNode   = buttonNode;
   this.imageNode    = false;
@@ -32,7 +32,7 @@ var CalendarButtonInput = function(inputNode, buttonNode, datepicker,dateFormat)
   });
 };
 
-console.log(CalendarButtonInput.prototype);
+
 
 CalendarButtonInput.prototype.init = function () {
   this.buttonNode.addEventListener('click', this.handleClick.bind(this));
@@ -89,6 +89,7 @@ CalendarButtonInput.prototype.setFocus = function () {
 };
 
 CalendarButtonInput.prototype.setDate = function (day) {
+  console.log('setDate SET STATE', this.setState);
   console.log('---->>> setDate called', day);
   let dateFormatString = this.dateFormat;
   console.log('DATE FORMAT STRING', dateFormatString)
@@ -97,6 +98,13 @@ CalendarButtonInput.prototype.setDate = function (day) {
                                       .replace("dd",day.getDate())
   // this.inputNode.value = (day.getMonth() + 1) + '/' + day.getDate() + '/' + day.getFullYear();
   this.inputNode.value = newDateString
+  var DOMinputBoxValueChange = new CustomEvent('DOMinputBoxValueChange')
+
+  this.inputNode.dispatchEvent(DOMinputBoxValueChange)
+  console.log('INPUT NODE', this.inputNode);
+  // console.log('CONST VALUE', constValue);
+  // // constValue= "Hellooooo"
+  // this.setState({indexStateText: "YEAAAA"})
   console.log('after set value', this.inputNode.value);
 };
 
