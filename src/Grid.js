@@ -6,7 +6,7 @@ import { faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '
 const Grid = (props) =>{
     const tableClasses = props.tableClasses;
     const dateButtonClasses = props.dateButtonClasses;
-    console.log('table classes -- >', tableClasses);
+    
     return(
         <div id="id-datepicker-1"
         className="datepickerDialog"

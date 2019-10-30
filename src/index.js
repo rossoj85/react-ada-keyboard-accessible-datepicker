@@ -22,7 +22,7 @@ class ReactColorSquare extends Component{
 
 
   componentDidMount(){
-    // console.log('STILLL CHANGINGGGGGGGGGGGGG ');
+
 
     const themeColor = this.props.themeColor || null;
     const minDate = this.minDate
@@ -37,23 +37,19 @@ class ReactColorSquare extends Component{
     var datePickers = document.querySelectorAll('.datepicker');
   
    
-    console.log('DATE BUTTON CLASSES ', dateButtonClasses);
+
     datePickers.forEach(function (dp) {
       var inputNode   = dp.querySelector('input');
       var buttonNode  = dp.querySelector('button');
       var dialogNode  = dp.querySelector('[role=dialog]');
 
-    console.log('vars-->',inputNode,buttonNode,dialogNode, minDate, maxDate );
     var datePicker = new DatePicker(inputNode, buttonNode, dialogNode,dateFormat, minDate, maxDate, specifiedFocusDate, dateButtonClasses );
     datePicker.init();
     })
   }
 
   render(){
-    console.log('index  Props', this.props);
-    console.log('styles', styles[".datepicker"]);
-    console.log('MOUNTING CSS',document.documentElement.style);
-  
+    console.log('React ADA Datepicker Master');
     return(
       <Fragment>
          <CalControls {...this.props} 

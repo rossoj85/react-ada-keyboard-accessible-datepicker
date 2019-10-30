@@ -27,7 +27,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.maxDate = maxDate;
   this.specifiedFocusDate =specifiedFocusDate;
   this.dateButtonClasses = dateButtonClasses;
-  console.log(`min-max date format inside datepicker constructor --> min-${minDate}, max-${maxDate}` );
+
   this.dateInput = new CalendarButtonInput(this.inputNode, this.buttonNode, this, this.dateFormat );
 
   this.MonthYearNode = this.dialogNode.querySelector('.monthYear');
@@ -69,7 +69,7 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
 };
 
 DatePicker.prototype.init = function () {
-  console.log('datePicker init called... ');
+
   this.dateInput.init();
 
   this.okButtonNode.addEventListener('click', this.handleOkButton.bind(this));
@@ -121,7 +121,7 @@ DatePicker.prototype.init = function () {
 };
 
 DatePicker.prototype.updateGrid = function () {
-  console.log('----------calling update grid-------------');
+
   var i, flag;
   var fd = this.focusDay;
 
@@ -134,7 +134,7 @@ DatePicker.prototype.updateGrid = function () {
   firstDayOfMonth.setDate(firstDayOfMonth.getDate() - dayOfWeek);
 
   var d = new Date(firstDayOfMonth);
-  console.log('variable d in update grid--(first day of month)', d)
+
 
   for (i = 0; i < this.days.length; i++) {
     flag = d.getMonth() != fd.getMonth();
@@ -165,19 +165,18 @@ DatePicker.prototype.showLastRow = function () {
 };
 
 DatePicker.prototype.setFocusDay = function (flag) {
-  console.log('Datepicker setFocusday called .. . ');
+
   if (typeof flag !== 'boolean') {
     flag = true;
   }
   
   var fd = this.focusDay;
   // var fd = new Date ("2019-10-14")
-  console.log('FD (focus day)',       fd);
+
 
   
 
   function checkDay (d) {
-    // console.log('checkday called ---- D=', d.day);
 
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&
@@ -185,7 +184,6 @@ DatePicker.prototype.setFocusDay = function (flag) {
         (d.day.getFullYear() == fd.getFullYear())) {
       d.domNode.setAttribute('tabindex', '0');
       if (flag) {
-        console.log('');
         d.domNode.focus();
       }
     }
@@ -196,11 +194,8 @@ DatePicker.prototype.setFocusDay = function (flag) {
 
 DatePicker.prototype.updateDay = function (day) {
   //called when gird opens or changes
-  console.log('ANOTHER updateDay called ');
   var d = this.focusDay;
   this.focusDay = day;
-  console.log('updateDay focus day', this.focusDay);
-  console.log('updateDay d', d);
   if ((d.getMonth() !== day.getMonth()) ||
       (d.getFullYear() !== day.getFullYear())) {
     this.updateGrid();
@@ -539,22 +534,20 @@ DatePicker.prototype.moveToPreviousMonth = function () {
 
 DatePicker.prototype.moveFocusToDay = function (day) {
   //day is the date that the focus is about to move to 
-  console.log('moveFocusToDay called .. . .');
 
   var d = this.focusDay;
   var dayDataDate = convertJSDayToDataDate(day);
 
-  console.log('--->>> moveFocusDay datDataDate', dayDataDate);
+
 
   if(this.minDate && isLessThanMinDate(dayDataDate,this.minDate, dataDateFormat)) {
-    console.log('moveFocusToDay --->>> move focus cancelled on account fo minDate');
+
     return;
 }
   if(this.maxDate && isGreaterThanMaxDate(dayDataDate, this.maxDate, dataDateFormat)){
-    console.log('moveFocusToDay --->>> move focus cancelled on account of maxDate');
     return;
   }
-  console.log('moveFocusToDay --->>> NO MIN OR MAX DATE DISABLING');
+
 
 
   this.focusDay = day;
@@ -567,7 +560,7 @@ DatePicker.prototype.moveFocusToDay = function (day) {
 };
 
 DatePicker.prototype.moveFocusToNextDay = function () {
-  console.log('moveFocusToNextDat called ....');
+
   var d = new Date(this.focusDay);
   d.setDate(d.getDate() + 1);
   this.moveFocusToDay(d);
@@ -580,21 +573,15 @@ DatePicker.prototype.moveFocusToNextWeek = function () {
 };
 
 DatePicker.prototype.moveFocusToPreviousDay = function () {
-  console.log('moveFocusToPrev day called .. . .');
   var d = new Date(this.focusDay);
   d.setDate(d.getDate() - 1);
   this.moveFocusToDay(d);
 };
 
 DatePicker.prototype.moveFocusToPreviousWeek = function () {
-  console.log('moveFocusToPrevious Week Called');
 
   var d = new Date(this.focusDay);
-  // console.log('moveFocusToPrevWeek var d  (current focus date) ', d);
-
-  // var nextDate = d.setDate(d.getDate() - 7);
-  // console.log(' moveFocusToPrevWeek next date', d.getDate()-7);
-  // console.log('moveFocusToPrevWeek nextDate', nextDate);
+  
   d.setDate(d.getDate() - 7);
   this.moveFocusToDay(d);
 };
@@ -621,7 +608,7 @@ DatePicker.prototype.setTextboxDate = function (day) {
 };
 
 DatePicker.prototype.getDateInput = function () {
-  console.log(' get date input called  . . . . ');
+ 
 
 
   var parts = this.dateInput.getDate().split(/[\s,/]+/);
@@ -642,7 +629,7 @@ DatePicker.prototype.getDateInput = function () {
     this.selectedDay = new Date(this.focusDay);
   }
   else {
-    console.log('TODAY AD DATSA DATE', today);
+   
     if(this.specifiedFocusDate) this.focusDay = splitDataDateAndCreateNewDate(this.specifiedFocusDate, dataDateFormat);
     else if(this.minDate && isLessThanMinDate(today,this.minDate, dataDateFormat)) this.focusDay = splitDataDateAndCreateNewDate(this.minDate, dataDateFormat);
     else if(this.maxDate && isGreaterThanMaxDate(today,this.maxDate, dataDateFormat )) this.focusDay = splitDataDateAndCreateNewDate(this.maxDate, dataDateFormat)
