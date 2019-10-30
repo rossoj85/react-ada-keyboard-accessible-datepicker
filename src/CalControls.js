@@ -149,7 +149,7 @@ class CalControls extends Component{
         
        <div className="date">
        {inputBoxLabel!== false ? 
-         <label htmlFor="id-textbox-1">{inputBoxLabel|| "Date"}</label>
+         <label htmlFor={customInputBox? customInputBox.props.id:"id-textbox-1"}>{inputBoxLabel|| "Date"}</label>
          :
          null
      }
@@ -164,7 +164,7 @@ class CalControls extends Component{
              className ={inputBoxClassNames}
             //  onKeyDown={this.stopKeyDown}
             onChange={this.autoFormatDateBox}
-            onBLur = {this.handleBlur}
+            onBlur = {this.handleBlur}
             value={this.state.stateDate}
             maxLength={dateFormat.length}
                />

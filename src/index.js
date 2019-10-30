@@ -19,7 +19,9 @@ class ReactColorSquare extends Component{
       if(this.maxDate && this.maxDate.toLowerCase()==="today") this.maxDate = createTodaysDateAsDataDate();
 
   }
-
+  componentWillMount(){
+    console.log('React ADA Datepicker Master');
+  }
 
   componentDidMount(){
 
@@ -49,7 +51,6 @@ class ReactColorSquare extends Component{
   }
 
   render(){
-    console.log('React ADA Datepicker Master');
     return(
       <Fragment>
          <CalControls {...this.props} 
