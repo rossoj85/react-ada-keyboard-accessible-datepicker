@@ -177,7 +177,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
   
 
   function checkDay (d) {
-    console.log('checkday called ---- D=', d.day);
+    // console.log('checkday called ---- D=', d.day);
 
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&

@@ -9,10 +9,14 @@ export const errorMessages ={
 }
 
 export const dataDateFormat = "yyyy-mm-dd"
+export const isNum = /^[0-9]*$/
+export const isDelineator = /[\s,/-]+/
+
+
 
 //data date and min/max date formats are the same 
 export const splitByDelineator = (date) =>{
-   const delineated =  date.split(/[\s,/-]+/)
+   const delineated =  date.split(isDelineator)
 
    return delineated
 };
@@ -40,7 +44,7 @@ export const splitDataDateAndCreateNewDate = (dataDate, dataDateFormat) =>{
   }
   else {
       console.log(" splitData Date please check dateInput String ")
-      return "Please CHeck Date INput String"
+      return null;
   }
 }
 
@@ -101,6 +105,32 @@ export const convertJSDayToDataDate = (day) =>{
 
 }
 export const today = createTodaysDateAsDataDate();
+
+
+export const checkForProperDateFormat = (inputDate,dateFormat)=>{
+    console.log('handleBlur  - > inside properDate');
+
+    for(let slot in inputDate){
+        // console.log(`properDate - inputDate[${slot}] -${inputDate[slot]}`);
+        // console.log(`properDate - dateFormat[${slot}] -${dateFormat[slot]}`);
+        if( isNum.test(inputDate[slot]) && isDelineator.test(dateFormat[slot]) ) {
+            // console.log('properDate - hit first condition');
+            return false;
+        }
+        if( isDelineator.test(inputDate[slot]) && !isDelineator.test(dateFormat[slot]) ) {
+            // console.log('properDate - hit second condition ');
+            return false;   
+        } 
+        if(!isDelineator.test(inputDate[slot]) && isDelineator.test(dateFormat)[slot] ) {
+            // console.log('properDate - hit thirrd condition');
+            return false
+        }
+        
+    }
+    console.log('date ofmatting is ok ');
+    return true 
+};
+
 //compartes the input date with the date format, both as data-dates(yyyy-mm-dd)
 export const isGreaterThanMaxDate = (inputDate, maxDate, dateFormat) =>{
     console.log('called isGreaterTHan .. . ');
@@ -115,6 +145,8 @@ export const isGreaterThanMaxDate = (inputDate, maxDate, dateFormat) =>{
 
     const maxDateArray = maxDate.split('-')
     const nodeDateArray = dataDateFromInput.split('-')
+    console.log('maxDateArray', maxDateArray);
+    console.log('nodeDateArray', nodeDateArray);
 
     for(let i = 0; i<3; i++){
         // console.log(`${nodeDateArray[i]}>${maxDateArray[i]}`);
