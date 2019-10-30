@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import { format } from 'util';
 import Grid from './Grid'
-import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue, createTodaysDateAsDataDate} from './Utilities.js'
+import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue, createTodaysDateAsDataDate, checkForProperDateFormat, isDelineator} from './Utilities.js'
 
 
 class CalControls extends Component{
@@ -14,7 +14,7 @@ class CalControls extends Component{
       error: null
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
-    this.dateFormat = this.props.dateFormat || "mm/dd/yyyy"
+    this.dateFormat = this.props.dateFormat.toLowerCase() || "mm/dd/yyyy"
   }
   componentWillMount(){
     console.log('cal controls mounted');
@@ -32,19 +32,108 @@ class CalControls extends Component{
       this.handleInputErrors(this.dateFormat,inputBox.value);
         })
   }
-  
+  constructString(dateFormat, nextStateDate){
+    console.log('handleINput construct string called');
+    let formatFields =  splitByDelineator(dateFormat)       
+    let inputValues =   splitByDelineator(nextStateDate)                 
+
+    let monthIndex = formatFields.indexOf('mm');
+    let yearIndex = formatFields.indexOf('yyyy');
+    let dayIndex = formatFields.indexOf('dd')
+
+    let month = parseInt(inputValues[formatFields.indexOf('mm')])
+    let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
+    let day = parseInt(inputValues[formatFields.indexOf('dd')])
+    let dateObj = {};
+    dateObj[monthIndex]=month;
+    dateObj[yearIndex]= year;
+    dateObj[dayIndex] = day;
+
+    console.log('*************************************');
+    console.log('dateFormat');
+    let delineators =[];
+
+    for(let char of dateFormat){
+      if ( isDelineator.test(char)) delineators.push(char);
+    }
+    console.log('handleINput Delineators', delineators );
+    console.log('**********************************');
+
+    console.log('handleInput Errors dateFormat',dateFormat );
+    
+    console.log('handleInput Errors dd', day );
+    console.log('handleInput Errors mm', month );
+    console.log('handleInput Errors yyyy', year);
+
+    console.log('*****handleInput dateObj', dateObj);
+
+    console.log('handleINput formatFields', formatFields);
+    
+    console.log('handleInput yyyy length',formatFields[formatFields.indexOf('yyyy')].length);
+    console.log('handleInput mm length',formatFields.indexOf('mm').length);
+    console.log('handleInput dd length',formatFields.indexOf('dd').length);
+    // let constructedDateString =`${dateObj[0]}-${dateObj[1]}-${dateObj[2]}`
+    let constructedDateString= ''
+    constructedDateString =  constructedDateString + dateObj[0]
+    if(dateObj[0].toString().length===formatFields[0].length) constructedDateString = constructedDateString +delineators[0];
+
+    if(dateObj[1]) constructedDateString = constructedDateString + dateObj[1]
+    if(dateObj[1].toString().length===formatFields[1].length) constructedDateString = constructedDateString +delineators[1];
+    
+    if(dateObj[2])constructedDateString = constructedDateString + dateObj[2]
+    // if(dateObj[2].toString().length===formatFields[2].length) constructedDateString = constructedDateString +delineators[2];
+
+
+
+
+    console.log('handleInput dateObj[0]--->', typeof (dateObj[0]+''));
+    // console.log('handleInput dateobject[0]----', dateObj[0].length, 'formatFields[0].length---', formatFields[0].length  );
+    console.log('handleInputString---->>>>', constructedDateString);
+    
+    console.log('');
+    console.log('--------------------handleINput--------------------------');
+  }
   handleInputErrors(dateFormat, nextStateDate){
     console.log('CalCONTROL HANDLE INPUT ERRORS CALLED');
     let formatFields =  splitByDelineator(dateFormat)       
     let inputValues =   splitByDelineator(nextStateDate)                 
 
+    this.constructString(dateFormat, nextStateDate)
 
     let month = parseInt(inputValues[formatFields.indexOf('mm')])
     let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
     let day = parseInt(inputValues[formatFields.indexOf('dd')])
+    // let positionValueObj{
+    //   formatFields.indexOf('mm'): month,
+    // }
+    
+    // console.log('handleInput Errors dd', day );
+    // console.log('handleInput Errors mm', month );
+    // console.log('handleInput Errors yyyy', year);
+
+    // console.log('handleINput formatFields', formatFields);
+    
+    // console.log('handleInput yyyy length',formatFields[formatFields.indexOf('yyyy')].length);
+    // console.log('handleInput mm length',formatFields.indexOf('mm').length);
+    // console.log('handleInput dd length',formatFields.indexOf('dd').length);
+    // console.log('handleInputString---->>>>', ``);
+    // let constructedDateString =
+    // console.log('--------------------handleINput--------------------------');
     
     let pastMaxDate;
     let beforeMinDate;
+    let isproperDateFormat;
+    
+    if(nextStateDate.length === this.dateFormat.length){
+      console.log('^^^^^^^^^^^^CALLING properDate^^^^^^^^^^^^');
+      isproperDateFormat = checkForProperDateFormat(nextStateDate,this.dateFormat)
+      console.log('properDate-', isproperDateFormat);
+      if(!isproperDateFormat) {
+        this.setState({error: `Please check date format. Format should be ${this.dateFormat}`});
+        return;
+      }
+    }
+   
 
     if(this.props.maxDate && nextStateDate.length === this.dateFormat.length){
       console.log('^^^^^^^^^^^^CALLING IS GREATER THAN MAX DATE ^^^^^^^^^^^^');
@@ -55,8 +144,7 @@ class CalControls extends Component{
       console.log('^^^^^^^^^^^^CALLING IS LESS THAN MIN DATE ^^^^^^^^^^^^');
       beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
- 
-
+    console.log('Day', day)
     if(month>12 || month ===0 ) this.setState({ error: errorMessages.invalidMonth});
     else if (day>31|| day === 0) this.setState({error: errorMessages.invalidDate});
     else if (pastMaxDate) this.setState({error: "THe Date is too lare"});
@@ -77,14 +165,8 @@ class CalControls extends Component{
     console.log('targetVal', targetVal);
     const re = /^[0-9]*$/
     if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
-    const isDelineator= (dateFormatChar)=>{
-      if( dateFormatChar
-        && dateFormatChar 
-        && dateFormatChar != 'y' 
-        && dateFormatChar != 'm' 
-        &&  dateFormatChar != 'd'){ return true }
-        else return false 
-    }
+
+    const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
     
 
     for(let i = 0; i<targetVal.length; i++){
@@ -92,10 +174,10 @@ class CalControls extends Component{
       // console.log('dateFormat[i]', dateFormat[i]);
       // console.log('dateFormat[i+1]',dateFormat[i+1] );
       // console.log('--------------------------------------');
-      if(stateDate.length<targetVal.length && isDelineator(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelineator(targetVal[i+1] ) ) ){
+      if(stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) ) ){
         nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
         targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
-        isDelineator( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
+        isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
         console.log('Next state date', nextStateDate);
        
       }
@@ -220,21 +302,3 @@ class CalControls extends Component{
 }
 export default CalControls;
 
-
-
-//**************OLD CLASSES***************************************************
-
-// const themeColor = this.props.themeColor;
-    // const minDate = this.props.minDate;
-    // const maxDate = this.props.maxDate;
-    // let customInputBox;
-    // let extendedCustomInputBox;
-    // const inputBoxLabel = this.props.inputBoxLabel;
-    // const inputBoxClassNames = this.props.inputBoxClassNames;
-    // const inputBoxOnChange = this.props.inputBoxOnChange;
-
-    // const buttonInlineStyle = this.props.buttonInlineStyle;
-    // const buttonClassNames = this.props.buttonClassNames
-    // const inputBoxLabelContent = this.props.inputBoxLabelContent;
-    // const dateButtonClasses = this.props.dateButtonClasses;
-    // const tableClasses = this.props.tableClasses;

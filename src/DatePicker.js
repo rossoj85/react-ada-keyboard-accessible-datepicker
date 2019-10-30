@@ -177,7 +177,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
   
 
   function checkDay (d) {
-    console.log('checkday called ---- D=', d.day);
+    // console.log('checkday called ---- D=', d.day);
 
     d.domNode.setAttribute('tabindex', '-1');
     if ((d.day.getDate()  == fd.getDate()) &&
@@ -624,24 +624,30 @@ DatePicker.prototype.getDateInput = function () {
   console.log(' get date input called  . . . . ');
 
 
-  var parts = this.dateInput.getDate().split(/[\s,/]+/);
-  var formatParts = this.dateFormat.split(/[\s,/]+/);
+  // var parts = this.dateInput.getDate().split(/[\s,/]+/);
+  // var formatParts = this.dateFormat.split(/[\s,/]+/);
   // var originalParts = this.dateInput.getDate().split(/[\s,/]+/);
 
-  if ((parts.length === 3) &&
-      Number.isInteger(parseInt(parts[0])) &&
-      Number.isInteger(parseInt(parts[1])) &&
-      Number.isInteger(parseInt(parts[2]))) 
-        {
+  // if ((parts.length === 3) &&
+  //     Number.isInteger(parseInt(parts[0])) &&
+  //     Number.isInteger(parseInt(parts[1])) &&
+  //     Number.isInteger(parseInt(parts[2]))) 
+  //       {
         
-        var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
-        var day = parseInt(parts[formatParts.indexOf('dd')]);
-        var year = parseInt(parts[formatParts.indexOf('yyyy')]);
+  //       var month = parseInt(parts[formatParts.indexOf('mm')]) - 1;
+  //       var day = parseInt(parts[formatParts.indexOf('dd')]);
+  //       var year = parseInt(parts[formatParts.indexOf('yyyy')]);
 
-    this.focusDay = splitDataDateAndCreateNewDate(this.dateInput.getDate(), this.dateFormat);
-    this.selectedDay = new Date(this.focusDay);
-  }
+  //   this.focusDay = splitDataDateAndCreateNewDate(this.dateInput.getDate(), this.dateFormat);
+  //   this.selectedDay = new Date(this.focusDay);
+  // }
+
+   //retuns a the date inside the input box if there is one 
+  let inputBoxDate = splitDataDateAndCreateNewDate(this.dateInput.getDate(), this.dateFormat)
+
+  if(inputBoxDate) return inputBoxDate
   else {
+    //there is no date in the input box 
     console.log('TODAY AD DATSA DATE', today);
     if(this.specifiedFocusDate) this.focusDay = splitDataDateAndCreateNewDate(this.specifiedFocusDate, dataDateFormat);
     else if(this.minDate && isLessThanMinDate(today,this.minDate, dataDateFormat)) this.focusDay = splitDataDateAndCreateNewDate(this.minDate, dataDateFormat);

@@ -28,7 +28,7 @@ class ReactColorSquare extends Component{
     const minDate = this.minDate
     const maxDate = this.maxDate
     const dateButtonClasses = this.props.dateButtonClasses || null;
-    const dateFormat = this.props.dateFormat || "mm/dd/yyyy";
+    const dateFormat = this.props.dateFormat.toLowerCase() || "mm/dd/yyyy";
     const focusDate = this.props.focusDate;
     const specifiedFocusDate = this.props.specifiedFocusDate;
 
