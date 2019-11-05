@@ -5,6 +5,7 @@ import DatePicker from './DatePicker';
 import Grid from './Grid'
 import styles from './Datepicker.scss'
 import {createTodaysDateAsDataDate} from './Utilities'
+import Inputtest from "./InputTest";
 
 class ReactColorSquare extends Component{
   
@@ -28,7 +29,7 @@ class ReactColorSquare extends Component{
     const minDate = this.minDate
     const maxDate = this.maxDate
     const dateButtonClasses = this.props.dateButtonClasses || null;
-    const dateFormat = this.props.dateFormat.toLowerCase() || "mm/dd/yyyy";
+    const dateFormat = this.props.dateFormat? this.props.dateFormat.toLowerCase() : "mm/dd/yyyy";
     const focusDate = this.props.focusDate;
     const specifiedFocusDate = this.props.specifiedFocusDate;
 
@@ -60,6 +61,7 @@ class ReactColorSquare extends Component{
          minDate={this.minDate}
          maxDate={this.maxDate}
          />
+         <Inputtest dateFormat={this.props.dateFormat || "mm/dd/yyyy"} />
       </Fragment>
     )
   }

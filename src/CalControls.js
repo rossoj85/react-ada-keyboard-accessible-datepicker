@@ -14,7 +14,7 @@ class CalControls extends Component{
       error: null
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
-    this.dateFormat = this.props.dateFormat.toLowerCase() || "mm/dd/yyyy"
+    this.dateFormat = this.props.dateFormat? this.props.dateFormat.toLowerCase() :"mm/dd/yyyy";
   }
   componentWillMount(){
     console.log('cal controls mounted');
@@ -32,73 +32,81 @@ class CalControls extends Component{
       this.handleInputErrors(this.dateFormat,inputBox.value);
         })
   }
-  constructString(dateFormat, nextStateDate){
-    console.log('handleINput construct string called');
-    let formatFields =  splitByDelineator(dateFormat)       
-    let inputValues =   splitByDelineator(nextStateDate)                 
+  // constructString(dateFormat, nextStateDate){
+  //   console.log('handleINput construct string called');
+  //   let formatFields =  splitByDelineator(dateFormat)       
+  //   let inputValues =   splitByDelineator(nextStateDate)                 
 
-    let monthIndex = formatFields.indexOf('mm');
-    let yearIndex = formatFields.indexOf('yyyy');
-    let dayIndex = formatFields.indexOf('dd')
+  //   let monthIndex = formatFields.indexOf('mm');
+  //   let yearIndex = formatFields.indexOf('yyyy');
+  //   let dayIndex = formatFields.indexOf('dd')
 
-    let month = parseInt(inputValues[formatFields.indexOf('mm')])
-    let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
-    let day = parseInt(inputValues[formatFields.indexOf('dd')])
-    let dateObj = {};
-    dateObj[monthIndex]=month;
-    dateObj[yearIndex]= year;
-    dateObj[dayIndex] = day;
+  //   let month = parseInt(inputValues[formatFields.indexOf('mm')])
+  //   let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
+  //   let day = parseInt(inputValues[formatFields.indexOf('dd')])
+  //   let dateObj = {};
+  //   dateObj[monthIndex]=month;
+  //   dateObj[yearIndex]= year;
+  //   dateObj[dayIndex] = day;
 
-    console.log('*************************************');
-    console.log('dateFormat');
-    let delineators =[];
+  //   console.log('*************************************');
+  //  console.log('handleINput nextStateDate - ', nextStateDate);
+  //   let delineators =[];
 
-    for(let char of dateFormat){
-      if ( isDelineator.test(char)) delineators.push(char);
-    }
-    console.log('handleINput Delineators', delineators );
-    console.log('**********************************');
+  //   for(let char of dateFormat){
+  //     if ( isDelineator.test(char)) delineators.push(char);
+  //   }
+  //   console.log('handleINput Delineators', delineators );
+  //   console.log('**********************************');
 
-    console.log('handleInput Errors dateFormat',dateFormat );
+  //   console.log('handleInput Errors dateFormat',dateFormat );
     
-    console.log('handleInput Errors dd', day );
-    console.log('handleInput Errors mm', month );
-    console.log('handleInput Errors yyyy', year);
+  //   console.log('handleInput Errors dd', day );
+  //   console.log('handleInput Errors mm', month );
+  //   console.log('handleInput Errors yyyy', year);
 
-    console.log('*****handleInput dateObj', dateObj);
+  //   console.log('*****handleInput dateObj', dateObj);
 
-    console.log('handleINput formatFields', formatFields);
+  //   console.log('handleINput formatFields', formatFields);
     
-    console.log('handleInput yyyy length',formatFields[formatFields.indexOf('yyyy')].length);
-    console.log('handleInput mm length',formatFields.indexOf('mm').length);
-    console.log('handleInput dd length',formatFields.indexOf('dd').length);
-    // let constructedDateString =`${dateObj[0]}-${dateObj[1]}-${dateObj[2]}`
-    let constructedDateString= ''
-    constructedDateString =  constructedDateString + dateObj[0]
-    if(dateObj[0].toString().length===formatFields[0].length) constructedDateString = constructedDateString +delineators[0];
+  //   console.log('handleInput yyyy length',formatFields[formatFields.indexOf('yyyy')].length);
+  //   console.log('handleInput mm length',formatFields.indexOf('mm').length);
+  //   console.log('handleInput dd length',formatFields.indexOf('dd').length);
+  //   // let constructedDateString =`${dateObj[0]}-${dateObj[1]}-${dateObj[2]}`
+  //   let constructedDateString= ''
+  //   constructedDateString =  constructedDateString + dateObj[0]
+  //   if(dateObj[0].toString().length===formatFields[0].length && nextStateDate.length> this.state.stateDate.length){ 
+  //     console.log('handleInput ADDING DELINEATOR CALLED');
+  //     constructedDateString = constructedDateString +delineators[0];
+  //   }
 
-    if(dateObj[1]) constructedDateString = constructedDateString + dateObj[1]
-    if(dateObj[1].toString().length===formatFields[1].length) constructedDateString = constructedDateString +delineators[1];
+  //   if(dateObj[1]) constructedDateString = constructedDateString + dateObj[1]
+  //   if(dateObj[1].toString().length===formatFields[1].length) constructedDateString = constructedDateString +delineators[1];
     
-    if(dateObj[2])constructedDateString = constructedDateString + dateObj[2]
-    // if(dateObj[2].toString().length===formatFields[2].length) constructedDateString = constructedDateString +delineators[2];
+  //   if(dateObj[2])constructedDateString = constructedDateString + dateObj[2]
+  //   // if(dateObj[2].toString().length===formatFields[2].length) constructedDateString = constructedDateString +delineators[2];
 
 
 
 
-    console.log('handleInput dateObj[0]--->', typeof (dateObj[0]+''));
-    // console.log('handleInput dateobject[0]----', dateObj[0].length, 'formatFields[0].length---', formatFields[0].length  );
-    console.log('handleInputString---->>>>', constructedDateString);
+  //   console.log('handleInput dateObj[0]--->', typeof (dateObj[0]+''));
+  //   // console.log('handleInput dateobject[0]----', dateObj[0].length, 'formatFields[0].length---', formatFields[0].length  );
+  //   console.log('handleInputString---->>>>', constructedDateString);
     
-    console.log('');
-    console.log('--------------------handleINput--------------------------');
-  }
-  handleInputErrors(dateFormat, nextStateDate){
+  //   console.log('');
+  //   console.log('--------------------handleINput--------------------------');
+  // }
+
+  parseDelineators(dateFormat, nextStateDate){
+
+  };
+  handleInputErrors(e){
     console.log('CalCONTROL HANDLE INPUT ERRORS CALLED');
-    let formatFields =  splitByDelineator(dateFormat)       
-    let inputValues =   splitByDelineator(nextStateDate)                 
+    let formatFields =  splitByDelineator(this.props.dataDateFormat)       
+    let inputValues =   splitByDelineator(e.target.value)                 
 
-    this.constructString(dateFormat, nextStateDate)
+    // this.constructString(dateFormat, nextStateDate)
+    this.parseDelineators(dateFormat,nextStateDate)
 
     let month = parseInt(inputValues[formatFields.indexOf('mm')])
     let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
@@ -169,19 +177,22 @@ class CalControls extends Component{
     const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
     
 
-    for(let i = 0; i<targetVal.length; i++){
-      // console.log('targetVal[i]', targetVal[i]);
-      // console.log('dateFormat[i]', dateFormat[i]);
-      // console.log('dateFormat[i+1]',dateFormat[i+1] );
-      // console.log('--------------------------------------');
-      if(stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) ) ){
-        nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
-        targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
-        isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
-        console.log('Next state date', nextStateDate);
+    // for(let i = 0; i<targetVal.length; i++){
+    //   // console.log('targetVal[i]', targetVal[i]);
+    //   // console.log('dateFormat[i]', dateFormat[i]);
+    //   // console.log('dateFormat[i+1]',dateFormat[i+1] );
+    //   // console.log('--------------------------------------');
+    //   if(stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) ) ){
+    //     nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
+    //     targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
+    //     isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
+    //     console.log('Next state date', nextStateDate);
        
-      }
-    }
+    //   }
+    // }
+
+
+
     console.log('OUT OF LOOP NEXT STATE DATE', nextStateDate);
     this.setState({stateDate: nextStateDate})
     this.handleInputErrors(dateFormat, nextStateDate)

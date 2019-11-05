@@ -16,6 +16,7 @@ export const isDelineator = /[\s,/-]+/
 
 //data date and min/max date formats are the same 
 export const splitByDelineator = (date) =>{
+    console.log('date--', date);
    const delineated =  date.split(isDelineator)
 
    return delineated
