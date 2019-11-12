@@ -1,11 +1,35 @@
 {
   "name": "react-ada-keyboard-accessible-datepicker",
   "version": "1.0.0",
+  "description": "An ADA compliant datepicker with keyboard accessibility, compatable with React",
+  "keywords": [
+    "datePicker",
+    "React",
+    "Americans With Diabilities Act",
+    "ADA",
+    "Calendar"
+  ],
+  "homepage": "https://github.com/rossoj85/react-ada-keyboard-accessible-datepicker",
+  "bugs": {
+    "url": "https://github.com/rossoj85/react-ada-keyboard-accessible-datepicker/issues",
+    "email": "jasonrosso@gmail.com"
+  },
+
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
     "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rossoj85/react-ada-keyboard-accessible-datepicker.git"
+  },
+  "peerDependencies": {
+    "react": "^16.10.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.5"
   },
   "author": {
     "name": "rossoj85",
@@ -32,6 +56,5 @@
     "style-loader": "^1.0.0",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
-  },
-  "description": ""
+  }
 }
