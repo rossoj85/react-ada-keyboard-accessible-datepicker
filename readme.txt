@@ -7,9 +7,8 @@ Accessibility Features
 -The calendar grid provides hotkeys for changing the year and month as well as support for normal grid navigation keys.
 -When the dialog opens and a date in the calendar grid receives focus, a live region enables screen readers to announce keyboard instructions for navigating the calendar grid. The instructions are also visible at the bottom of the dialog box.
 
-
-  Customization and Formatting 
-  The date picker can be customized and styled by passing in the following props. 
+Customization and Formatting 
+The date picker can be customized and styled by passing in the following props. 
 
   themeColor
   -Applies a selected color to the calendar button and calendar borders
@@ -37,7 +36,7 @@ Accessibility Features
   -Pass in a string to set the label’s contents or false to remove the input box’s label. 
 
   inputBoxClassNames 
-  One of more classes can be passed to the input box through the inputBoxClassNames prop. Be sure to pass in names without a prepending period. 
+  -One of more classes can be passed to the input box through the inputBoxClassNames prop. Be sure to pass in names without a prepending period. 
   ex. buttonClassNames={“oneClass anotherClass orangeText”}
 
   inputBoxOnChange
