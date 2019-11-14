@@ -25,7 +25,7 @@ class CalControls extends Component{
 
 
   componentDidMount(){
-
+    console.log('HIIIII');
     // this must be adapted to take in custom boxes
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
