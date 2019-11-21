@@ -145,7 +145,8 @@ const DatePickerContainer = () =>{
   ```python
 const DatePickerContainer = () =>{
 
-const customInputBox = <input id="CUstom-Box" placeholder="this is a custom inputBox" style={{'backgroundColor': 'red'}}></input>
+const customInputBox = <input id="Custom-Box" placeholder="this is a custom inputBox" style={{'backgroundColor': 'red'}}></input>
+
     return(
         <div>
             < Datepicker
@@ -159,21 +160,52 @@ const customInputBox = <input id="CUstom-Box" placeholder="this is a custom inpu
 
 
   **inputBoxLabel** <br />
-  Pass in a string to set the label’s contents or false to remove the input box’s label. 
+  Pass in a string for a custom input box label, or pass in false to remove the default label. 
+  ```python
+const DatePickerContainer = () =>{
+
+const customInputBox = <input id="Custom-Box" placeholder="this is a custom inputBox" style={{'backgroundColor': 'red'}}></input>
+
+    return(
+        <div>
+            < Datepicker
+              inputBoxLabel={"This is a custom label"}
+              # OR
+                inputBoxLabel={false}
+            />
+        </div>
+    )
+}
+```
 
   **inputBoxClassNames** <br /> 
-  -One of more classes can be passed to the input box through the inputBoxClassNames prop. Be sure to pass in names without a prepending period. 
-  ex. buttonClassNames={“oneClass anotherClass orangeText”}
+  One of more classes can be passed as strings  to the input box through the inputBoxClassNames prop. Be sure to pass in names without a prepending period. 
+
+    ```python
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            < Datepicker
+              inputBoxClassNames={"cssClass1 cssClass2 cssClass3"}
+            />
+        </div>
+    )
+}
+```
+ 
 
   **inputBoxOnChange** <br />
-  Callback that will be executed on input box change 
+  Callback that will be executed on input box change (*under development*)
 
 
   **inputBoxOnBlur** <br/>
-  Callback that will be executed on input box blur. 
+  Callback that will be executed on input box blur (*under development*)
 
   **autoFormat** <br/>
-  Auto formatting of user input can be turned off by passing in autoFormat={false}
+  Auto formatting of user input can be turned off by passing in autoFormat={false}. (*under development*)
+
+  
 
 
 
