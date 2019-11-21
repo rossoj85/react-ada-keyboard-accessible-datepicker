@@ -40,7 +40,7 @@ The date picker allows several levels of customization to acccomodate developers
   **themeColor** <br/>
   Applies a selected color to the calendar button and calendar borders
 
-   
+   `
       import React from 'react';
       import Datepicker from 'react-ada-keyboard-accessible-datepicker'
 
@@ -52,7 +52,7 @@ The date picker allows several levels of customization to acccomodate developers
               </div>
           )
       }
-
+`
 
   **dateFormat** <br/>
   Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by ddd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormat={false} is passed in as a prop. 
