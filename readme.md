@@ -37,7 +37,7 @@ const DatePickerContainer = () =>{
 ## Customization and Formatting 
 The date picker allows several levels of customization to acccomodate developers needs. Customizations are generally passed into the <Datepicker /> component as props. Additional levels of customization will be available in future releases. 
 
-  * themeColor
+  **themeColor** <br/>
   Applies a selected color to the calendar button and calendar borders
 
   * dateFormat 
