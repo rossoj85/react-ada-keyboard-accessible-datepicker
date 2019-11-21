@@ -35,13 +35,13 @@ const DatePickerContainer = () =>{
 
 
 ## Customization and Formatting 
-The date picker allows several levels of customization to acccomodate developers needs. 
+The date picker allows several levels of customization to acccomodate developers needs. Customizations are generally passed into the <Datepicker /> component as props. Additional levels of customization will be available in future releases. 
 
-  themeColor
-  -Applies a selected color to the calendar button and calendar borders
+  * themeColor
+  Applies a selected color to the calendar button and calendar borders
 
-  dateFormat 
-  -Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by ddd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormat={false} is passed in as a prop. 
+  * dateFormat 
+  Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by ddd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormat={false} is passed in as a prop. 
 
   minDate 
   -Sets the earliest day that the user may choose by using the datepicker. All date cells before the minDate will be disabled. Combing the minDate prop with maxDate will create a date range.  minDate must be passed in with the following format: minDate={“yyyy-mm-dd”}. To set the min date to the current date pass in minDate={“today”}
