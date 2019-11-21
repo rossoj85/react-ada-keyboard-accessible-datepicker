@@ -161,6 +161,7 @@ const customInputBox = <input id="Custom-Box" placeholder="this is a custom inpu
 
   **inputBoxLabel** <br />
   Pass in a string for a custom input box label, or pass in false to remove the default label. 
+  
   ```python
 const DatePickerContainer = () =>{
 
@@ -171,7 +172,7 @@ const customInputBox = <input id="Custom-Box" placeholder="this is a custom inpu
             < Datepicker
               inputBoxLabel={"This is a custom label"}
               # OR
-                inputBoxLabel={false}
+              inputBoxLabel={false}
             />
         </div>
     )
@@ -181,7 +182,7 @@ const customInputBox = <input id="Custom-Box" placeholder="this is a custom inpu
   **inputBoxClassNames** <br /> 
   One of more classes can be passed as strings  to the input box through the inputBoxClassNames prop. Be sure to pass in names without a prepending period. 
 
-    ```python
+ ```python
 const DatePickerContainer = () =>{
 
     return(
