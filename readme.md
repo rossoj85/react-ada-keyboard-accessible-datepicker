@@ -106,8 +106,9 @@ const DatePickerContainer = () =>{
   **buttonInlineStyle** <br/> 
   Customized styling can be passed to the calendar button as a style object. Object keys follow JSX conventions. Alternatively, class names from your own stylesheet can be passed to the calendar button with the buttonClassNames prop. 
 
-    ```python
-    const buttonInlineStyle = {'color': "orange", marginLeft: "30px"} 
+   
+```python
+const buttonInlineStyle = {'color': "orange", marginLeft: "30px"} 
 
 const DatePickerContainer = () =>{
 
