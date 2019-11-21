@@ -48,7 +48,7 @@ const DatePickerContainer = () =>{
 
     return(
         <div>
-            <Datepicker  />
+            <Datepicker themeColor={"#B41C1C"} />
         </div>
     )
 }
@@ -73,7 +73,25 @@ const DatePickerContainer = () =>{
   
 
   **minDate** <br/>
-  -Sets the earliest day that the user may choose by using the datepicker. All date cells before the minDate will be disabled. Combing the minDate prop with maxDate will create a date range.  minDate must be passed in with the following format: minDate={“yyyy-mm-dd”}. To set the min date to the current date pass in minDate={“today”}
+  -Sets the earliest day that the user may choose by using the datepicker. All date cells before the minDate will be disabled. Combing the minDate prop with maxDate will create a date range.  ***minDate must be passed in with the following format: minDate={“yyyy-mm-dd”}***. To set the min date to the current date pass in `minDate={“today”}`
+
+  ```python
+import React from 'react';
+import Datepicker from 'react-ada-keyboard-accessible-datepicker'
+
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            <Datepicker
+               mindDate={"2019-12-25"} 
+              # ----- OR -------
+              minDateDate={"today}
+            />
+        </div>
+    )
+}
+```
 
   **maxDate** <br/>
   Sets the latest date that the user may choose by using the date picker. All date cells after the maxDate will be disabled. Combining the maxDate with mandate will create a date range. maxDate must be passed in with the following format: maxDate={“yyyy-mm-dd”}. To set the max date to the current date pass in maxDate={“today”}
