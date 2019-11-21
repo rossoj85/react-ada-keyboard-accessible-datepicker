@@ -108,7 +108,7 @@ const DatePickerContainer = () =>{
 
    
 ```python
-const buttonInlineStyle = {'color': "orange", marginLeft: "30px"} 
+const buttonInlineStyle = {"color": "orange", "marginLeft": "30px"} 
 
 const DatePickerContainer = () =>{
 
@@ -123,11 +123,40 @@ const DatePickerContainer = () =>{
 ```
 
   **buttonClassNames** <br/>
-  One of more classes can be passed to the calendar button through the buttonClassNames prop. Be sure to pass in names without a prepending period. 
-  ex. buttonClassNames={“oneClass anotherClass orangeText”}
+  One of more classes can be passed to the calendar button through the buttonClassNames prop as a string. Seperate the classes by a space Be sure to pass in names without a prepending period. 
+
+  ```python
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            < Datepicker
+              buttonClassNames={"cssClass1 cssClass2 cssClass3"}
+            />
+        </div>
+    )
+}
+```
+  
 
   **customInputBox** <br/>
-  You can pass your own input box into the date picker as a prop
+  Save a custom input box as a variable and pass it in as a prob. Note, you will have ot provide your own ARIA labels. 
+
+  ```python
+const DatePickerContainer = () =>{
+
+const customInputBox = <input id="CUstom-Box" placeholder="this is a custom inputBox" style={{'backgroundColor': 'red'}}></input>
+    return(
+        <div>
+            < Datepicker
+                customInputBox={customInputBox}
+            />
+        </div>
+    )
+}
+```
+  
+
 
   **inputBoxLabel** <br />
   Pass in a string to set the label’s contents or false to remove the input box’s label. 
