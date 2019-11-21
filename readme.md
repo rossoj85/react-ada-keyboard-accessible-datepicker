@@ -35,7 +35,7 @@ const DatePickerContainer = () =>{
 
 
 ## Customization and Formatting 
-The date picker allows several levels of custumization to acccomodate developeers needs. 
+The date picker allows several levels of customization to acccomodate developers needs. 
 
   themeColor
   -Applies a selected color to the calendar button and calendar borders
