@@ -41,9 +41,6 @@ The date picker allows several levels of customization to acccomodate developers
   Applies a selected color to the calendar button and calendar borders
 
  ```python
-import React from 'react';
-import Datepicker from 'react-ada-keyboard-accessible-datepicker'
-
 const DatePickerContainer = () =>{
 
     return(
@@ -58,9 +55,6 @@ const DatePickerContainer = () =>{
   Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by ddd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormat={false} is passed in as a prop. 
 
 ```python
-import React from 'react';
-import Datepicker from 'react-ada-keyboard-accessible-datepicker'
-
 const DatePickerContainer = () =>{
 
     return(
@@ -73,20 +67,17 @@ const DatePickerContainer = () =>{
   
 
   **minDate** <br/>
-  -Sets the earliest day that the user may choose by using the datepicker. All date cells before the minDate will be disabled. Combing the minDate prop with maxDate will create a date range.  ***minDate must be passed in with the following format: minDate={“yyyy-mm-dd”}***. To set the min date to the current date pass in `minDate={“today”}`
+  -Sets the earliest day that the user may choose by using the datepicker. All date cells before the minDate will be disabled. Combing the minDate prop with maxDate will create a date range. Users will not be able to naviagate to the dates outside of the range.  ***minDate must be passed in with the “yyyy-mm-dd” format***. To set the min date to the current date pass in `minDate={“today”}`
 
   ```python
-import React from 'react';
-import Datepicker from 'react-ada-keyboard-accessible-datepicker'
-
 const DatePickerContainer = () =>{
 
     return(
         <div>
             <Datepicker
-               mindDate={"2019-12-25"} 
+               minDate={"2019-12-25"} 
               # ----- OR -------
-              minDateDate={"today}
+              minDate={"today}
             />
         </div>
     )
@@ -94,7 +85,23 @@ const DatePickerContainer = () =>{
 ```
 
   **maxDate** <br/>
-  Sets the latest date that the user may choose by using the date picker. All date cells after the maxDate will be disabled. Combining the maxDate with mandate will create a date range. maxDate must be passed in with the following format: maxDate={“yyyy-mm-dd”}. To set the max date to the current date pass in maxDate={“today”}
+  Sets the latest date that the user may choose by using the date picker. All date cells after the maxDate will be disabled. Combining the maxDate with mandate will create a date range. Users will not be able to naviagate to the dates outside of the range.  ***maxDate must be passed in with the “yyyy-mm-dd” format***. To set the min date to the current date pass in `maxDate={“today”}`
+
+  ```python
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            <Datepicker
+               maxDate={"2019-12-25"} 
+              # ----- OR -------
+              maxDate={"today"}
+            />
+        </div>
+    )
+}
+```
+  
 
   **buttonInlineStyle** <br/> 
   -Customized styling can be passed to the calendar button as a style object. Object keys follow JSX conventions. Alternatively, class names from your own stylesheet can be passed to the calendar button with the buttonClassNames prop. 
