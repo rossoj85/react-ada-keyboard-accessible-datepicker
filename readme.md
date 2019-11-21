@@ -45,7 +45,7 @@ const DatePickerContainer = () =>{
 
     return(
         <div>
-            <Datepicker themeColor={"#B41C1C"} />
+            < Datepicker themeColor={"#B41C1C"} />
         </div>
     )
 }
@@ -59,7 +59,7 @@ const DatePickerContainer = () =>{
 
     return(
         <div>
-            <Datepicker dateFormat={"yyyy,mm,dd"} />
+            < Datepicker dateFormat={"yyyy,mm,dd"} />
         </div>
     )
 }
@@ -74,10 +74,10 @@ const DatePickerContainer = () =>{
 
     return(
         <div>
-            <Datepicker
+            < Datepicker
                minDate={"2019-12-25"} 
               # ----- OR -------
-              minDate={"today}
+              minDate={"today"}
             />
         </div>
     )
@@ -92,8 +92,8 @@ const DatePickerContainer = () =>{
 
     return(
         <div>
-            <Datepicker
-               maxDate={"2019-12-25"} 
+            < Datepicker
+               maxDate={"2017-10-12"} 
               # ----- OR -------
               maxDate={"today"}
             />
@@ -104,7 +104,22 @@ const DatePickerContainer = () =>{
   
 
   **buttonInlineStyle** <br/> 
-  -Customized styling can be passed to the calendar button as a style object. Object keys follow JSX conventions. Alternatively, class names from your own stylesheet can be passed to the calendar button with the buttonClassNames prop. 
+  Customized styling can be passed to the calendar button as a style object. Object keys follow JSX conventions. Alternatively, class names from your own stylesheet can be passed to the calendar button with the buttonClassNames prop. 
+
+    ```python
+    const buttonInlineStyle = {'color': "orange", marginLeft: "30px"} 
+
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            < Datepicker
+               buttonInlineStyle={buttonInlineStyle} 
+            />
+        </div>
+    )
+}
+```
 
   **buttonClassNames** <br/>
   One of more classes can be passed to the calendar button through the buttonClassNames prop. Be sure to pass in names without a prepending period. 
