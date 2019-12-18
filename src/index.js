@@ -20,7 +20,8 @@ class ReactColorSquare extends Component{
 
   }
   componentWillMount(){
-    console.log('React ADA Datepicker Master');
+    console.log('*****Callback Branch*****');
+    console.log('INDEX.JS PROPS', this.props);
   }
 
   componentDidMount(){
@@ -56,6 +57,7 @@ class ReactColorSquare extends Component{
          <CalControls {...this.props} 
          minDate={this.minDate}
          maxDate={this.maxDate}
+         callBack = {this.props.callBack}
          />
       </Fragment>
     )

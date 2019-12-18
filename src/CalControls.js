@@ -25,7 +25,7 @@ class CalControls extends Component{
 
 
   componentDidMount(){
-    console.log('HIIIII 2');
+    console.log('YO');
     // this must be adapted to take in custom boxes
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
@@ -69,11 +69,26 @@ class CalControls extends Component{
       beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
 
-    if(month>12 || month ===0 ) this.setState({ error: errorMessages.invalidMonth});
-    else if (day>31|| day === 0) this.setState({error: errorMessages.invalidDate});
-    else if (pastMaxDate) this.setState({error: "THe Date is too lare"});
-    else if(beforeMinDate) this.setState({error: "TheDate is too early"});
-    else this.setState({error: null});
+    if(month>12 || month ===0 ){ 
+      this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
+      if(this.props.callBack){this.props.callBack("monthError")}
+    }
+    else if (day>31|| day === 0) {
+      this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
+      if(this.props.callBack){this.props.callBack("dateError")};
+      }
+    else if (pastMaxDate){ 
+      this.setState({error: this.props.pastMaxDateErrorMessage || "past the max allowed date"})
+      if(this.props.callBack){this.props.callBack("pastMaxDate")};
+      ;}
+    else if(beforeMinDate) {
+      this.setState({error: "TheDate is too early"});
+      if(this.props.callBack){this.props.callBack("beforeMinDate")};
+    }
+    else {
+      this.setState({error: null})
+      if(this.props.callBack){this.props.callBack("no Error")};
+    };
   };
 
   autoFormatDateBox(e){
