@@ -52,7 +52,7 @@ const DatePickerContainer = () =>{
 ```
 
   **dateFormat** <br/>
-  Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by ddd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormat={false} is passed in as a prop. 
+  Dates will be formatted to mm/dd/yyyy by default, but custom formats may be passed in as a string. The month field must be repressed by mm, the date by dd, and the year by yyyy. Fields may be separated by forward slashes, commas or spaces[/ , ]. User input will be automatically formatted unless autoFormatting={false} is passed in as a prop. 
 
 ```python
 const DatePickerContainer = () =>{
@@ -101,7 +101,22 @@ const DatePickerContainer = () =>{
     )
 }
 ```
-  
+**specifiedFocusDate** <br />
+You can specifiy which date that the datepicker will open to by passing in specifiedFocusDate={"yyyy-mm-dd"}
+
+  ```python
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            < Datepicker
+               specifiedFocusDate={"2019-10-15"}
+            />
+        </div>
+    )
+}
+```
+
 
   **buttonInlineStyle** <br/> 
   Customized styling can be passed to the calendar button as a style object. Object keys follow JSX conventions. Alternatively, class names from your own stylesheet can be passed to the calendar button with the buttonClassNames prop. 
@@ -194,7 +209,99 @@ const DatePickerContainer = () =>{
     )
 }
 ```
+  **Error Handling** <br />
+ The datepicker comes with default internal error handling, but it is possible to passs in custom error messages through props. all of the following must be passed in as strings
  
+  <br />
+
+ invalidFormatError - This message will be displated when a user enters the date in an invaliud format 
+
+ invalidMonthErrorMessage - This message will be displayed when a user enters a mm(month) value greater than 12 <br />
+
+ invalidDateErrorMessage - This message will be displayed when a user enters a dd(day) value greater than 31 <br />
+
+ pastMaxDateErrorMessage -  This message will be displayted when there is a Maximum date prop passed into the datepicker and the user enters a date past that  <br />
+
+minDateErrorMessage - This message will be displayted when there is a minimum date prop passed into the datepicker and the user enters a date before that  <br />
+
+ ```python
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            < Datepicker
+              invalidDateErrorMessage={" Month invalid, please check the month"}
+            />
+        </div>
+    )
+}
+```
+
+If you would prefer to handle error on your application levelrather than internally through the datepicker, and alternative can be to pass in the errorHandlingCallback. and wrapping the datepicker in its own component with its own state. Set a field on the state called errorType.  Write a function that will invoke this.setState and pass it into the errorHandlingCallback. An example can be seen below.  <br />
+
+For Class Based Components : 
+ ```python
+import React,{useState, Fragment, Component} from 'react';
+import Datepicker from 'react-ada-keyboard-accessible-datepicker';
+import './testStyle.css'
+
+class ClassBasedCalContainer extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            errorType: null
+        }
+        this.setStateCallBack = this.setStateCallBack.bind(this);
+    }
+
+    setStateCallBack(messageType){
+        this.setState({errorType: messageType})
+    }
+
+render(){
+    return(
+        <div>
+            <h1>CLASS BASED COMPONENT CONTAINER</h1>
+            <h2>{`The State message is ${this.state.errorType}`}</h2>
+            <Datepicker 
+            
+            errorHandlingCallback ={this.setStateCallBack}
+            minDate={"today"} //eventually make this so it follows format
+            maxDate={"2019-12-25"}
+
+            />
+
+        </div>
+    )
+}
+
+}
+}
+```
+
+For Functional Components: 
+
+ ```python
+const CalendarContainer = () =>{
+
+     const [errorType, setErrorType] = useState(null)
+    return(
+        <div>
+            <h1 >CALANDER CONTAINER APP</h1>
+            <h2>{`The errorType is ${errorType}`}</h2>
+      
+            <Datepicker 
+                specifiedFocusDate={"2019-10-15"}
+                dateFormat ={"mm dd, yyyy"}
+                minDate={"today"} 
+                maxDate={"2019-12-25"}
+                errorHandlingCallback ={setErrorType}
+                            />
+        </div>
+    )
+}
+```
+You can use the errorType const to write the logic for determining your errorType messages and errorHandling behavior. 
 
   **inputBoxOnChange** <br />
   Callback that will be executed on input box change (*under development*)
@@ -204,7 +311,7 @@ const DatePickerContainer = () =>{
   Callback that will be executed on input box blur (*under development*)
 
   **autoFormat** <br/>
-  Auto formatting of user input can be turned off by passing in autoFormat={false}. (*under development*)
+  Auto formatting of user input can be turned off by passing in autoFormatting={false}. (*under development*)
 
   
 
