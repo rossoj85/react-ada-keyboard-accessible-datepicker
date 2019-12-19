@@ -22,7 +22,19 @@ class CalControls extends Component{
     
   }
 
+ moveCursorToEnd() {
+   console.log('CALLING MOVE CURSOR TO END');
+   const el = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
+    if (typeof el.selectionStart == "number") {
+        el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange != "undefined") {
+        el.focus();
+        var range = el.createTextRange();
+        range.collapse(false);
+        range.select();
+    }
+}
 
   componentDidMount(){
     console.log('YO');
@@ -30,11 +42,38 @@ class CalControls extends Component{
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
 
-
+    //custom event handler that allows ties together DOM manipulation and React
     inputBox.addEventListener('DOMinputBoxValueChange', ()=> {
       this.setState({stateDate: inputBox.value});
       this.handleInputErrors(this.dateFormat,inputBox.value);
         })
+    
+    // disable the select feature ont he inputBox to make for easier autoFormatting
+    if (inputBox.attachEvent) {
+      inputBox.attachEvent('onselectstart', function (e) {
+          e.returnValue = false;
+          return false;
+      });
+      inputBox.attachEvent('onpaste', function (e) {
+          e.returnValue = false;
+          return false;
+      });
+  } else {
+      inputBox.addEventListener('paste', function (e) {
+          e.preventDefault();
+      });
+      inputBox.addEventListener('select', function (e) {
+          var start = this.selectionStart,
+              end = this.selectionEnd;
+          if (this.selectionDirection === 'forward') {
+              this.setSelectionRange(end, end);
+          } else {
+              this.setSelectionRange(start, start);
+          }
+      });
+  }
+  
+    
   }
 
   handleInputErrors(dateFormat, nextStateDate){
@@ -91,37 +130,76 @@ class CalControls extends Component{
     };
   };
 
+  // autoFormatDateBox(e){
+  //   let stateDate = this.state.stateDate;
+  //   let targetVal = e.target.value;
+  //   let dateFormat = this.dateFormat;
+  //   let nextStateDate = e.target.value;
+  //   e.preventDefault();
+
+
+  //   const re = /^[0-9]*$/
+  //   if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
+
+  //   const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
+  //   let formDirty = this.state.formDirty
+
+  //   if(targetVal.length<stateDate.length) this.setState({formDirty:true})
+  //   if(targetVal.length === 0) this.setState({formDirty: false})
+
+  //   for(let i = 0; i<targetVal.length; i++){
+  //     if(!formDirty && stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) )){
+  //       nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
+  //       targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
+  //       isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
+       
+       
+  //     }
+  //   }
+    
+  //   this.setState({stateDate: nextStateDate})
+  //   this.handleInputErrors(dateFormat, nextStateDate)
+
+  // }
   autoFormatDateBox(e){
+    console.log('NEW ON AUTOFORMAT FUCNTION');
+
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value;
     let dateFormat = this.dateFormat;
     let nextStateDate = e.target.value;
     e.preventDefault();
 
-
+    // If input is not a number, does nothing 
     const re = /^[0-9]*$/
     if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
 
+    // Funtion to check if input at char[i] is a delineator 
     const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
-    let formDirty = this.state.formDirty
 
-    if(targetVal.length<stateDate.length) this.setState({formDirty:true})
-    if(targetVal.length === 0) this.setState({formDirty: false})
-
+    // cycle through the input value 
     for(let i = 0; i<targetVal.length; i++){
-      if(!formDirty && stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) )){
-        nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
-        targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
-        isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
-       
-       
+      console.log('targetVal outside condition', targetVal);
+      console.log('state length', stateDate.length);
+      console.log('target val length',targetVal.length);
+      if(stateDate.length<targetVal.length){
+        if(isDelin(dateFormat[i+1])&& ( !targetVal[i+1] || !isDelin(targetVal[i+1] ))){
+          console.log('next char is delin');
+          targetVal = targetVal.split('')
+          let delin = dateFormat[i+1]
+          //make an exceptional case if the numbers are seperated by two consecutive delineators 
+          if(isDelin(dateFormat[i+2])) delin = delin+ dateFormat[i+2]
+          targetVal.splice(i+1,0,delin)
+          targetVal = targetVal.join('')
+          nextStateDate= targetVal
+        }
       }
-    }
-    
-    this.setState({stateDate: nextStateDate})
-    this.handleInputErrors(dateFormat, nextStateDate)
 
-  }
+    }
+    this.setState({stateDate: nextStateDate})
+}
+
+
   handleBlur(){
     
     let dateFormat = this.dateFormat;
@@ -182,6 +260,7 @@ class CalControls extends Component{
             onBlur = {this.handleBlur}
             value={this.state.stateDate}
             maxLength={dateFormat.length}
+            onMouseUp={this.moveCursorToEnd}
                />
      }
        <button className={`icon ${buttonClassNames? buttonClassNames: "buttonDefault"}`} aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
