@@ -218,7 +218,8 @@ DatePicker.prototype.getDaysInMonth = function () {
 DatePicker.prototype.show = function () {
   console.log('DSATEPICKER SHOW CALLED ');
   console.log(' DIAGLOG NODE BEFORE SHOW', this.dialogNode)
-  this.dialogNode.style.display = 'block';
+  // this.dialogNode.style.display = 'block';
+  this.dialogNode.setAttribute('style','display: block')
   this.dialogNode.style.zIndex = 2;
 
   console.log('dailogue node after show', this.dialogNode);

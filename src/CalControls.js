@@ -3,7 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import { format } from 'util';
 import Grid from './Grid'
-import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat, isLessThanMinDate, constValue, createTodaysDateAsDataDate, checkForProperDateFormat, isDelineator} from './Utilities.js'
+import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, 
+  isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat,
+  isLessThanMinDate, constValue, createTodaysDateAsDataDate, 
+  checkForProperDateFormat, isDelineator, disableHighlightingInInputBox} from './Utilities.js'
 // import { threadId } from 'worker_threads';
 
 
@@ -18,23 +21,41 @@ class CalControls extends Component{
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
     this.handleBlur = this.handleBlur.bind(this)
     this.dateFormat = this.props.dateFormat? this.props.dateFormat.toLowerCase() :"mm/dd/yyyy";
+    this.handleChange = this.handleChange.bind(this);
     this.customInputBox;
     
   }
 
+ moveCursorToEnd() {
+   console.log('CALLING MOVE CURSOR TO END');
+   const el = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
+    if (typeof el.selectionStart == "number") {
+        el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange != "undefined") {
+        el.focus();
+        var range = el.createTextRange();
+        range.collapse(false);
+        range.select();
+    }
+}
 
   componentDidMount(){
-    console.log('HIIIII 2');
+    console.log('COmponent did Moutn Props', this.props);
     // this must be adapted to take in custom boxes
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
 
-
+    //custom event handler that allows ties together DOM manipulation and React
     inputBox.addEventListener('DOMinputBoxValueChange', ()=> {
       this.setState({stateDate: inputBox.value});
       this.handleInputErrors(this.dateFormat,inputBox.value);
         })
+    
+    // disable the select feature ont he inputBox to make for easier autoFormatting
+    console.log('this.props.autoFormatting', this.props.autoFormatting);
+    if(this.props.autoFormatting!== false) disableHighlightingInInputBox(inputBox);
+  
   }
 
   handleInputErrors(dateFormat, nextStateDate){
@@ -55,60 +76,125 @@ class CalControls extends Component{
     if(nextStateDate.length === this.dateFormat.length){
       isproperDateFormat = checkForProperDateFormat(nextStateDate,this.dateFormat)
       if(!isproperDateFormat) {
-        this.setState({error: `Please check date format. Format should be ${this.dateFormat}`});
+        this.setState({error: this.props.invalidFormatError ||  `Please check date format. Format should be ${this.dateFormat}`});
         return;
       }
     }
    
-
+    // determine if the date entered is greater thatn the max date and save to variable
     if(this.props.maxDate && nextStateDate.length === this.dateFormat.length){
       pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat);
 
     }
+    //determine if the date entered in less than the min date and save it rot a variable
     if(this.props.minDate && nextStateDate.length === this.dateFormat.length){
       beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
 
-    if(month>12 || month ===0 ) this.setState({ error: errorMessages.invalidMonth});
-    else if (day>31|| day === 0) this.setState({error: errorMessages.invalidDate});
-    else if (pastMaxDate) this.setState({error: "THe Date is too lare"});
-    else if(beforeMinDate) this.setState({error: "TheDate is too early"});
-    else this.setState({error: null});
+    if(month>12 || month ===0 ){ 
+      this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidMonthErrorMessage")}
+    }
+    else if (day>31|| day === 0) {
+      this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")};
+      }
+    else if (pastMaxDate){ 
+      this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("pastMaxDateErrorMessage")};
+      ;}
+    else if(beforeMinDate) {
+      this.setState({error: this.props.minDateErrorMessage || errorMessages.beforeMinDate});
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("minDateErrorMessage")};
+    }
+    else {
+      this.setState({error: null})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("no Error")};
+    };
   };
 
+  // ALTERNATE AUTOFORMATTING WITH DIRTY FORM VARIABLE 
+  // autoFormatDateBox(e){
+  //   let stateDate = this.state.stateDate;
+  //   let targetVal = e.target.value;
+  //   let dateFormat = this.dateFormat;
+  //   let nextStateDate = e.target.value;
+  //   e.preventDefault();
+
+
+  //   const re = /^[0-9]*$/
+  //   if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
+
+  //   const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
+  //   let formDirty = this.state.formDirty
+
+  //   if(targetVal.length<stateDate.length) this.setState({formDirty:true})
+  //   if(targetVal.length === 0) this.setState({formDirty: false})
+
+  //   for(let i = 0; i<targetVal.length; i++){
+  //     if(!formDirty && stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) )){
+  //       nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
+  //       targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
+  //       isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
+       
+       
+  //     }
+  //   }
+    
+  //   this.setState({stateDate: nextStateDate})
+  //   this.handleInputErrors(dateFormat, nextStateDate)
+
+  // }
   autoFormatDateBox(e){
+    console.log('NEW ON AUTOFORMAT FUCNTION');
+
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value;
     let dateFormat = this.dateFormat;
     let nextStateDate = e.target.value;
     e.preventDefault();
 
-
+    // If input is not a number, does nothing 
     const re = /^[0-9]*$/
     if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
 
+    // Funtion to check if input at char[i] is a delineator 
     const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
-    let formDirty = this.state.formDirty
 
-    if(targetVal.length<stateDate.length) this.setState({formDirty:true})
-    if(targetVal.length === 0) this.setState({formDirty: false})
-
+    // cycle through the input value 
     for(let i = 0; i<targetVal.length; i++){
-      if(!formDirty && stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) )){
-        nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
-        targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
-        isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
-       
-       
+      console.log('targetVal outside condition', targetVal);
+      console.log('state length', stateDate.length);
+      console.log('target val length',targetVal.length);
+      if(stateDate.length<targetVal.length){
+        if(isDelin(dateFormat[i+1])&& ( !targetVal[i+1] || !isDelin(targetVal[i+1] ))){
+          console.log('next char is delin');
+          targetVal = targetVal.split('')
+          let delin = dateFormat[i+1]
+          //make an exceptional case if the numbers are seperated by two consecutive delineators 
+          if(isDelin(dateFormat[i+2])) delin = delin+ dateFormat[i+2]
+          targetVal.splice(i+1,0,delin)
+          targetVal = targetVal.join('')
+          nextStateDate= targetVal
+        }
       }
+
     }
-    
     this.setState({stateDate: nextStateDate})
     this.handleInputErrors(dateFormat, nextStateDate)
+}
 
-  }
-  handleBlur(){
+  handleChange(e){
+    e.preventDefault()
     
+    if(this.props.autoFormatting!==false) this.autoFormatDateBox(e)
+    else{
+      this.setState({stateDate: event.target.value})
+    }
+  }
+
+
+  handleBlur(){
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
@@ -123,15 +209,17 @@ class CalControls extends Component{
   render(){
     
     const dateFormat = this.dateFormat;
-    const autoFormatInput = this.props.autoFormatInput || true
-    const {themeColor, minDate, maxDate, inputBoxLabel, inputBoxClassNames, inputBoxOnChange, buttonInlineStyle, buttonClassNames, inputBoxLabelContent, dateButtonClasses,tableClasses} = this.props;
-
+    let autoFormatting= true
+    if(this.props.autoFormatting===false) {autoFormatting=false}
+    const {themeColor, minDate, maxDate, inputBoxLabel,inputBoxOnChange, buttonInlineStyle, buttonClassNames, inputBoxLabelContent, dateButtonClasses,tableClasses} = this.props;
+    let inputBoxClassNames = this.props
+    if(this.props.autoFormatting!==false) inputBoxClassNames = inputBoxClassNames + " disableCssHighlight"
  
     let customInputBox = this.customInputBox;
     let extendedCustomInputBox;
-    if(this.props.customInputBox && autoFormatInput!==false){
+    if(this.props.customInputBox){
        extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
-        onChange: this.autoFormatDateBox,
+        onChange: this.handleChange,
         value: this.state.stateDate,
         maxLength: dateFormat.length,
         placeholder: dateFormat,
@@ -141,7 +229,7 @@ class CalControls extends Component{
     }
     else customInputBox = this.props.customInputBox
 
-  
+  console.log('AUTO FORMATTING OR NOT? ', autoFormatting);
     
     return(
        // this is the inputBox
@@ -163,10 +251,11 @@ class CalControls extends Component{
              aria-autocomplete="none"
              className ={inputBoxClassNames}
             //  onKeyDown={this.stopKeyDown}
-            onChange={this.autoFormatDateBox}
+            onChange={this.handleChange}
             onBlur = {this.handleBlur}
             value={this.state.stateDate}
             maxLength={dateFormat.length}
+            onMouseUp={this.moveCursorToEnd}
                />
      }
        <button className={`icon ${buttonClassNames? buttonClassNames: "buttonDefault"}`} aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >

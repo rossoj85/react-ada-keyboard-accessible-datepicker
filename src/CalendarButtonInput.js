@@ -64,11 +64,16 @@ CalendarButtonInput.prototype.handleKeyDown = function (event) {
 //CHANGED - put event into take in
 CalendarButtonInput.prototype.handleClick = function (evt) {
   console.log('CAlBUtton hAndle CLick Called');
+  console.log('DATEPICKER', this.datepicker);
+
+
   if (!this.datepicker.isOpen()) {
+    console.log('---->>>>>>>GOIG TO DATEPICKER SHOW');
     this.datepicker.show();
     this.datepicker.setFocusDay();
   }
   else {
+    console.log('---->>>GOING TO DATEPICKER HIFDE');
     this.datepicker.hide();
   }
 

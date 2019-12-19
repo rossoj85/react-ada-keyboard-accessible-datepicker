@@ -4,8 +4,11 @@ export let constValue = "Just a string x"
 
 
 export const errorMessages ={
+    invalidFormat : `Please check date format. Format should be _____`,
     invalidMonth: `Invalid Month.  Please enter a value between 1 and 12`,
-    invalidDate: `Invalid date. Please enter a value between 1 and 31`
+    invalidDate: `Invalid date. Please enter a value between 1 and 31`,
+    pastMaxDate: `past the max allowed date`,
+    beforeMinDate : `The Date is too early`
 }
 
 export const dataDateFormat = "yyyy-mm-dd"
@@ -161,3 +164,29 @@ export const isLessThanMinDate = (inputDate, minDate, dateFormat)=>{
       return false
 }
 
+export const disableHighlightingInInputBox = (el)=>{
+    console.log('DIABLE HIGHLIGHTING IN INPUT BOX CALLED');
+    if (el.attachEvent) {
+        el.attachEvent('onselectstart', function (e) {
+            e.returnValue = false;
+            return false;
+        });
+        el.attachEvent('onpaste', function (e) {
+            e.returnValue = false;
+            return false;
+        });
+    } else {
+        el.addEventListener('paste', function (e) {
+            e.preventDefault();
+        });
+        el.addEventListener('select', function (e) {
+            var start = this.selectionStart,
+                end = this.selectionEnd;
+            if (this.selectionDirection === 'forward') {
+                this.setSelectionRange(end, end);
+            } else {
+                this.setSelectionRange(start, start);
+            }
+        });
+    }
+};
