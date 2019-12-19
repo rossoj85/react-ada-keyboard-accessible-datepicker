@@ -86,7 +86,8 @@ class CalControls extends Component{
       pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat);
 
     }
-    //determine if the date entered in less than the min date and save it rot a variable
+    //determine if the date entered in less than the min date and save it to a variable
+    // merge again to see diff 
     if(this.props.minDate && nextStateDate.length === this.dateFormat.length){
       beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
