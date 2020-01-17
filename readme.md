@@ -316,7 +316,7 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
-v1.1.2  
+v1.1.1  
 * custom iput boxs without ids are automatically assigned id of "id-textbox-1" 
 * error messages nor use the htmlFor attribute and point ot inputBox
 * inputBox ariaDescribedby pointsx to the error message
