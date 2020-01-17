@@ -216,6 +216,7 @@ class CalControls extends Component{
     if(this.props.autoFormatting!==false) inputBoxClassNames = inputBoxClassNames + " disableCssHighlight"
  
     let customInputBox = this.props.customInputBox;
+    console.log('custpmInputBOx', customInputBox);
     let extendedCustomInputBox;
     if(this.props.customInputBox){
        extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
@@ -225,7 +226,7 @@ class CalControls extends Component{
         maxLength: dateFormat.length,
         placeholder: dateFormat,
         onBlur: this.handleBlur,
-        "aria-describedby": this.state.error,
+        "aria-describedby": customInputBox.props["aria-describedby"] || null,
       })
       customInputBox = extendedCustomInputBox
     }
