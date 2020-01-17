@@ -1,6 +1,6 @@
 {
   "name": "react-ada-keyboard-accessible-datepicker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An ADA compliant datepicker with keyboard accessibility, compatable with React",
   "keywords": [
     "datePicker",
@@ -14,7 +14,6 @@
     "url": "https://github.com/rossoj85/react-ada-keyboard-accessible-datepicker/issues",
     "email": "jasonrosso@gmail.com"
   },
-
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
