@@ -237,7 +237,7 @@ const DatePickerContainer = () =>{
 }
 ```
 
-If you would prefer to handle error on your application levelrather than internally through the datepicker, and alternative can be to pass in the errorHandlingCallback. and wrapping the datepicker in its own component with its own state. Set a field on the state called errorType.  Write a function that will invoke this.setState and pass it into the errorHandlingCallback. An example can be seen below.  <br />
+If you would prefer to handle error on your application level rather than internally through the datepicker, and alternative can be to pass in the errorHandlingCallback. and wrapping the datepicker in its own component with its own state. Set a field on the state called errorType.  Write a function that will invoke this.setState and pass it into the errorHandlingCallback. An example can be seen below. Passing in errorHandlingCallback will disable the internally generated error messages. <br />
 
 For Class Based Components : 
  ```python
@@ -315,5 +315,9 @@ You can use the errorType const to write the logic for determining your errorTyp
 
   
 
-
-
+History 
+v1.1.2  
+* custom iput boxs without ids are automatically assigned id of "id-textbox-1" 
+* error messages nor use the htmlFor attribute and point ot inputBox
+* inputBox ariaDescribedby pointsx to the error message
+* updates to documentation 

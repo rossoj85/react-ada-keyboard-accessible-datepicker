@@ -7,7 +7,7 @@ export const errorMessages ={
     invalidFormat : `Please check date format. Format should be _____`,
     invalidMonth: `Invalid Month.  Please enter a value between 1 and 12`,
     invalidDate: `Invalid date. Please enter a value between 1 and 31`,
-    pastMaxDate: `past the max allowed date`,
+    pastMaxDate: `Past the maximum allowed date`,
     beforeMinDate : `The Date is too early`
 }
 
@@ -165,7 +165,6 @@ export const isLessThanMinDate = (inputDate, minDate, dateFormat)=>{
 }
 
 export const disableHighlightingInInputBox = (el)=>{
-    console.log('DIABLE HIGHLIGHTING IN INPUT BOX CALLED');
     if (el.attachEvent) {
         el.attachEvent('onselectstart', function (e) {
             e.returnValue = false;

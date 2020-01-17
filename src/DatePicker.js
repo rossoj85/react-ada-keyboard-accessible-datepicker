@@ -216,13 +216,12 @@ DatePicker.prototype.getDaysInMonth = function () {
 };
 
 DatePicker.prototype.show = function () {
-  console.log('DSATEPICKER SHOW CALLED ');
-  console.log(' DIAGLOG NODE BEFORE SHOW', this.dialogNode)
+  
   // this.dialogNode.style.display = 'block';
   this.dialogNode.setAttribute('style','display: block')
   this.dialogNode.style.zIndex = 2;
 
-  console.log('dailogue node after show', this.dialogNode);
+ 
   this.getDateInput();
   this.updateGrid();
   this.setFocusDay();
@@ -230,8 +229,7 @@ DatePicker.prototype.show = function () {
 };
 
 DatePicker.prototype.isOpen = function () {
-  console.log('isOpen? called returns -->', window.getComputedStyle(this.dialogNode).display !== 'none');
-  console.log('Computed Style ',window.getComputedStyle(this.dialogNode).display);
+ 
 
   return window.getComputedStyle(this.dialogNode).display !== 'none';
 };

@@ -27,7 +27,6 @@ class CalControls extends Component{
   }
 
  moveCursorToEnd() {
-   console.log('CALLING MOVE CURSOR TO END');
    const el = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
     if (typeof el.selectionStart == "number") {
@@ -41,7 +40,6 @@ class CalControls extends Component{
 }
 
   componentDidMount(){
-    console.log('COmponent did Moutn Props', this.props);
     // this must be adapted to take in custom boxes
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
@@ -53,7 +51,7 @@ class CalControls extends Component{
         })
     
     // disable the select feature ont he inputBox to make for easier autoFormatting
-    console.log('this.props.autoFormatting', this.props.autoFormatting);
+    
     if(this.props.autoFormatting!== false) disableHighlightingInInputBox(inputBox);
   
   }
@@ -67,7 +65,8 @@ class CalControls extends Component{
     let month = parseInt(inputValues[formatFields.indexOf('mm')])
     let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
     let day = parseInt(inputValues[formatFields.indexOf('dd')])
-    
+    let monthString = inputValues[formatFields.indexOf('mm')] || '' //empty string for edge case when not entered yet
+    let dayString = inputValues[formatFields.indexOf('dd')] || ''
     
     let pastMaxDate;
     let beforeMinDate;
@@ -80,7 +79,6 @@ class CalControls extends Component{
         return;
       }
     }
-   
     // determine if the date entered is greater thatn the max date and save to variable
     if(this.props.maxDate && nextStateDate.length === this.dateFormat.length){
       pastMaxDate = isGreaterThanMaxDate(nextStateDate,this.props.maxDate, this.dateFormat);
@@ -90,26 +88,31 @@ class CalControls extends Component{
     if(this.props.minDate && nextStateDate.length === this.dateFormat.length){
       beforeMinDate = isLessThanMinDate(nextStateDate,this.props.minDate, this.dateFormat);
     }
-
-    if(month>12 || month ===0 ){ 
-      this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
+    
+    if(month>12 || (monthString.length==2 &&month ===0)){ 
+      // this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidMonthErrorMessage")}
+      else this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
     }
-    else if (day>31|| day === 0) {
-      this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
-      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")};
+    else if (day>31|| (dayString.length==2 && day === 0)) {
+      // this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
+      else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       }
     else if (pastMaxDate){ 
-      this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
-      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("pastMaxDateErrorMessage")};
+      // this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("pastMaxDateErrorMessage")}
+      else this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
       ;}
     else if(beforeMinDate) {
-      this.setState({error: this.props.minDateErrorMessage || errorMessages.beforeMinDate});
-      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("minDateErrorMessage")};
+      // this.setState({error: this.props.minDateErrorMessage || errorMessages.beforeMinDate});
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("minDateErrorMessage")}
+      else  this.setState({error: this.props.minDateErrorMessage || errorMessages.beforeMinDate});
     }
     else {
-      this.setState({error: null})
-      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("no Error")};
+      // this.setState({error: null})
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback(null)}
+      else this.setState({error: null})
     };
   };
 
@@ -146,7 +149,6 @@ class CalControls extends Component{
 
   // }
   autoFormatDateBox(e){
-    console.log('NEW ON AUTOFORMAT FUCNTION');
 
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value;
@@ -163,12 +165,10 @@ class CalControls extends Component{
 
     // cycle through the input value 
     for(let i = 0; i<targetVal.length; i++){
-      console.log('targetVal outside condition', targetVal);
-      console.log('state length', stateDate.length);
-      console.log('target val length',targetVal.length);
+      
       if(stateDate.length<targetVal.length){
         if(isDelin(dateFormat[i+1])&& ( !targetVal[i+1] || !isDelin(targetVal[i+1] ))){
-          console.log('next char is delin');
+          
           targetVal = targetVal.split('')
           let delin = dateFormat[i+1]
           //make an exceptional case if the numbers are seperated by two consecutive delineators 
@@ -200,7 +200,7 @@ class CalControls extends Component{
 
    let isproperDateFormat =  checkForProperDateFormat(inputBoxDate, dateFormat) && (inputBoxDate.length===dateFormat.length)
     if(!isproperDateFormat) {
-      this.setState({error: `Please check date format. Format should be ${this.dateFormat}`});
+      this.setState({error: this.props.invalidFormatError || `Please check date format. Format should be ${this.dateFormat}`});
       return;
     }
   }
@@ -215,21 +215,22 @@ class CalControls extends Component{
     let inputBoxClassNames = this.props
     if(this.props.autoFormatting!==false) inputBoxClassNames = inputBoxClassNames + " disableCssHighlight"
  
-    let customInputBox = this.customInputBox;
+    let customInputBox = this.props.customInputBox;
     let extendedCustomInputBox;
     if(this.props.customInputBox){
        extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{
+        id: customInputBox && !customInputBox.props.id ? "id-textbox-1": customInputBox.props.id,
         onChange: this.handleChange,
         value: this.state.stateDate,
         maxLength: dateFormat.length,
         placeholder: dateFormat,
-        onBlur: this.handleBlur
+        onBlur: this.handleBlur,
+        "aria-describedby": this.state.error,
       })
       customInputBox = extendedCustomInputBox
     }
-    else customInputBox = this.props.customInputBox
+    else customInputBox = this.props.customInputBox;
 
-  console.log('AUTO FORMATTING OR NOT? ', autoFormatting);
     
     return(
        // this is the inputBox
@@ -262,10 +263,15 @@ class CalControls extends Component{
          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
        </button>
        </span>
-       <div id="inputBoxError" style={{'color': 'red'}}>
-        {this.state.error? <p>{this.state.error}</p>: null}
+       {
+         (!this.props.errorHandlingCallback) ?
+         <div id="inputBoxError">
+         <div id="error-message" htmlFor={customInputBox? customInputBox.props.id:"id-textbox-1"}>
+          {this.state.error? this.state.error:null}
+         </div>
        </div>
-    
+       :null 
+       }
      </div>  
        
 

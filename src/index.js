@@ -20,8 +20,7 @@ class ReactColorSquare extends Component{
 
   }
   componentWillMount(){
-    console.log('*****Callback Branch updated Vulnerability*****');
-    console.log('INDEX.JS PROPS', this.props);
+    
   }
 
   componentDidMount(){
