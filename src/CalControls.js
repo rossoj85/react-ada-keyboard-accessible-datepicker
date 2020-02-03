@@ -6,7 +6,7 @@ import Grid from './Grid'
 import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, 
   isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat,
   isLessThanMinDate, constValue, createTodaysDateAsDataDate, 
-  checkForProperDateFormat, isDelineator, disableHighlightingInInputBox} from './Utilities.js'
+  checkForProperDateFormat, isDelineator, disableHighlightingInInputBox, getDaysInMonth} from './Utilities.js'
 // import { threadId } from 'worker_threads';
 
 
@@ -67,6 +67,7 @@ class CalControls extends Component{
     let day = parseInt(inputValues[formatFields.indexOf('dd')])
     let monthString = inputValues[formatFields.indexOf('mm')] || '' //empty string for edge case when not entered yet
     let dayString = inputValues[formatFields.indexOf('dd')] || ''
+    let yearString = inputValues[formatFields.indexOf('yyyy')] || ''
     
     let pastMaxDate;
     let beforeMinDate;
@@ -94,11 +95,21 @@ class CalControls extends Component{
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidMonthErrorMessage")}
       else this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
     }
-    else if (day>31|| (dayString.length==2 && day === 0)) {
+    else if (dayString.length==2 && day === 0 ||  day>31) {
       // this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
       else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       }
+    else if (monthString.length===2 && yearString.length===4 && day){
+      console.log('MONth year and Day', month, year, day)
+      let daysInMonth = getDaysInMonth(month,year)
+      console.log('DAYS IN MONTH', daysInMonth);
+      if(day>daysInMonth){
+        console.log('DAY GREATER THAN DAY IN MONTH');
+        if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
+        else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
+      }
+    }
     else if (pastMaxDate){ 
       // this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("pastMaxDateErrorMessage")}
