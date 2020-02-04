@@ -4,7 +4,7 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
 ![alt text](https://raw.githubusercontent.com/rossoj85/react-ada-keyboard-accessible-datepicker/master/datePickerScreenShot.png)
 
-![Alt text](./screenshot.jpg?raw=true "Optional Title")
+![Alt text](./screenShot.jpg?raw=true "Optional Title")
 
 ![ScreenShot](screenShot.jpg)
 
