@@ -4,9 +4,27 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
 ![alt text](https://raw.githubusercontent.com/rossoj85/react-ada-keyboard-accessible-datepicker/master/datePickerScreenShot.png)
 
-![Alt text](./screenShot.jpg?raw=true "Optional Title")
+## Keyboard Controls
+ **Choose Date Button**
+ | Key             | Function                                                                                                                                                                              |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Space,<br>Enter | *Open the date picker dialog.<br>*Move focus to selected date, i.e., the date displayed in the date input text field. If no date has been selected, places focus on the current date. |
+|                 |                                                                                                                                                                                       |
+|                 |                                                                                                                                                                                       |
+ **Date Picker Dialog**
+ **Date Picker Dialog: Month/Year Buttons**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: OK and Cancel Buttons**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ **Date Picker Dialog: Date Grid**
+ 
 
-![ScreenShot](screenShot.jpg)
+
 
 ## Installation
 Use npm to install React-ADA-Keyboard-Accessible-Datepicker
