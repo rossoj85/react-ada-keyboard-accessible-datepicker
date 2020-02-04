@@ -9,7 +9,7 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
  
 | Key         	| Function                                                                                                                                                                          	|
 |-------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| Space,Enter 	| * Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
+| Space,<br>Enter 	| * Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
  
  **Date Picker Dialog**
 
@@ -26,9 +26,19 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
  **Date Picker Dialog: Date Grid**
 
-| Key             	| Function                                                                                                                                                                                                                                               	|
-|-----------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| Space,<br>Enter 	| * Select the date, close the dialog, and move focus to the Choose Date button.<br><br><br>* Update the value of the Date input with the selected date.<br><br><br>* Update the accessible name of the Choose Date button to include the selected date. 	|
+| Key               	| Function                                                                                                                                                                                                                                               	|
+|-------------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter   	| * Select the date, close the dialog, and move focus to the Choose Date button.<br><br><br>* Update the value of the Date input with the selected date.<br><br><br>* Update the accessible name of the Choose Date button to include the selected date. 	|
+| Up Arrow          	| Moves focus to the same day of the previous week.                                                                                                                                                                                                      	|
+| Down Arrow        	| Moves focus to the same day of the next week.                                                                                                                                                                                                          	|
+| Right Arrow       	| Moves focus to the next day.                                                                                                                                                                                                                           	|
+| Left Arrow        	| Moves focus to the previous day.                                                                                                                                                                                                                       	|
+| Home              	| Moves focus to the first day (e.g Sunday) of the current week.                                                                                                                                                                                         	|
+| End               	| Moves focus to the last day (e.g. Saturday) of the current week.                                                                                                                                                                                       	|
+| Page Up           	| *Changes the grid of dates to the previous month.<br><br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                  	|
+| Shift + Page Up   	| *Changes the grid of dates to the previous Year.<br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                       	|
+| Page Down         	| *Changes the grid of dates to the next month.<br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                          	|
+| Shift + Page Down 	| *Changes the grid of dates to the next Year.<br><br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                       	|
 
  **Date Picker Dialog: OK and Cancel Buttons**
  **Date Picker Dialog: Date Grid**
