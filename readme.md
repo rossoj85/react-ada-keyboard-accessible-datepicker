@@ -22,7 +22,7 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
  | Key         	| Function                                                     	|
 |-------------	|--------------------------------------------------------------	|
-| Space,Enter 	| Change the month and/or year displayed in the calendar grid. 	|
+| Space,<br>Enter 	| Change the month and/or year displayed in the calendar grid. 	|
 
  **Date Picker Dialog: Date Grid**
 
