@@ -9,14 +9,14 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
  
 | Key         	| Function                                                                                                                                                                          	|
 |-------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| Space,Enter 	| Open the date picker dialog.Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
+| Space,Enter 	| Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
  
  **Date Picker Dialog**
 
 | Key 	| Function                                                                                                                                                                                                                                                                                	|
 |-----	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
 | ESC 	| Closes the dialog and returns focus to the Choose Date button.                                                                                                                                                                                                                          	|
-| Tab 	| Moves focus to next element in the dialog Tab sequence.<br><br>Note that, as specified in the grid design pattern, only one button in the calendar grid is in the Tab sequence.<br><br>If focus is on the last button (i.e., OK), moves focus to the first button (i.e. Previous Year). 	|
+| Tab 	| * Moves focus to next element in the dialog Tab sequence.<br><br> * Note that, as specified in the grid design pattern, only one button in the calendar grid is in the Tab sequence.<br><br> * If focus is on the last button (i.e., OK), moves focus to the first button (i.e. Previous Year). 	|
 
  **Date Picker Dialog: Month/Year Buttons**
 
