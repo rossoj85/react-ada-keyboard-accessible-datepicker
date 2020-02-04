@@ -9,7 +9,7 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
  
 | Key         	| Function                                                                                                                                                                          	|
 |-------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| Space,Enter 	| Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
+| Space,Enter 	| * Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
  
  **Date Picker Dialog**
 
