@@ -105,24 +105,24 @@ export const today = createTodaysDateAsDataDate();
 
 
 export const checkForProperDateFormat = (inputDate,dateFormat)=>{
-
+    console.log('checking for proper date format');
     for(let slot in inputDate){
         
         if( isNum.test(inputDate[slot]) && isDelineator.test(dateFormat[slot]) ) {
-           
+           console.log('failed one');
             return false;
         }
         if( isDelineator.test(inputDate[slot]) && !isDelineator.test(dateFormat[slot]) ) {
-          
+            console.log('failed two');
             return false;   
         } 
         if(!isDelineator.test(inputDate[slot]) && isDelineator.test(dateFormat)[slot] ) {
-           
+           console.log('faield three');
             return false
         }
         
     }
- 
+    console.log('ALL PASSED');
     return true 
 };
 
