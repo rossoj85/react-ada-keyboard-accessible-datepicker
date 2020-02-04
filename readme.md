@@ -19,7 +19,17 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 | Tab 	| Moves focus to next element in the dialog Tab sequence.<br><br>Note that, as specified in the grid design pattern, only one button in the calendar grid is in the Tab sequence.<br><br>If focus is on the last button (i.e., OK), moves focus to the first button (i.e. Previous Year). 	|
 
  **Date Picker Dialog: Month/Year Buttons**
+
+ | Key         	| Function                                                     	|
+|-------------	|--------------------------------------------------------------	|
+| Space,Enter 	| Change the month and/or year displayed in the calendar grid. 	|
+
  **Date Picker Dialog: Date Grid**
+
+| Key             	| Function                                                                                                                                                                                                                                               	|
+|-----------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter 	| * Select the date, close the dialog, and move focus to the Choose Date button.<br><br><br>* Update the value of the Date input with the selected date.<br><br><br>* Update the accessible name of the Choose Date button to include the selected date. 	|
+
  **Date Picker Dialog: OK and Cancel Buttons**
  **Date Picker Dialog: Date Grid**
  **Date Picker Dialog: Date Grid**
