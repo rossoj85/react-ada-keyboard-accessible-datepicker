@@ -6,11 +6,13 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
 ## Keyboard Controls
  **Choose Date Button**
- | Key             | Function                                                                                                                                                                              |
-|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Space,<br>Enter | *Open the date picker dialog.<br>*Move focus to selected date, i.e., the date displayed in the date input text field. If no date has been selected, places focus on the current date. |
-|                 |                                                                                                                                                                                       |
-|                 |                                                                                                                                                                                       |
+ 
+| KEY         	| FUNCTION                                                                                                                                                                          	|
+|-------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,Enter 	| Open the date picker dialog.Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|
+|             	|                                                                                                                                                                                   	|
+|             	|                                                                                                                                                                                   	|
+ 
  **Date Picker Dialog**
  **Date Picker Dialog: Month/Year Buttons**
  **Date Picker Dialog: Date Grid**
