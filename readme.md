@@ -4,6 +4,13 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 
 ![alt text](https://raw.githubusercontent.com/rossoj85/react-ada-keyboard-accessible-datepicker/master/datePickerScreenShot.png)
 
+## Accessibility Features 
+React-ADA-Keyboard-Accessible-Datepicker includes several features to help make its use more accessible to all. 
+* When a date is chosen, the accessible name of the “Choose Date” button is updated to include the selected date. So, when the dialog closes and focus returns to the “Choose Date” button, screen reader users hear confirmation of the selected date in the button name.
+* When the month or year of the calendar grid changes as users navigate the calendar or activate the buttons for next or previous month or year, a live region enables screen readers to announce the new month and year.
+* The calendar grid provides hotkeys for changing the year and month as well as support for normal grid navigation keys.
+* When the dialog opens and a date in the calendar grid receives focus, a live region enables screen readers to announce keyboard instructions for navigating the calendar grid. The instructions are also visible at the bottom of the dialog box.
+
 ## Keyboard Controls
  **Choose Date Button**
  
@@ -57,13 +64,6 @@ Use npm to install React-ADA-Keyboard-Accessible-Datepicker
 ```bash
 npm install react-ada-keyboard-accessible-datepicker
 ```
-
-## Accessibility Features 
-React-ADA-Keyboard-Accessible-Datepicker includes several features to help make its use more accessible to all. 
-* When a date is chosen, the accessible name of the “Choose Date” button is updated to include the selected date. So, when the dialog closes and focus returns to the “Choose Date” button, screen reader users hear confirmation of the selected date in the button name.
-* When the month or year of the calendar grid changes as users navigate the calendar or activate the buttons for next or previous month or year, a live region enables screen readers to announce the new month and year.
-* The calendar grid provides hotkeys for changing the year and month as well as support for normal grid navigation keys.
-* When the dialog opens and a date in the calendar grid receives focus, a live region enables screen readers to announce keyboard instructions for navigating the calendar grid. The instructions are also visible at the bottom of the dialog box.
 
 ## Usage
 
