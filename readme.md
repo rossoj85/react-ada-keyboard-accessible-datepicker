@@ -41,13 +41,12 @@ React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker com
 | Shift + Page Down 	| *Changes the grid of dates to the next Year.<br><br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                       	|
 
  **Date Picker Dialog: OK and Cancel Buttons**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
- **Date Picker Dialog: Date Grid**
+
+| Key             	| Function                                                                                                                                                                                                                         	|
+|-----------------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter 	| Activates the button: <br><br>*"Cancel": Closes the dialog, moves focus to Choose Date button, does not update date in date input.<br><br>*OK: Closes the dialog, moves focus to Choose Date button, updates date in date input. 	|
+
+
  
 
 
