@@ -2,6 +2,9 @@
 
 React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker compliant with the standards set out by the Americans with Disabilities Act, including features such as full keyboard accessibility and aria labeling. The package builds upon the date picker developed by w3.org ( https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html ) and and adds several options for customization and easy React integrations. 
 
+![alt text](https://raw.githubusercontent.com/rossoj85/react-ada-keyboard-accessible-datepicker/autoFormatTwo/static/screenShot.png)
+
+
 ## Installation
 Use npm to install React-ADA-Keyboard-Accessible-Datepicker
 
@@ -316,6 +319,12 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+
+v1.2.0 
+* input box now calculates latest day of each month and throws error if entered date is beyond that 
+* simplified autoformating that allows for easier revisions to input date 
+* updated documentation with screenshots and keyboard controls 
+
 v1.1.4  
 * custom iput boxs without ids are automatically assigned id of "id-textbox-1" 
 * error messages nor use the htmlFor attribute and point ot inputBox
