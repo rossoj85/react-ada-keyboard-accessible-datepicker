@@ -16,7 +16,7 @@ class CalControls extends Component{
     this.state ={
       stateDate: "",
       error: null,
-      formDirty: false
+      dirtyForm: false
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
     this.handleBlur = this.handleBlur.bind(this)
@@ -101,7 +101,7 @@ class CalControls extends Component{
       else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       }
     else if (monthString.length===2 && yearString.length===4 && day){
-      console.log('MONth year and Day', month, year, day)
+     
       let daysInMonth = getDaysInMonth(month,year)
       console.log('DAYS IN MONTH', daysInMonth);
       if(day>daysInMonth){
@@ -127,44 +127,28 @@ class CalControls extends Component{
     };
   };
 
-  // ALTERNATE AUTOFORMATTING WITH DIRTY FORM VARIABLE 
-  // autoFormatDateBox(e){
-  //   let stateDate = this.state.stateDate;
-  //   let targetVal = e.target.value;
-  //   let dateFormat = this.dateFormat;
-  //   let nextStateDate = e.target.value;
-  //   e.preventDefault();
 
-
-  //   const re = /^[0-9]*$/
-  //   if(!re.test(targetVal[targetVal.length-1]) && stateDate.length<targetVal.length) return;
-
-  //   const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
-  //   let formDirty = this.state.formDirty
-
-  //   if(targetVal.length<stateDate.length) this.setState({formDirty:true})
-  //   if(targetVal.length === 0) this.setState({formDirty: false})
-
-  //   for(let i = 0; i<targetVal.length; i++){
-  //     if(!formDirty && stateDate.length<targetVal.length && isDelin(dateFormat[i+1]) && ( !targetVal[i+1] || !isDelin(targetVal[i+1] ) )){
-  //       nextStateDate= targetVal.substring(0, i+1 ) + dateFormat[i+1];
-  //       targetVal[i+1]? nextStateDate = nextStateDate+ targetVal[i+1]: null;
-  //       isDelin( dateFormat[i+2] )? nextStateDate = nextStateDate + dateFormat[i+2]: null
-       
-       
-  //     }
-  //   }
-    
-  //   this.setState({stateDate: nextStateDate})
-  //   this.handleInputErrors(dateFormat, nextStateDate)
-
-  // }
   autoFormatDateBox(e){
 
     let stateDate = this.state.stateDate;
     let targetVal = e.target.value;
     let dateFormat = this.dateFormat;
     let nextStateDate = e.target.value;
+    let inputValues =   splitByDelineator(nextStateDate)
+    let formatFields =  splitByDelineator(this.dateFormat)
+    let dirtyForm = this.state.dirtyForm
+    
+    
+    let month = parseInt(inputValues[formatFields.indexOf('mm')])
+    let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
+    let day = parseInt(inputValues[formatFields.indexOf('dd')])
+    let monthString = inputValues[formatFields.indexOf('mm')] || '' //empty string for edge case when not entered yet
+    let dayString = inputValues[formatFields.indexOf('dd')] || ''
+    let yearString = inputValues[formatFields.indexOf('yyyy')] || ''
+
+    console.log('~month, day, year~', month, day, year);
+    console.log('type of target', typeof e.target.value);
+
     e.preventDefault();
 
     // If input is not a number, does nothing 
@@ -177,7 +161,8 @@ class CalControls extends Component{
     // cycle through the input value 
     for(let i = 0; i<targetVal.length; i++){
       
-      if(stateDate.length<targetVal.length){
+      if(stateDate.length<targetVal.length && !this.state.dirtyForm){
+        console.log('HITTING CLEAN FORM');
         if(isDelin(dateFormat[i+1])&& ( !targetVal[i+1] || !isDelin(targetVal[i+1] ))){
           
           targetVal = targetVal.split('')
@@ -188,6 +173,9 @@ class CalControls extends Component{
           targetVal = targetVal.join('')
           nextStateDate= targetVal
         }
+      }
+      if(stateDate.length>targetVal.length) {
+        this.setState({dirtyForm:true})
       }
 
     }
@@ -209,10 +197,19 @@ class CalControls extends Component{
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
+    let invalidFormatError = this.props.invalidFormatError || `Please check date format. Format should be ${this.dateFormat}`
+
+    if(this.state.error && this.state.error!==invalidFormatError) return;
+
    let isproperDateFormat =  checkForProperDateFormat(inputBoxDate, dateFormat) && (inputBoxDate.length===dateFormat.length)
+    
+ 
     if(!isproperDateFormat) {
-      this.setState({error: this.props.invalidFormatError || `Please check date format. Format should be ${this.dateFormat}`});
+      this.setState({error: invalidFormatError});
       return;
+    }
+    else if (isproperDateFormat){
+      this.setState({error:null})
     }
   }
 

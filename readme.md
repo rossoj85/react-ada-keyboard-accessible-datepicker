@@ -2,12 +2,7 @@
 
 React-ADA-Keyboard-Accessible-Datepicker is an easy to implement date picker compliant with the standards set out by the Americans with Disabilities Act, including features such as full keyboard accessibility and aria labeling. The package builds upon the date picker developed by w3.org ( https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html ) and and adds several options for customization and easy React integrations. 
 
-## Installation
-Use npm to install React-ADA-Keyboard-Accessible-Datepicker
-
-```bash
-npm install react-ada-keyboard-accessible-datepicker
-```
+![alt text](https://raw.githubusercontent.com/rossoj85/react-ada-keyboard-accessible-datepicker/master/datePickerScreenShot.png)
 
 ## Accessibility Features 
 React-ADA-Keyboard-Accessible-Datepicker includes several features to help make its use more accessible to all. 
@@ -15,6 +10,92 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 * When the month or year of the calendar grid changes as users navigate the calendar or activate the buttons for next or previous month or year, a live region enables screen readers to announce the new month and year.
 * The calendar grid provides hotkeys for changing the year and month as well as support for normal grid navigation keys.
 * When the dialog opens and a date in the calendar grid receives focus, a live region enables screen readers to announce keyboard instructions for navigating the calendar grid. The instructions are also visible at the bottom of the dialog box.
+
+## Keyboard Controls
+ **Choose Date Button**
+ 
+| Key         	| Function                                                                                                                                                                          	|
+|-------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter 	| * Open the date picker dialog.<br><br> * Move focus to selected date, i.e.,  the date displayed in the date input text field. If no date has been selected,  places focus on the current date. 	|                                                    
+ 
+ **Date Picker Dialog**
+
+| Key 	| Function                                                                                                                                                                                                                                                                                	|
+|-----	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| ESC 	| Closes the dialog and returns focus to the Choose Date button.                                                                                                                                                                                                                          	|
+| Tab 	| * Moves focus to next element in the dialog Tab sequence.<br><br> * Note that, as specified in the grid design pattern, only one button in the calendar grid is in the Tab sequence.<br><br> * If focus is on the last button (i.e., OK), moves focus to the first button (i.e. Previous Year). 	|
+
+ **Date Picker Dialog: Month/Year Buttons**
+
+ | Key         	| Function                                                     	|
+|-------------	|--------------------------------------------------------------	|
+| Space,<br>Enter 	| Change the month and/or year displayed in the calendar grid. 	|
+
+ **Date Picker Dialog: Date Grid**
+
+| Key               	| Function                                                                                                                                                                                                                                               	|
+|-------------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter   	| * Select the date, close the dialog, and move focus to the Choose Date button.<br><br><br>* Update the value of the Date input with the selected date.<br><br><br>* Update the accessible name of the Choose Date button to include the selected date. 	|
+| Up Arrow          	| Moves focus to the same day of the previous week.                                                                                                                                                                                                      	|
+| Down Arrow        	| Moves focus to the same day of the next week.                                                                                                                                                                                                          	|
+| Right Arrow       	| Moves focus to the next day.                                                                                                                                                                                                                           	|
+| Left Arrow        	| Moves focus to the previous day.                                                                                                                                                                                                                       	|
+| Home              	| Moves focus to the first day (e.g Sunday) of the current week.                                                                                                                                                                                         	|
+| End               	| Moves focus to the last day (e.g. Saturday) of the current week.                                                                                                                                                                                       	|
+| Page Up           	| *Changes the grid of dates to the previous month.<br><br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                  	|
+| Shift + Page Up   	| *Changes the grid of dates to the previous Year.<br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                       	|
+| Page Down         	| *Changes the grid of dates to the next month.<br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                          	|
+| Shift + Page Down 	| *Changes the grid of dates to the next Year.<br><br><br>*Sets focus on the same day of the same week. If that day does not exist, then moves focus to the same day of the previous or next week.                                                       	|
+
+ **Date Picker Dialog: OK and Cancel Buttons**
+
+| Key             	| Function                                                                                                                                                                                                                         	|
+|-----------------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Space,<br>Enter 	| Activates the button: <br><br>*"Cancel": Closes the dialog, moves focus to Choose Date button, does not update date in date input.<br><br>*OK: Closes the dialog, moves focus to Choose Date button, updates date in date input. 	|
+
+
+
+
+## Role, Property, State, and Tabindex Attributes
+**Chose Date Button**
+
+| Role 	| Attribute           	| Element 	| Usage                                                                                                                                                     	|
+|------	|---------------------	|---------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------	|
+|      	| aria-label="String" 	| button  	| The initial value of accessible name is "Choose Date".<br><br>When users select a date, the accessible name is updated to also include the selected date. 	|
+
+**Date Picker Dialog**
+
+| Role   	| Attribute               	| Element 	| Usage                                                                                                                                                                                                                                                                                                          	|
+|--------	|-------------------------	|---------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| dialog 	|                         	| div     	| Identifies the element as a dialog .                                                                                                                                                                                                                                                                           	|
+|        	| aria-modal="true"       	| div     	| Indicates the dialog is modal.                                                                                                                                                                                                                                                                                 	|
+|        	| aria-labelledby="IDREF" 	| div     	| Refers to the heading containing the currently displayed month and year, which defines the accessible name for the dialog.                                                                                                                                                                                     	|
+|        	| aria-live="polite"      	| div     	| *Indicates the element that displays information about keyboard commands for navigating the grid should be automatically announced by screen readers.<br><br>*The script slightly delays display of the information so screen readers are more likely to read it after information related to change of focus. 	|
+
+**Date Picker Dialog: Calendar Navigation Buttons**
+
+| Role 	| Attribute           	| Element 	| Usage                                                                                                                                                          	|
+|------	|---------------------	|---------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+|      	| aria-label="String" 	| button  	| Defines the accessible name of the button (e.g. Next Year).                                                                                                    	|
+|      	| aria-live="polite"  	| h2      	| *When the month and/or year changes the content of the h2element is updated.<br><br><br>*Indicates the h2 should be automatically announced by screen readers. 	|
+
+**Date Picker Dialog: Date Grid**
+
+| Role 	| Attribute             	| Element 	| Usage                                                                                                                                                                                                                                                                                                                                                              	|
+|------	|-----------------------	|---------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| grid 	|                       	| table   	| *Identifies the table element as a grid widget.<br><br><br>*Since the grid role is applied to a table element, the row, colheader, and gridcell roles do not need to be specified because they are implied by tr, th, and tdtags.                                                                                                                                  	|
+|      	| aria-labelledby=IDREF 	| table   	| Defines the accessible name for the grid using the h2 that shows the month and year of the dates displayed in the grid.                                                                                                                                                                                                                                            	|
+|      	| tabindex="0"          	| button  	| *Makes the button focusable and includes it in the dialog Tab sequence.<br><br>*Set dynamically by the JavaScript when the element is to be included in the dialog Tab sequence.<br><br>*At any given time, only one button within the grid is in the dialog Tab sequence.<br><br>*This approach to managing focus is described in the section on roving tabindex. 	|
+|      	| tabindex="-1"         	| button  	| Makes the button focusable and excludes it from the dialog Tab sequence.<br>*Changed dynamically to 0 by the JavaScript when the button is to be included in the dialog Tab sequence.<br>*At any given time, only one button within the grid is in the dialog Tab sequence.<br>*This approach to managing focus is described in the section on roving tabindex.    	|
+|      	| aria-selected="true"  	| button  	| *Identifies the button for the currently selected date, i.e., the date value present in the date input.<br><br><br>*Only set on the button representing the currently selected date, no other buttons have aria-selectedspecified.                                                                                                                                 	|
+
+
+## Installation
+Use npm to install React-ADA-Keyboard-Accessible-Datepicker
+
+```bash
+npm install react-ada-keyboard-accessible-datepicker
+```
 
 ## Usage
 
@@ -316,6 +397,12 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+
+v1.2.0 
+* input box now calculates latest day of each month and throws error if entered date is beyond that 
+* simplified autoformating that allows for easier revisions to input date 
+* updated documentation with screenshots and keyboard controls 
+
 v1.1.4  
 * custom iput boxs without ids are automatically assigned id of "id-textbox-1" 
 * error messages nor use the htmlFor attribute and point ot inputBox
