@@ -378,6 +378,7 @@ DatePicker.prototype.handleNextYearButton = function (event) {
     case 'click':
       this.moveToNextYear();
       this.setFocusDay(false);
+      flag = true;
       break;
 
     default:
@@ -427,6 +428,7 @@ DatePicker.prototype.handlePreviousYearButton = function (event) {
     case 'click':
       this.moveToPreviousYear();
       this.setFocusDay(false);
+      flag = true;
       break;
 
     default:
@@ -465,6 +467,7 @@ DatePicker.prototype.handleNextMonthButton = function (event) {
     case 'click':
       this.moveToNextMonth();
       this.setFocusDay(false);
+      flag = true;
       break;
 
     default:

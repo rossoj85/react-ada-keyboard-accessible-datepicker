@@ -20,7 +20,7 @@ class ReactColorSquare extends Component{
 
   }
   componentWillMount(){
-    console.log('running from link');
+    console.log('running from link --> Latest version - ADDED flags to datepicker button fuctions');
   }
 
   componentDidMount(){
