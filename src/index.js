@@ -2,7 +2,7 @@
 import React,{Component,Fragment} from "react";
 import CalControls from './CalControls';
 import DatePicker from './DatePicker';
-import Grid from './Grid'
+import Grid from './GridHTML'
 import styles from './Datepicker.scss'
 import {createTodaysDateAsDataDate} from './Utilities'
 
@@ -20,7 +20,7 @@ class ReactColorSquare extends Component{
 
   }
   componentWillMount(){
-    console.log('v 1.2.2');
+    console.log('v 1.2.3');
   }
 
   componentDidMount(){

@@ -15,7 +15,8 @@ var DatePicker = function (inputNode, buttonNode, dialogNode, dateFormat, minDat
   this.dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   this.monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  this.messageCursorKeys = 'Cursor keys can navigate dates';
+  // this.messageCursorKeys = 'Cursor keys can navigate dates';
+  this.messageCursorKeys = '';
   this.lastMessage = '';
 
   this.inputNode   = inputNode;

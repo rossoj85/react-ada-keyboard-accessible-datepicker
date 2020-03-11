@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faCalendar, faAngleDoubleLeft, faAngleLeft, faAngleDoubleRight,faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import { format } from 'util';
-import Grid from './Grid'
+import Grid from './GridHTML'
 import {errorMessages, splitByDelineator,convertFormatedDateToDataDate, 
   isGreaterThanMaxDate, createDateFieldMapObj, dataDateFormat,
   isLessThanMinDate, constValue, createTodaysDateAsDataDate, 
