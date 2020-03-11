@@ -606,6 +606,7 @@ DatePicker.prototype.moveFocusToLastDayOfWeek = function () {
 };
 
 DatePicker.prototype.setTextboxDate = function (day) {
+  console.log('setTextboxDate DAY --->', day);
   if (day) {
     this.dateInput.setDate(day);
   }
