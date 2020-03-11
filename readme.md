@@ -397,6 +397,8 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+v1.2.1
+* Fixes bug that causes DOM propagation on go to next year and go to previous year buttons.
 
 v1.2.0 
 * input box now calculates latest day of each month and throws error if entered date is beyond that 
