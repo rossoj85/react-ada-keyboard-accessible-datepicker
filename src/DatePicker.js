@@ -159,10 +159,12 @@ DatePicker.prototype.updateGrid = function () {
 
 DatePicker.prototype.hideLastRow = function () {
   this.lastRowNode.style.visibility = 'hidden';
+  this.lastRowNode.style.display = 'none';
 };
 
 DatePicker.prototype.showLastRow = function () {
   this.lastRowNode.style.visibility = 'visible';
+  this.lastRowNode.style.display = 'table-row';
 };
 
 DatePicker.prototype.setFocusDay = function (flag) {

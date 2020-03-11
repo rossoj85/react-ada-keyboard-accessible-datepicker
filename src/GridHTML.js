@@ -321,7 +321,7 @@ const Grid = (props) =>{
        </button>
      </div>
      <div className="message" aria-live="polite">
-       Test
+       {/* Test */}
      </div>
    </div>
     );
