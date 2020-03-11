@@ -397,6 +397,10 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+
+v1.2.2
+* Added leading zeros into dateBoxInput string in roder to facilitate error handling and follow project formatting
+
 v1.2.1
 * Fixes bug that causes DOM propagation on go to next year and go to previous year buttons.
 
