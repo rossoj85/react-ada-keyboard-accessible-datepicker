@@ -397,6 +397,9 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+v1.2.3
+* Removed default "Cursor keys can navigate dates" message"
+* Calander height now changes to fit dates
 
 v1.2.2
 * Added leading zeros into dateBoxInput string in roder to facilitate error handling and follow project formatting
