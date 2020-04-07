@@ -396,7 +396,7 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
-v1.2.4, v1.2.5, v1.2.6
+v1.2.9
 * Improved documentation readibility.
 v1.2.3
 * Removed default "Cursor keys can navigate dates" message"
