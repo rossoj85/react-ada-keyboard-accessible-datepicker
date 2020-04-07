@@ -10,6 +10,30 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 * When the month or year of the calendar grid changes as users navigate the calendar or activate the buttons for next or previous month or year, a live region enables screen readers to announce the new month and year.
 * The calendar grid provides hotkeys for changing the year and month as well as support for normal grid navigation keys.
 * When the dialog opens and a date in the calendar grid receives focus, a live region enables screen readers to announce keyboard instructions for navigating the calendar grid. The instructions are also visible at the bottom of the dialog box.
+* A numbr of customization options including auto complete dates, date ranges, and more.
+
+## Installation
+Use npm to install React-ADA-Keyboard-Accessible-Datepicker
+
+```bash
+npm install react-ada-keyboard-accessible-datepicker
+```
+
+## Usage
+
+```python
+import React from 'react';
+import Datepicker from 'react-ada-keyboard-accessible-datepicker'
+
+const DatePickerContainer = () =>{
+
+    return(
+        <div>
+            <Datepicker  />
+        </div>
+    )
+}
+```
 
 ## Keyboard Controls
  **Choose Date Button**
@@ -77,7 +101,7 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 | Role 	| Attribute           	| Element 	| Usage                                                                                                                                                          	|
 |------	|---------------------	|---------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------	|
 |      	| aria-label="String" 	| button  	| Defines the accessible name of the button (e.g. Next <br>  Year).                                                                                                    	|
-|      	| aria-live="polite"  	| h2      	| *When the month and/or year changes the content <br>  of the h2element is updated.<br><br><br>*Indicates the h2 should be automatically <br> announced by screen readers. 	|
+|      	| aria-live="polite"  	| h2      	| *When the month and/or year changes the content <br>  of the h2 element is updated.<br><br><br>*Indicates the h2 should be automatically <br> announced by screen readers. 	|
 
 **Date Picker Dialog: Date Grid**
 
@@ -88,31 +112,6 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 |      	| tabindex="0"          	| button  	| *Makes the button focusable and includes it in <br> the dialog Tab sequence.<br><br>*Set dynamically by the JavaScript when the<br>  element is to be included in the dialog <br>Tab sequence.<br><br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br><br>*This approach to managing focus is described in <br>  the section on roving tabindex. 	|
 |      	| tabindex="-1"         	| button  	| Makes the button focusable and excludes it from <br> the dialog Tab sequence.<br>*Changed dynamically to 0 by the <br> JavaScript when the button is to be included in <br> the dialog Tab sequence.<br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br>*This approach to managing focus is described in <br> the section on roving tabindex.    	|
 |      	| aria-selected="true"  	| button  	| *Identifies the button for the currently selected <br>  date, i.e., the date value present in the date input.<br><br><br>*Only set on the button representing the <br>currently selected date, no other buttons have <br> aria-selectedspecified.                                                                                                                                 	|
-
-
-## Installation
-Use npm to install React-ADA-Keyboard-Accessible-Datepicker
-
-```bash
-npm install react-ada-keyboard-accessible-datepicker
-```
-
-## Usage
-
-```python
-import React from 'react';
-import Datepicker from 'react-ada-keyboard-accessible-datepicker'
-
-const DatePickerContainer = () =>{
-
-    return(
-        <div>
-            <Datepicker  />
-        </div>
-    )
-}
-```
-
 
 
 ## Customization and Formatting 
