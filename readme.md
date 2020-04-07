@@ -61,7 +61,7 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 
 | Role 	| Attribute           	| Element 	| Usage                                                                                                                                                     	|
 |------	|---------------------	|---------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------	|
-|      	| aria-label="String" 	| button  	| The initial value of accessible name is "Choose Date".<br><br>When users select a date, the accessible name is  <br> updated to also include the selected date. 	|
+|      	| aria-label="String" 	| button  	| The initial value of accessible name is <br>"Choose Date".<br><br>When users select a date, the accessible name is  <br> updated to also include the selected date. 	|
 
 **Date Picker Dialog**
 
@@ -70,7 +70,7 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 | dialog 	|                         	| div     	| Identifies the element as a dialog .                                                                                                                                                                                                                                                                           	|
 |        	| aria-modal="true"       	| div     	| Indicates the dialog is modal.                                                                                                                                                                                                                                                                                 	|
 |        	| aria-labelledby="IDREF" 	| div     	| Refers to the heading containing the currently <br> displayed month and year, which defines the<br> accessible name for the dialog.                                                                                                                                                                                     	|
-|        	| aria-live="polite"      	| div     	| *Indicates the element that displays <br> information about keyboard commands for <br>navigating the grid should be automatically announced by screen readers.<br><br>*The script slightly delays display of the <br> information so screen readers are more likely <br>to read it after information related to change of focus. 	|
+|        	| aria-live="polite"      	| div     	| *Indicates the element that displays <br> information about keyboard commands for <br>navigating the grid should be <br>automatically announced by screen readers.<br><br>*The script slightly delays display of the <br> information so screen readers are more likely <br>to read it after information related to change <br>of focus. 	|
 
 **Date Picker Dialog: Calendar Navigation Buttons**
 
@@ -397,7 +397,7 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
-v1.2.4 and v1.2.5
+v1.2.4, v1.2.5, v1.2.6
 * Improved documentation readibility.
 v1.2.3
 * Removed default "Cursor keys can navigate dates" message"
