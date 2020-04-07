@@ -23,7 +23,7 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 | Key 	| Function                                                                                                                                                                                                                                                                                	|
 |-----	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
 | ESC 	| Closes the dialog and returns focus to the Choose Date button.                                                                                                                                                                                                                          	|
-| Tab 	| * Moves focus to next element in the dialog Tab sequence.<br><br> * Note that, as specified in the grid design pattern, only one button in the calendar grid is <br> in the Tab sequence.<br><br> * If focus is on the last button (i.e., OK), moves focus to the first button (i.e. Previous Year). 	|
+| Tab 	| * Moves focus to next element in the dialog Tab sequence.<br><br> * Note that, as specified in the grid design pattern, only one button in the calendar grid <br>is in the Tab sequence.<br><br> * If focus is on the last button (i.e., OK), moves focus to the first button(i.e. Previous Year). 	|
 
  **Date Picker Dialog: Month/Year Buttons**
 
@@ -69,8 +69,8 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 |--------	|-------------------------	|---------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
 | dialog 	|                         	| div     	| Identifies the element as a dialog .                                                                                                                                                                                                                                                                           	|
 |        	| aria-modal="true"       	| div     	| Indicates the dialog is modal.                                                                                                                                                                                                                                                                                 	|
-|        	| aria-labelledby="IDREF" 	| div     	| Refers to the heading containing the currently <br> displayed month and year, which defines the accessible name for the dialog.                                                                                                                                                                                     	|
-|        	| aria-live="polite"      	| div     	| *Indicates the element that displays <br> information about keyboard commands for navigating the grid should be automatically announced by screen readers.<br><br>*The script slightly delays display of the <br> information so screen readers are more likely to read it after information related to change of focus. 	|
+|        	| aria-labelledby="IDREF" 	| div     	| Refers to the heading containing the currently <br> displayed month and year, which defines the<br> accessible name for the dialog.                                                                                                                                                                                     	|
+|        	| aria-live="polite"      	| div     	| *Indicates the element that displays <br> information about keyboard commands for <br>navigating the grid should be automatically announced by screen readers.<br><br>*The script slightly delays display of the <br> information so screen readers are more likely <br>to read it after information related to change of focus. 	|
 
 **Date Picker Dialog: Calendar Navigation Buttons**
 
@@ -83,11 +83,11 @@ React-ADA-Keyboard-Accessible-Datepicker includes several features to help make 
 
 | Role 	| Attribute             	| Element 	| Usage                                                                                                                                                                                                                                                                                                                                                              	|
 |------	|-----------------------	|---------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| grid 	|                       	| table   	| *Identifies the table element as a grid widget.<br><br><br>*Since the grid role is applied to a table element, <br> the row, colheader, and gridcell roles do not need to be specified because they are implied by tr, th, and tdtags.                                                                                                                                  	|
-|      	| aria-labelledby=IDREF 	| table   	| Defines the accessible name for the grid <br> using the h2 that shows the month and year of the dates displayed in the grid.                                                                                                                                                                                                                                            	|
-|      	| tabindex="0"          	| button  	| *Makes the button focusable and includes it in <br> the dialog Tab sequence.<br><br>*Set dynamically by the JavaScript when the<br>  element is to be included in the dialog Tab sequence.<br><br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br><br>*This approach to managing focus is described in <br>  the section on roving tabindex. 	|
-|      	| tabindex="-1"         	| button  	| Makes the button focusable and excludes it from <br> the dialog Tab sequence.<br>*Changed dynamically to 0 by the <br> JavaScript when the button is to be included in the dialog Tab sequence.<br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br>*This approach to managing focus is described in <br> the section on roving tabindex.    	|
-|      	| aria-selected="true"  	| button  	| *Identifies the button for the currently selected <br>  date, i.e., the date value present in the date input.<br><br><br>*Only set on the button representing the <br>currently selected date, no other buttons have aria-selectedspecified.                                                                                                                                 	|
+| grid 	|                       	| table   	| *Identifies the table element as a grid widget.<br><br><br>*Since the grid role is applied to a table element, <br> the row, colheader, and gridcell roles  <br> to be specified because they are implied by tr, th, and tdtags.                                                                                                                                  	|
+|      	| aria-labelledby=IDREF 	| table   	| Defines the accessible name for the grid <br> using the h2 that shows the month and year of <br> the dates displayed in the grid.                                                                                                                                                                                                                                            	|
+|      	| tabindex="0"          	| button  	| *Makes the button focusable and includes it in <br> the dialog Tab sequence.<br><br>*Set dynamically by the JavaScript when the<br>  element is to be included in the dialog <br>Tab sequence.<br><br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br><br>*This approach to managing focus is described in <br>  the section on roving tabindex. 	|
+|      	| tabindex="-1"         	| button  	| Makes the button focusable and excludes it from <br> the dialog Tab sequence.<br>*Changed dynamically to 0 by the <br> JavaScript when the button is to be included in <br> the dialog Tab sequence.<br>*At any given time, only one button within the <br> grid is in the dialog Tab sequence.<br>*This approach to managing focus is described in <br> the section on roving tabindex.    	|
+|      	| aria-selected="true"  	| button  	| *Identifies the button for the currently selected <br>  date, i.e., the date value present in the date input.<br><br><br>*Only set on the button representing the <br>currently selected date, no other buttons have <br> aria-selectedspecified.                                                                                                                                 	|
 
 
 ## Installation
@@ -397,6 +397,8 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+v1.2.4 and v1.2.5
+* Improved documentation readibility.
 v1.2.3
 * Removed default "Cursor keys can navigate dates" message"
 * Calander height now changes to fit dates
@@ -417,5 +419,3 @@ v1.1.4
 * error messages nor use the htmlFor attribute and point ot inputBox
 * inputBox ariaDescribedby pointsx to the error message
 * updates to documentation 
-
-//test commit
