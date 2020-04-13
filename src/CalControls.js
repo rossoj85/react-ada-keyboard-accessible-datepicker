@@ -56,7 +56,6 @@ class CalControls extends Component{
     
     if(this.props.autoFormatting!== false) disableHighlightingInInputBox(inputBox);
 
-    console.log('****PROPS', this.props);
   
   }
 
