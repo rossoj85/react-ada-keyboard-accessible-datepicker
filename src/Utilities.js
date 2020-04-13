@@ -15,6 +15,18 @@ export const dataDateFormat = "yyyy-mm-dd"
 export const isNum = /^[0-9]*$/
 export const isDelineator = /[\s,/-]+/
 
+export const checkIfIsDataDate = (dateString)=>{
+    if(dateString===null ||dateString==="today") return;
+    let error = false
+    
+    for(var i =0;i<dateString.length;i++){
+      if(i!=4 && i!=7 && isNaN(dateString[i])) error = true
+    }
+
+   if(dateString[4]!='-' || dateString[7]!='-') error = true
+
+   if(error) console.error(`MESSAGE FROM REACT ADA DATEPICKER: Please check your minDate or maxDate format. ${dateString} is not a valid format. Format must be in data date form yyyy-mm-dd`)
+}
 
 
 //data date and min/max date formats are the same 

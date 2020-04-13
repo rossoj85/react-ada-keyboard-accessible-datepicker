@@ -55,6 +55,8 @@ class CalControls extends Component{
     // disable the select feature ont he inputBox to make for easier autoFormatting
     
     if(this.props.autoFormatting!== false) disableHighlightingInInputBox(inputBox);
+
+    console.log('****PROPS', this.props);
   
   }
 

@@ -4,7 +4,7 @@ import CalControls from './CalControls';
 import DatePicker from './DatePicker';
 import Grid from './GridHTML'
 import styles from './Datepicker.scss'
-import {createTodaysDateAsDataDate} from './Utilities'
+import {createTodaysDateAsDataDate,checkIfIsDataDate} from './Utilities'
 
 class ReactColorSquare extends Component{
   
@@ -29,10 +29,14 @@ class ReactColorSquare extends Component{
 
     const themeColor = this.props.themeColor || null;
     const minDate = this.minDate
+    checkIfIsDataDate(minDate)
+
     const maxDate = this.maxDate
+    checkIfIsDataDate(maxDate)
+    
     const dateButtonClasses = this.props.dateButtonClasses || null;
     const dateFormat = this.props.dateFormat || "mm/dd/yyyy";
-    const focusDate = this.props.focusDate;
+    const focusDate = this.props.focusDate ||null;
     const specifiedFocusDate = this.props.specifiedFocusDate;
 
     if(themeColor) document.documentElement.style.setProperty("--defaultTheme", themeColor);
