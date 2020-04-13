@@ -397,7 +397,7 @@ You can use the errorType const to write the logic for determining your errorTyp
 
 History 
 
-v1.2.11
+v1.2.12
 * Improvements to autopcomplete functionality
 * Formatting error message only appears entire datepicker's blur 
 * Errors in console for incorrect datadate format with min and max date props
