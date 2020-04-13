@@ -15,11 +15,13 @@ class CalControls extends Component{
     super(props);
     this.state ={
       stateDate: "",
-      error: null,
-      dirtyForm: false
+      error: null
     }
     this.autoFormatDateBox = this.autoFormatDateBox.bind(this);
-    this.handleBlur = this.handleBlur.bind(this)
+
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocus  =this.handleFocus.bind(this);
+    this.timeOutId = null;
     this.dateFormat = this.props.dateFormat? this.props.dateFormat.toLowerCase() :"mm/dd/yyyy";
     this.handleChange = this.handleChange.bind(this);
     this.customInputBox;
@@ -57,8 +59,7 @@ class CalControls extends Component{
   }
 
   handleInputErrors(dateFormat, nextStateDate){
- 
-    let formatFields =  splitByDelineator(dateFormat)       
+    let formatFields =  splitByDelineator(dateFormat)
     let inputValues =   splitByDelineator(nextStateDate)                 
 
 
@@ -129,27 +130,22 @@ class CalControls extends Component{
 
 
   autoFormatDateBox(e){
+    let recursiveString;
+    if( typeof e ==="string") recursiveString=e
 
     let stateDate = this.state.stateDate;
-    let targetVal = e.target.value;
+    let targetVal = recursiveString || e.target.value 
+    let targetString =  recursiveString || e.target.value;
     let dateFormat = this.dateFormat;
-    let nextStateDate = e.target.value;
-    let inputValues =   splitByDelineator(nextStateDate)
-    let formatFields =  splitByDelineator(this.dateFormat)
-    let dirtyForm = this.state.dirtyForm
-    
-    
-    let month = parseInt(inputValues[formatFields.indexOf('mm')])
-    let year = parseInt(inputValues[formatFields.indexOf('yyyy')]) 
-    let day = parseInt(inputValues[formatFields.indexOf('dd')])
-    let monthString = inputValues[formatFields.indexOf('mm')] || '' //empty string for edge case when not entered yet
-    let dayString = inputValues[formatFields.indexOf('dd')] || ''
-    let yearString = inputValues[formatFields.indexOf('yyyy')] || ''
 
-    console.log('~month, day, year~', month, day, year);
-    console.log('type of target', typeof e.target.value);
+    let i = targetString.length-1
+    
+    // console.log('type of target', typeof e.target.value);
+    console.log('stateDate--->',stateDate);
+    console.log('target string--->', targetString);
+    console.log('index -->', i);
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault() || null;
 
     // If input is not a number, does nothing 
     const re = /^[0-9]*$/
@@ -158,29 +154,54 @@ class CalControls extends Component{
     // Funtion to check if input at char[i] is a delineator 
     const isDelin = (dateFormatChar)=>isDelineator.test(dateFormatChar)
 
-    // cycle through the input value 
-    for(let i = 0; i<targetVal.length; i++){
-      
-      if(stateDate.length<targetVal.length && !this.state.dirtyForm){
-        console.log('HITTING CLEAN FORM');
-        if(isDelin(dateFormat[i+1])&& ( !targetVal[i+1] || !isDelin(targetVal[i+1] ))){
-          
-          targetVal = targetVal.split('')
-          let delin = dateFormat[i+1]
-          //make an exceptional case if the numbers are seperated by two consecutive delineators 
-          if(isDelin(dateFormat[i+2])) delin = delin+ dateFormat[i+2]
-          targetVal.splice(i+1,0,delin)
-          targetVal = targetVal.join('')
-          nextStateDate= targetVal
+    // cycle through the input value
+    if(targetString>stateDate){
+
+      if(isDelin(dateFormat[i])){
+        //if the targtString[i] isDelin, do nothing
+        console.log('wwe should have an insertion....');
+        if(isDelin(targetString[i])){
+          console.log('END OF FUNC!!!!!!!!!');
+          targetString=targetString
+        }
+        if(!isDelin(targetString[i])){
+          console.log('~~~~~~NOT DELIN~~~~~~');
+          console.log('THE SLICE', targetString.slice(-1));
+          console.log('THE PIE', targetString.slice(0,-1));
+          let newEntry = targetString.slice(-1)
+          targetString= targetString.slice(0,-1) + dateFormat[i];
+          console.log('target string',targetString);
+          if(isDelin(dateFormat[i+1])) {
+            console.log('HIT IT BIGG!! ! !');
+            targetString = targetString + dateFormat[i+1]
+          }
+          targetString = targetString+ newEntry;
         }
       }
-      if(stateDate.length>targetVal.length) {
-        this.setState({dirtyForm:true})
+
+      else if(isDelin(dateFormat[i+1])){
+        console.log('%%%%%%%%%%%%%%%% hitting alt insert');
+        //if the targetString[i+1] is not delin we have to slice it in and call this function on the new string
+        // if(!isDelin(targetString[i+1])){
+          
+          targetString=targetString+dateFormat[i+1]
+          if(isDelin(dateFormat[i+2])) targetString=targetString+dateFormat[i+2]
+          this.setState({stateDate: targetString})
+          console.log('LAST TARGETSTRIGN BEFORE RECURSION', targetString);
+          this.autoFormatDateBox(targetString)
+        // }
       }
 
+      
     }
-    this.setState({stateDate: nextStateDate})
-    this.handleInputErrors(dateFormat, nextStateDate)
+    else{
+      //if we are going backwards, we do nothing 
+      console.log('hitting the else conditional');
+    }
+
+    this.setState({stateDate: targetString})
+    console.log('TARGET STING AT END',targetString);
+    this.handleInputErrors(dateFormat, targetString)
 }
 
   handleChange(e){
@@ -194,6 +215,7 @@ class CalControls extends Component{
 
 
   handleBlur(){
+    console.log('BLUR CALLED FROM ..');
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
@@ -212,10 +234,14 @@ class CalControls extends Component{
       this.setState({error:null})
     }
   }
+  handleFocus(){
+   console.log('HANDLE FOCUS CALLED');
+   this.setState({error:null})
+  }
 
 
   render(){
-    
+    console.log('ERROR TYPE --->', this.state.error);
     const dateFormat = this.dateFormat;
     let autoFormatting= true
     if(this.props.autoFormatting===false) {autoFormatting=false}
@@ -233,7 +259,7 @@ class CalControls extends Component{
         value: this.state.stateDate,
         maxLength: dateFormat.length,
         placeholder: dateFormat,
-        onBlur: this.handleBlur,
+        // onBlur: this.handleBlur,
         "aria-describedby": customInputBox.props["aria-describedby"] || null,
       })
       customInputBox = extendedCustomInputBox
@@ -242,16 +268,16 @@ class CalControls extends Component{
 
     
     return(
-       // this is the inputBox
-       <div id="myDatepicker" className="datepicker">
+       // this is the inputBox hello
+       <div id="myDatepicker" className="datepicker" >
         
-       <div className="date">
+       <div className="date" >
        {inputBoxLabel!== false ? 
          <label htmlFor={customInputBox? customInputBox.props.id:"id-textbox-1"}>{inputBoxLabel|| "Date"}</label>
          :
          null
      }
-       <span>
+       <span onBlur = {this.handleBlur} onFocus ={this.handleFocus}>
       { customInputBox ? 
        customInputBox
        :
@@ -262,7 +288,7 @@ class CalControls extends Component{
              className ={inputBoxClassNames}
             //  onKeyDown={this.stopKeyDown}
             onChange={this.handleChange}
-            onBlur = {this.handleBlur}
+            // onBlur = {this.handleBlur}
             value={this.state.stateDate}
             maxLength={dateFormat.length}
             onMouseUp={this.moveCursorToEnd}
