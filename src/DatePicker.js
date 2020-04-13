@@ -174,6 +174,7 @@ DatePicker.prototype.setFocusDay = function (flag) {
   }
   
   var fd = this.focusDay;
+  console.log('fd');
   // var fd = new Date ("2019-10-14")
 
 
