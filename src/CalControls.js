@@ -215,8 +215,9 @@ class CalControls extends Component{
   }
 
 
-  handleBlur(){
+  handleBlur(e){
     console.log('BLUR CALLED FROM ..');
+    console.log('Blur target.value', e.target.value);
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
@@ -227,7 +228,7 @@ class CalControls extends Component{
    let isproperDateFormat =  checkForProperDateFormat(inputBoxDate, dateFormat) && (inputBoxDate.length===dateFormat.length)
     
  
-    if(!isproperDateFormat) {
+    if(!isproperDateFormat && e.target.value) {
       this.setState({error: invalidFormatError});
       return;
     }
