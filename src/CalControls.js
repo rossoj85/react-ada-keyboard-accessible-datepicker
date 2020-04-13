@@ -79,7 +79,7 @@ class CalControls extends Component{
     if(nextStateDate.length === this.dateFormat.length){
       isproperDateFormat = checkForProperDateFormat(nextStateDate,this.dateFormat)
       if(!isproperDateFormat) {
-        this.setState({error: this.props.invalidFormatError ||  `Please check date format. Format should be ${this.dateFormat}`});
+        this.setState({error: this.props.invalidFormatError || errorMessages.invalidFormat + this.dateFormat});
         return;
       }
     }
@@ -221,7 +221,7 @@ class CalControls extends Component{
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
-    let invalidFormatError = this.props.invalidFormatError || `Please check date format. Format should be ${this.dateFormat}`
+    let invalidFormatError = this.props.invalidFormatError || errorMessages.invalidFormat + this.dateFormat
 
     if(this.state.error && this.state.error!==invalidFormatError) return;
 
@@ -236,9 +236,12 @@ class CalControls extends Component{
       this.setState({error:null})
     }
   }
-  handleFocus(){
-   console.log('HANDLE FOCUS CALLED');
-   this.setState({error:null})
+  handleFocus(e){
+   console.log('HANDLE FOCUS TARGET', e.target.id)
+   console.log('Preset error from state', this.state.error);
+   if(e.target.id==='mainCalButton' 
+   && (this.state.error===this.props.invalidFormatError
+   || errorMessages.invalidFormat + this.dateFormat)) this.setState({error:null})
   }
 
 
@@ -296,7 +299,7 @@ class CalControls extends Component{
             onMouseUp={this.moveCursorToEnd}
                />
      }
-       <button className={`icon ${buttonClassNames? buttonClassNames: "buttonDefault"}`} aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
+       <button id='mainCalButton' className={`icon ${buttonClassNames? buttonClassNames: "buttonDefault"}`} aria-label="Choose Date" attribute="testing . ." style={{"color" : themeColor}, buttonInlineStyle} >
          <FontAwesomeIcon icon={faCalendar} className="fa-2x" />
        </button>
        </span>
