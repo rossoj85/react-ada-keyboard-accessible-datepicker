@@ -396,8 +396,15 @@ You can use the errorType const to write the logic for determining your errorTyp
   
 
 History 
+
+v1.2.11
+* Improvements to autopcomplete functionality
+* Formatting error message only appears entire datepicker's blur 
+* Errors in console for incorrect datadate format with min and max date props
+
 v1.2.9
 * Improved documentation readibility.
+
 v1.2.3
 * Removed default "Cursor keys can navigate dates" message"
 * Calander height now changes to fit dates

@@ -94,9 +94,6 @@ CalendarButtonInput.prototype.setFocus = function () {
 
 CalendarButtonInput.prototype.setDate = function (day) {
   let dateFormatString = this.dateFormat;
-  console.log('CalendarButtonInput.prototype.setDate  DAY-->', day);
-  console.log('day.getMonth() + 1)---->', day.getMonth() + 1);
-  console.log('day.getDate() ---->', day.getDate());
 
   // variables for adding in leading zero fro single dig dates,
   const zeroFormattedDayOrMonth = (dayOrMonth) =>{

@@ -20,8 +20,7 @@ class ReactColorSquare extends Component{
 
   }
   componentWillMount(){
-    console.log('v 1.2.9');
-    console.log('GELLO');
+    console.log('v 1.2.11');
   }
 
   componentDidMount(){

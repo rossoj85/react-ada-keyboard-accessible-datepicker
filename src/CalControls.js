@@ -56,7 +56,6 @@ class CalControls extends Component{
     
     if(this.props.autoFormatting!== false) disableHighlightingInInputBox(inputBox);
 
-    console.log('****PROPS', this.props);
   
   }
 
@@ -106,9 +105,7 @@ class CalControls extends Component{
     else if (monthString.length===2 && yearString.length===4 && day){
      
       let daysInMonth = getDaysInMonth(month,year)
-      console.log('DAYS IN MONTH', daysInMonth);
       if(day>daysInMonth){
-        console.log('DAY GREATER THAN DAY IN MONTH');
         if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
         else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       }
@@ -139,14 +136,8 @@ class CalControls extends Component{
     let targetVal = recursiveString || e.target.value 
     let targetString =  recursiveString || e.target.value;
     let dateFormat = this.dateFormat;
-
     let i = targetString.length-1
-    
-    // console.log('type of target', typeof e.target.value);
-    console.log('stateDate--->',stateDate);
-    console.log('target string--->', targetString);
-    console.log('index -->', i);
-
+  
     e.preventDefault && e.preventDefault() || null;
 
     // If input is not a number, does nothing 
@@ -161,20 +152,13 @@ class CalControls extends Component{
 
       if(isDelin(dateFormat[i])){
         //if the targtString[i] isDelin, do nothing
-        console.log('wwe should have an insertion....');
         if(isDelin(targetString[i])){
-          console.log('END OF FUNC!!!!!!!!!');
           targetString=targetString
         }
         if(!isDelin(targetString[i])){
-          console.log('~~~~~~NOT DELIN~~~~~~');
-          console.log('THE SLICE', targetString.slice(-1));
-          console.log('THE PIE', targetString.slice(0,-1));
           let newEntry = targetString.slice(-1)
           targetString= targetString.slice(0,-1) + dateFormat[i];
-          console.log('target string',targetString);
           if(isDelin(dateFormat[i+1])) {
-            console.log('HIT IT BIGG!! ! !');
             targetString = targetString + dateFormat[i+1]
           }
           targetString = targetString+ newEntry;
@@ -182,14 +166,12 @@ class CalControls extends Component{
       }
 
       else if(isDelin(dateFormat[i+1])){
-        console.log('%%%%%%%%%%%%%%%% hitting alt insert');
         //if the targetString[i+1] is not delin we have to slice it in and call this function on the new string
         // if(!isDelin(targetString[i+1])){
           
           targetString=targetString+dateFormat[i+1]
           if(isDelin(dateFormat[i+2])) targetString=targetString+dateFormat[i+2]
           this.setState({stateDate: targetString})
-          console.log('LAST TARGETSTRIGN BEFORE RECURSION', targetString);
           this.autoFormatDateBox(targetString)
         // }
       }
@@ -198,11 +180,9 @@ class CalControls extends Component{
     }
     else{
       //if we are going backwards, we do nothing 
-      console.log('hitting the else conditional');
     }
 
     this.setState({stateDate: targetString})
-    console.log('TARGET STING AT END',targetString);
     this.handleInputErrors(dateFormat, targetString)
 }
 
@@ -217,7 +197,6 @@ class CalControls extends Component{
 
 
   handleBlur(){
-    console.log('BLUR CALLED FROM ..');
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
@@ -237,8 +216,6 @@ class CalControls extends Component{
     }
   }
   handleFocus(e){
-   console.log('HANDLE FOCUS TARGET', e.target.id)
-   console.log('Preset error from state', this.state.error);
    if(e.target.id==='mainCalButton' 
    && (this.state.error===this.props.invalidFormatError
    || errorMessages.invalidFormat + this.dateFormat)) this.setState({error:null})
@@ -246,7 +223,6 @@ class CalControls extends Component{
 
 
   render(){
-    console.log('ERROR TYPE --->', this.state.error);
     const dateFormat = this.dateFormat;
     let autoFormatting= true
     if(this.props.autoFormatting===false) {autoFormatting=false}
@@ -255,7 +231,6 @@ class CalControls extends Component{
     if(this.props.autoFormatting!==false) inputBoxClassNames = inputBoxClassNames + " disableCssHighlight"
  
     let customInputBox = this.props.customInputBox;
-    console.log('custpmInputBOx', customInputBox);
     let extendedCustomInputBox;
     if(this.props.customInputBox){
        extendedCustomInputBox =  React.cloneElement(this.props.customInputBox,{

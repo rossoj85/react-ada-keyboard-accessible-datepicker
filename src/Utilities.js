@@ -131,7 +131,7 @@ export const checkForProperDateFormat = (inputDate,dateFormat)=>{
         }
         
     }
-    console.log('ALL PASSED');
+
     return true 
 };
 
@@ -149,7 +149,6 @@ export const isGreaterThanMaxDate = (inputDate, maxDate, dateFormat) =>{
 
 
     for(let i = 0; i<3; i++){
-        // console.log(`${nodeDateArray[i]}>${maxDateArray[i]}`);
        if (parseInt(nodeDateArray[i])>parseInt(maxDateArray[i])) return true;
        if (parseInt(nodeDateArray[i])<parseInt(maxDateArray[i])) return false;
       }
