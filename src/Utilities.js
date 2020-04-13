@@ -4,7 +4,7 @@ export let constValue = "Just a string x"
 
 
 export const errorMessages ={
-    invalidFormat : `Please check date format. Format should be _____`,
+    invalidFormat : `Please check date format. Format should be `,
     invalidMonth: `Invalid Month.  Please enter a value between 1 and 12`,
     invalidDate: `Invalid date. Please enter a value between 1 and 31`,
     pastMaxDate: `Past the maximum allowed date`,
