@@ -42,6 +42,7 @@ class CalControls extends Component{
 }
 
   componentDidMount(){
+    console.log('~~CAL CONTROL PROPS ~*NEw LiNk', this.props);
     // this must be adapted to take in custom boxes
     let inputBox = document.getElementById("id-textbox-1") || document.getElementById(this.props.customInputBox.props.id)
 
@@ -74,6 +75,9 @@ class CalControls extends Component{
     let pastMaxDate;
     let beforeMinDate;
     let isproperDateFormat;
+
+    console.log('month',month);
+    console.log('day', day);
     
     if(nextStateDate.length === this.dateFormat.length){
       isproperDateFormat = checkForProperDateFormat(nextStateDate,this.dateFormat)
@@ -98,18 +102,11 @@ class CalControls extends Component{
       else this.setState({ error: this.props.invalidMonthErrorMessage || errorMessages.invalidMonth})
     }
     else if (dayString.length==2 && day === 0 ||  day>31) {
+      console.log('HITTING THE DAY ERROR');
       // this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
       else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
       }
-    else if (monthString.length===2 && yearString.length===4 && day){
-     
-      let daysInMonth = getDaysInMonth(month,year)
-      if(day>daysInMonth){
-        if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
-        else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
-      }
-    }
     else if (pastMaxDate){ 
       // this.setState({error: this.props.pastMaxDateErrorMessage || errorMessages.pastMaxDate})
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("pastMaxDateErrorMessage")}
@@ -120,8 +117,23 @@ class CalControls extends Component{
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("minDateErrorMessage")}
       else  this.setState({error: this.props.minDateErrorMessage || errorMessages.beforeMinDate});
     }
+    else if (monthString.length===2 && yearString.length===4 && day){
+      console.log('~~~~hitting the other invalid date~~~~~~');
+       let daysInMonth = getDaysInMonth(month,year)
+       console.log('day', day);
+       console.log('days in month', daysInMonth);
+       if(day>daysInMonth){
+         if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidDateErrorMessage")}
+         else this.setState({error: this.props.invalidDateErrorMessage || errorMessages.invalidDate})
+       }
+       else{
+         if(this.props.errorHandlingCallback){this.props.errorHandlingCallback(null)}
+         else this.setState({error: null})
+       }
+     }
     else {
       // this.setState({error: null})
+      console.log('HITTING THE ELSE STATEMENT');
       if(this.props.errorHandlingCallback){this.props.errorHandlingCallback(null)}
       else this.setState({error: null})
     };
@@ -187,6 +199,7 @@ class CalControls extends Component{
 }
 
   handleChange(e){
+    
     e.preventDefault()
     
     if(this.props.autoFormatting!==false) this.autoFormatDateBox(e)
@@ -197,6 +210,7 @@ class CalControls extends Component{
 
 
   handleBlur(e){
+    console.log('handle blur called');
     let dateFormat = this.dateFormat;
     let inputBoxDate = this.state.stateDate
 
@@ -208,21 +222,29 @@ class CalControls extends Component{
     
  
     if(!isproperDateFormat && e.target.value) {
-      this.setState({error: invalidFormatError});
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback("invalidFormatErrorMessage")}
+      else this.setState({error: invalidFormatError});
       return;
     }
     else if (isproperDateFormat){
-      this.setState({error:null})
+      console.log('IT IS PROPER DATE FORMAT');
+      if(this.props.errorHandlingCallback){this.props.errorHandlingCallback(null)}
+      else this.setState({error: null})
     }
   }
+
   handleFocus(e){
-   if(e.target.id==='mainCalButton' 
-   && (this.state.error===this.props.invalidFormatError
-   || errorMessages.invalidFormat + this.dateFormat)) this.setState({error:null})
+  //  if(e.target.id==='mainCalButton' 
+  //  && (this.state.error===this.props.invalidFormatError
+  //  || errorMessages.invalidFormat + this.dateFormat)) {
+  //   if(this.props.errorHandlingCallback){this.props.errorHandlingCallback(null)}
+  //   else this.setState({error: null})
+  //   }
   }
 
 
   render(){
+    console.log('~~~~~RENDERING~~~~');
     const dateFormat = this.dateFormat;
     let autoFormatting= true
     if(this.props.autoFormatting===false) {autoFormatting=false}
